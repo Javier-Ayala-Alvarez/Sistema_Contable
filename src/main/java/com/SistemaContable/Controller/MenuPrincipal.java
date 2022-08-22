@@ -44,5 +44,15 @@ public class MenuPrincipal {
         model.addAttribute("dato","Hola Mundo");
         return "BalanceGeneral";
     }
+    @GetMapping("/login")
+    public String login(Model model){
+        model.addAttribute("dato","Hola Mundo");
+        return "login";
+    }
+    @GetMapping("/register")
+    public String register(Model model){
+        model.addAttribute("dato","Hola Mundo");
+        return "register";
+    }
 
 }
