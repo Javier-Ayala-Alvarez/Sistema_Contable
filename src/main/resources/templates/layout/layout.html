@@ -1,76 +1,85 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head th:fragment="head">
-<meta charset="utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="description" content="" />
-<meta name="author" content="" />
-<title>Sistema Contable</title>
-<!-- Favicon-->
-<link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}" />
-<!-- Core theme CSS (includes Bootstrap)-->
-<link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>Sistema Contable</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}"/>
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
 <body>
-	<div class="d-flex" id="wrapper">
-		<!-- Sidebar-->
-		<div class="border-end bg-primary" id="sidebar-wrapper">
+<div class="d-flex" id="wrapper">
+    <!-- Sidebar-->
+    <div class="border-end bg-primary" id="sidebar-wrapper">
 
-			<div class="sidebar-heading border-bottom bg-primary text-light">Sistema Contable</div>
-			<ul class="navbar-nav ms-4 mt-3 mt-lg-2">
-				<li class="nav-item active"><a class="btn btn-primary bi bi-border-width p-3"href="Catalogo">Catálogo</a></li>
-				<li class="nav-item active"><a class="btn btn-primary bi bi-border-width p-3"href="LibroDiario">Libro diario</a></li>
-				<li class="nav-item active"><a class="btn btn-primary bi bi-border-width p-3"href="LibroMayor">Libro mayor</a></li>
-				<li class="nav-item active"><a class="btn btn-primary bi bi-border-width p-3"href="BalanceDeComprobacion">Balance de comprobación</a></li>
-				<li class="nav-item active"><a class="btn btn-primary bi bi-border-width p-3"href="EstadoDeResultado">Estado de resultado</a></li>
-				<li class="nav-item active"><a class="btn btn-primary bi bi-border-width p-3"href="BalanceGeneral">Balance general</a></li>
-			</ul>
-
-
-		</div>
-
-		<!-- Page content wrapper-->
-		<div id="page-content-wrapper">
-			<!-- Top navigation-->
-			<nav
-				class="navbar navbar-expand-lg navbar-primary bg-primary border-bottom">
-				<div class="container-fluid">
-					<button class="btn btn-primary bi bi-border-width"  id="sidebarToggle">Menu</button>
-					<button class="navbar-toggler" type="button"
-						data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-						aria-controls="navbarSupportedContent" aria-expanded="false"
-						aria-label="Toggle navigation">
-						<span class="navbar-toggler-icon"></span>
-					</button>
-					<div class="collapse navbar-collapse" id="navbarSupportedContent">
-						<ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-							<li class="nav-item active"><a class="nav-link  text-light" href="/">Inicio</a></li>
-							<li class="nav-item"><a class="nav-link  text-light" href="login">Cerrar sesión</a></li>
-						</ul>
-					</div>
-				</div>
-			</nav>
-			<!-- Page content-->
-			<div class="container-fluid" layout:fragment="page-content">
+        <div class="sidebar-heading border-bottom bg-primary text-light">Sistema Contable</div>
+        <ul class="navbar-nav ms-4 mt-3 mt-lg-2">
+            <li class="nav-item active"><a class="btn btn-primary bi bi-border-width p-3" href="Catalogo">Catálogo</a>
+            </li>
+            <li class="nav-item active"><a class="btn btn-primary bi bi-border-width p-3" href="LibroDiario">Libro
+                diario</a></li>
+            <li class="nav-item active"><a class="btn btn-primary bi bi-border-width p-3" href="LibroMayor">Libro
+                mayor</a></li>
+            <li class="nav-item active"><a class="btn btn-primary bi bi-border-width p-3" href="BalanceDeComprobacion">Balance
+                de comprobación</a></li>
+            <li class="nav-item active"><a class="btn btn-primary bi bi-border-width p-3" href="EstadoDeResultado">Estado
+                de resultado</a></li>
+            <li class="nav-item active"><a class="btn btn-primary bi bi-border-width p-3" href="BalanceGeneral">Balance
+                general</a></li>
+        </ul>
 
 
-			</div>
-		</div>
-	</div>
+    </div>
+
+    <!-- Page content wrapper-->
+    <div id="page-content-wrapper">
+        <!-- Top navigation-->
+        <nav
+                class="navbar navbar-expand-lg navbar-primary bg-primary border-bottom">
+            <div class="container-fluid">
+                <button class="btn btn-primary bi bi-border-width" id="sidebarToggle">Menu</button>
+                <button class="navbar-toggler" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                        <li class="nav-item active"><a class="nav-link  text-light" href="/">Inicio</a></li>
+
+                        <li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link  text-light"
+                                                                                  th:href="@{/logout}">Cerrar sesión</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Page content-->
+        <div class="container-fluid" layout:fragment="page-content">
 
 
-
-	<!-- Bootstrap core JS-->
-	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
-	<!-- Core theme JS-->
-	<script th:src="@{/js/scripts.js}"></script>
+        </div>
+    </div>
+</div>
 
 
-	<!--OTRO SCRIPTS PARA PAGINAS-->
-	<th:block layout:fragment="page-scripts">
+<!-- Bootstrap core JS-->
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<!-- Core theme JS-->
+<script th:src="@{/js/scripts.js}"></script>
 
-	</th:block>
+
+<!--OTRO SCRIPTS PARA PAGINAS-->
+<th:block layout:fragment="page-scripts">
+
+</th:block>
 </body>
 </html>
