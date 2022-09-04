@@ -11,13 +11,13 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Nuevo Catálogo</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Nueva Cuenta</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="post">
 
                 <div class="modal-body">
-                    <form>
+
                         <div class="mb-3">
                             <label for="codigo" class="col-form-label">Código:</label>
                             <input type="number" class="form-control" id="codigo" placeholder="Ingrese el código de la cuenta">
@@ -27,7 +27,15 @@
                             <input type="text" class="form-control" id="nombre" placeholder="Ingrese el nombre de la cuenta">
 
                         </div>
-                    </form>
+                        <div class="mb-3">
+                            <label for="saldo" class="col-form-label">Saldo de cuenta:</label>
+                            <select class="form-select form-select-sm" aria-label=".form-select-lg example" id="saldo">
+                                <option selected>Seleccione el saldo de cuenta</option>
+                                <option value="1">Deudor</option>
+                                <option value="2">Acreedor</option>
+                            </select>
+                        </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
