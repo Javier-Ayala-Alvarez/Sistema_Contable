@@ -24,5 +24,14 @@ public class CatalogoServices   {
     public List<Catalogo> buscar(String buscar) {
         return catalogoRespository.buscar(buscar);
     }
+    public String buscar(String dato,String buscar) {
+        return catalogoRespository.buscar(dato, buscar);
+    }
+
+    public String save(Catalogo catalogo){
+         catalogoRepositoryInt.save(catalogo);
+         return "0";
+    }
+
 }
 

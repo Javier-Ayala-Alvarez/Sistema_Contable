@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -14,32 +14,33 @@
                 <h5 class="modal-title" id="exampleModalLabel">Nueva Cuenta</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="post">
+            <form th:action="@{/Catalogo}" method="post" th:object="${catalogo}">
 
                 <div class="modal-body">
 
                         <div class="mb-3">
                             <label for="codigo" class="col-form-label">Código:</label>
-                            <input type="number" class="form-control" id="codigo" placeholder="Ingrese el código de la cuenta">
+                            <input type="number" class="form-control" id="codigo" th:field="*{codigo}" th:errorClass="is-invalid" autofocus="autofocus" placeholder="Ingrese el código de la cuenta">
+                            <div th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}" class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3">
                             <label for="nombre" class="col-form-label">Nombre:</label>
-                            <input type="text" class="form-control" id="nombre" placeholder="Ingrese el nombre de la cuenta">
-
+                            <input type="text" class="form-control" id="nombre" th:field="*{nombre}" th:errorClass="is-invalid" autofocus="autofocus" placeholder="Ingrese el nombre de la cuenta">
+                            <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3">
-                            <label for="saldo" class="col-form-label">Saldo de cuenta:</label>
-                            <select class="form-select form-select-sm" aria-label=".form-select-lg example" id="saldo">
-                                <option selected>Seleccione el saldo de cuenta</option>
-                                <option value="1">Deudor</option>
-                                <option value="2">Acreedor</option>
+                            <label for="saldo_cuenta" class="col-form-label">Saldo de cuenta:</label>
+                            <select class="form-select form-select-sm"  aria-label=".form-select-lg example" id="saldo_cuenta" th:field="*{saldoCuenta}">
+                                <option selected th:value="''" >Seleccione el saldo de cuenta</option>
+                                <option th:value="'Deudor'">Deudor</option>
+                                <option th:value="'Acreedor'">Acreedor</option>
                             </select>
                         </div>
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Guardar</button>
+                    <input type="submit" class="btn btn-primary" value="Guardar"/>
                 </div>
             </form>
         </div>

@@ -20,9 +20,28 @@ public class CatalogoRespository {
         List<Catalogo> resultado = entityManager.createQuery(query).getResultList();
         return resultado;
     }
+
     public List<Catalogo> buscar(String buscar) {
-        String query = "FROM Catalogo where codigo = "+buscar+" or nombre = "+buscar+" or saldo_cuenta = "+buscar+" ORDER BY codigo ASC;";
+        String query = "FROM Catalogo where codigo = " + buscar + " or nombre = " + buscar + " or saldo_cuenta = " + buscar + " ORDER BY codigo ASC;";
         List<Catalogo> resultado = entityManager.createQuery(query).getResultList();
         return resultado;
     }
+
+    public String buscar(String valor, String buscar) {
+        if (buscar != "") {
+            String query = "FROM Catalogo where " + valor + " = '" + buscar + "'";
+            List<Catalogo> resultado = entityManager.createQuery(query).getResultList();
+            if (resultado.size() == 0) {
+                return "true";
+            } else {
+                return "false";
+            }
+
+        } else {
+            return "false";
+        }
+
+
+    }
+
 }

@@ -22,12 +22,15 @@
 
     <div th:insert="~{modalNuevoCatalogo}">
         <!--Aqui se mostrara la modal de nuevo catálogo-->
+
     </div>
 
     <div class="container ">
         <div class="row justify-content-start">
             <div class="col-md-12 p-3 border mt-3">
                 <div class="row p-2">
+
+
                     <div class="col-md-3 align-self-start ">
                         <caption><h1 th:text="${tituloDeLaPagina}"/></caption>
                         <!--Muestra el mensaje que viene del back-end-->
@@ -39,17 +42,15 @@
                     </div>
 
                     <div class="col-md-2 align-self-end ">
-                        <input type="submit" class="btn btn-primary col-8" value="Buscar"/>
+                        <input type="submit" class="btn btn-primary col-8"  value="Buscar"/>
                     </div>
 
                 </div>
                 <div class="row p-2">
                     <div class="col-md-3 align-self-start ">
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-success col-4" data-bs-toggle="modal"
-                                data-bs-target="#nuevoCatalogo">
-                            Nuevo
-                        </button> <!--Boton para mostrar la modal de nuevo-->
+                        <a class="btn btn-success col-4" href="nueva_cuenta" data-bs-toggle= "modal" data-bs-target="#nuevoCatalogo">Nuevo</a>
+                        <!--Boton para mostrar la modal de nuevo-->
                     </div>
                     <div class="col-md-6 align-self-start ">
 
@@ -133,7 +134,29 @@
 <th:block layout:fragment="page-scripts">
     <link rel="stylesheet" th:href="@{sweetalert2/sweetalert2.min.css}">
     <script th:src="@{/sweetalert2/sweetalert2.min.js}"></script>
+    <div th:if="${msgExito != null}">
+        <script>
+          var dato =  "La cuenta ha sido agregado con exito";
+            Swal.fire(
+                dato,
+                '!ya puedes usarla¡',
+                'question'
+            )
+        </script>
+    </div>
+    <div th:if="${msgErrorDatos != null}">
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Estos datos ya éxiste ó campos vacíos!',
+
+            })
+        </script>
+    </div>
+
     <script>
+
         function mostrarModal(){
             Swal.fire({
               icon: 'error',
