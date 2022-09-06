@@ -1,6 +1,8 @@
 package com.SistemaContable.model;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -28,10 +30,10 @@ public class Catalogo {
     private String nombre;
 
     @Column(name = "estado")
-    //@Pattern(regexp = "Deudor"+"Acreedor" )//es correcto si tiene estos datos
     private boolean estado;
 
     @Column(name = "saldo_cuenta")
     private String saldoCuenta;
+
 
 }

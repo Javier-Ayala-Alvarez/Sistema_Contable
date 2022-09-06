@@ -1,5 +1,6 @@
 package com.SistemaContable.Controller;
 
+import com.SistemaContable.Repository.CatalogoRepositoryInt;
 import com.SistemaContable.model.Catalogo;
 import com.SistemaContable.servicio.CatalogoServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class CatalogoController {
     @Autowired
     private CatalogoServices catalogoServices;
 
+    @Autowired
+    private CatalogoRepositoryInt catalogoRespositoryInt;
+
 
     @GetMapping()
     public String catalogo(@RequestParam Map<String, Object> params, Model model, Catalogo catalogo) {
@@ -47,17 +51,18 @@ public class CatalogoController {
 
     @PostMapping()
     public String save(@Validated Catalogo catalogo, BindingResult bindingResult, RedirectAttributes redirect, Model model) {
+        if (catalogo.getId() == null) {
 
             if (catalogoServices.buscar("codigo", catalogo.getCodigo()) == "true" && catalogoServices.buscar("nombre", catalogo.getNombre()) == "true") {
-                    if (bindingResult.hasErrors()) {
-                        model.addAttribute("catalogo", catalogo);
-                        return "Catalogo";
-                    }
+                if (bindingResult.hasErrors()) {
+                    model.addAttribute("catalogo", catalogo);
+                    return "Catalogo";
+                }
 
-                    catalogo.setEstado(true);
-                    catalogoServices.save(catalogo);
-                    redirect.addFlashAttribute("msgExito", "activo");
-                    return "redirect:/Catalogo";
+                catalogo.setEstado(true);
+                catalogoServices.save(catalogo);
+                redirect.addFlashAttribute("msgExito", "activo");
+                return "redirect:/Catalogo";
 
 
             } else {
@@ -65,6 +70,10 @@ public class CatalogoController {
                 return "redirect:/Catalogo";
             }
 
+        }else{
+            redirect.addFlashAttribute("msgExito", "activo");
+            return "redirect:/Catalogo";
+        }
 
 
     }
@@ -76,5 +85,26 @@ public class CatalogoController {
         model.addAttribute("catalogos", catalogo);
         return "catalogo";
 
+    }
+
+    @GetMapping("/{id}/editar")
+    public String mostrarEditar(@PathVariable Integer id, Model modelo) {
+        Catalogo catalogo = catalogoRespositoryInt.getById(id);
+        modelo.addAttribute("catalogo", catalogo);
+        return "catalogo";
+    }
+
+    @PostMapping("/{id}/eliminar")
+    public String eliminarContacto(@PathVariable Integer id, RedirectAttributes redirect) {
+        Catalogo catalogo = catalogoRespositoryInt.getById(id);//Busca por id
+        if (catalogo.isEstado() == true) {//Segun el valor cambia el dato
+            catalogo.setEstado(false);
+        } else {
+            catalogo.setEstado(true);
+        }
+
+        catalogoServices.save(catalogo);//modifica
+        redirect.addFlashAttribute("msgExito", "El contacto ha sido eliminado correctamente");
+        return "redirect:/Catalogo";
     }
 }

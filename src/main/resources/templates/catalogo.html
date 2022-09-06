@@ -42,14 +42,15 @@
                     </div>
 
                     <div class="col-md-2 align-self-end ">
-                        <input type="submit" class="btn btn-primary col-8"  value="Buscar"/>
+                        <input type="submit" class="btn btn-primary col-8" value="Buscar"/>
                     </div>
 
                 </div>
                 <div class="row p-2">
                     <div class="col-md-3 align-self-start ">
                         <!-- Button trigger modal -->
-                        <a class="btn btn-success col-4" href="nueva_cuenta" data-bs-toggle= "modal" data-bs-target="#nuevoCatalogo">Nuevo</a>
+                        <a class="btn btn-success col-4" href="nueva_cuenta" data-bs-toggle="modal"
+                           data-bs-target="#nuevoCatalogo">Nuevo</a>
                         <!--Boton para mostrar la modal de nuevo-->
                     </div>
                     <div class="col-md-6 align-self-start ">
@@ -88,13 +89,18 @@
 
 
                                 <td>
-                                    <button type="button" class="btn btn-warning mb-3" onclick="mostrarModal()">Editar
-                                    </button>
+
+                                    <a th:href="@{/Catalogo/{id}/editar/(id=${catalogo.id})}" class="btn btn-warning" data-bs-toggle="modal"
+                                       data-bs-target="#nuevoCatalogo"><i class="fas fa-edit"></i>&nbsp;Editar</a>
                                     <button type="button" class="btn btn-secondary mb-3
-                                        " onclick="mostrarModal()">
+                                        " onclick="modificarEstado(this)">
                                         Estado
                                     </button>
-
+                                    <!--Agregamos el boton modificar este va a un script y
+                                    luego segun respuesta llega al formulario de abajo para segir con el proceso-->
+                                    <form th:action="@{/Catalogo/{id}/eliminar/(id=${catalogo.id})}"
+                                          method="post"></form>
+                                </td>
                                 </td>
                             </tr>
 
@@ -136,11 +142,11 @@
     <script th:src="@{/sweetalert2/sweetalert2.min.js}"></script>
     <div th:if="${msgExito != null}">
         <script>
-          var dato =  "La cuenta ha sido agregado con exito";
+            var dato = "La cuenta ha sido agregado con exito";
             Swal.fire(
                 dato,
                 '!ya puedes usarla¡',
-                'question'
+                'success'
             )
         </script>
     </div>
@@ -157,26 +163,54 @@
 
     <script>
 
-        function mostrarModal(){
+        function mostrarModal() {
             Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Estamos en mantenimiento!',
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Estamos en mantenimiento!',
 
             })
         }
 
+    </script>
+    <script>
 
+        function modificarEstado(id) {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            })
 
-
-
-
-
-
-
-
-
-
+            swalWithBootstrapButtons.fire({
+                title: 'Estás seguro que deseas cambiar de estado?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, cambiar!',
+                cancelButtonText: 'No, cancelar!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    id.nextElementSibling.submit();
+                    swalWithBootstrapButtons.fire(
+                        'Modificado!',
+                        'Su cuenta ha sido modificada de estado.',
+                        'success'
+                    )
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelado',
+                        'Su cuenta no ha sido modificada de estado. :)',
+                        'error'
+                    )
+                }
+            })
+        }
     </script>
 </th:block>
 

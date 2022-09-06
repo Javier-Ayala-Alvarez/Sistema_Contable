@@ -33,5 +33,10 @@ public class CatalogoServices   {
          return "0";
     }
 
+    public String delete(Catalogo id){
+        catalogoRepositoryInt.delete(id);
+        return "true";
+    }
+
 }
 
