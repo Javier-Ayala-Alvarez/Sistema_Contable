@@ -40,7 +40,37 @@ public class CatalogoServices   {
     public int searchLike(String buscar){
         return catalogoRespository.searchLike(buscar);
     }
+    public Boolean validarCodigo(String codigo) {
+        int tamañoCodigo = codigo.length();
+        if (tamañoCodigo == 1) {
+            return true;
+        } else if (tamañoCodigo == 2) {
+            String verificarCodigo = codigo.substring(0,1);
+            int size = catalogoRespository.searchLike(verificarCodigo);
+            if (size >= 1) {
+                return true;
+            } else {
+                return false;
+            }
 
+        } else if((tamañoCodigo%2) == 1){
+            String verificarCodigo = codigo.substring(0,tamañoCodigo - 3);
+            int size = catalogoRespository.searchLike(verificarCodigo);
+            if (size >= 1) {
+                return true;
+            } else {
+                return false;
+            }
+        }else{
+            String verificarCodigo = codigo.substring(0,tamañoCodigo - 2);
+            int size = catalogoRespository.searchLike(verificarCodigo);
+            if (size >= 1) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
 
 }
 

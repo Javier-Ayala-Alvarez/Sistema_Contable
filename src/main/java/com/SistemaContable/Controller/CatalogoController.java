@@ -59,7 +59,7 @@ public class CatalogoController {
                     && catalogoServices.buscar("codigo", catalogo.getCodigo()) == "true"
                     && catalogoServices.buscar("nombre", catalogo.getNombre()) == "true") {
 
-                if (validarCodigo(catalogo.getCodigo()) == true) {
+                if (catalogoServices.validarCodigo(catalogo.getCodigo()) == true) {
                     if (bindingResult.hasErrors()) {
                         model.addAttribute("catalogo", catalogo);
                         return "Catalogo";
@@ -83,38 +83,6 @@ public class CatalogoController {
         }
 
 
-    }
-
-    private Boolean validarCodigo(String codigo) {
-        int tamañoCodigo = codigo.length();
-        if (tamañoCodigo == 1) {
-            return true;
-        } else if (tamañoCodigo == 2) {
-            String verificarCodigo = codigo.substring(0,1);
-            int size = catalogoServices.searchLike(verificarCodigo);
-            if (size >= 1) {
-                return true;
-            } else {
-                return false;
-            }
-
-        } else if((tamañoCodigo%2) == 1){
-            String verificarCodigo = codigo.substring(0,tamañoCodigo - 3);
-            int size = catalogoServices.searchLike(verificarCodigo);
-            if (size >= 1) {
-                return true;
-            } else {
-                return false;
-            }
-        }else{
-            String verificarCodigo = codigo.substring(0,tamañoCodigo - 2);
-            int size = catalogoServices.searchLike(verificarCodigo);
-            if (size >= 1) {
-                return true;
-            } else {
-                return false;
-            }
-        }
     }
 
 
