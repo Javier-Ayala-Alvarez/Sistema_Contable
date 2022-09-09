@@ -20,7 +20,7 @@
 
                         <div class="mb-3">
                             <label for="codigo" class="col-form-label">Código:</label>
-                            <input type="number" class="form-control" id="codigo" th:field="*{codigo}" th:errorClass="is-invalid" autofocus="autofocus" placeholder="Ingrese el código de la cuenta">
+                            <input type="text" class="form-control" id="codigo" th:field="*{codigo}" th:errorClass="is-invalid" autofocus="autofocus" placeholder="Ingrese el código de la cuenta">
                             <div th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}" class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3">

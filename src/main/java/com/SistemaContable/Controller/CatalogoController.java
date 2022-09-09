@@ -38,7 +38,7 @@ public class CatalogoController {
         if (totalPage > 0) {
             List<Integer> pages = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());
             model.addAttribute("pages", pages);//lista de paginas
-        }else{
+        } else {
             model.addAttribute("pie", "EL catálogo está vacío debe registrar datos");
         }
         model.addAttribute("catalogos", pageCatalogo.getContent());//enviando la lista
@@ -55,28 +55,68 @@ public class CatalogoController {
     public String save(@Validated Catalogo catalogo, BindingResult bindingResult, RedirectAttributes redirect, Model model) {
         if (catalogo.getId() == null) {
 
-            if (catalogo.getSaldoCuenta() != "" && catalogo.getTipoCuenta() != "" && catalogoServices.buscar("codigo", catalogo.getCodigo()) == "true" && catalogoServices.buscar("nombre", catalogo.getNombre()) == "true") {
-                if (bindingResult.hasErrors()) {
-                    model.addAttribute("catalogo", catalogo);
-                    return "Catalogo";
+            if (catalogo.getSaldoCuenta() != "" && catalogo.getTipoCuenta() != ""
+                    && catalogoServices.buscar("codigo", catalogo.getCodigo()) == "true"
+                    && catalogoServices.buscar("nombre", catalogo.getNombre()) == "true") {
+
+                if (validarCodigo(catalogo.getCodigo()) == true) {
+                    if (bindingResult.hasErrors()) {
+                        model.addAttribute("catalogo", catalogo);
+                        return "Catalogo";
+                    }
+                    catalogoServices.save(catalogo);
+                    redirect.addFlashAttribute("msgExito", "activo");
+                    return "redirect:/Catalogo";
+
+                } else {
+                    redirect.addFlashAttribute("msgErrorNoExisteDatos", "activo");
+                    return "redirect:/Catalogo";
                 }
-                catalogoServices.save(catalogo);
-                redirect.addFlashAttribute("msgExito", "activo");
-                return "redirect:/Catalogo";
-
-
             } else {
                 redirect.addFlashAttribute("msgErrorDatos", "activo");
                 return "redirect:/Catalogo";
             }
 
-        }else{
+        } else {
             redirect.addFlashAttribute("msgExito", "activo");
             return "redirect:/Catalogo";
         }
 
 
     }
+
+    private Boolean validarCodigo(String codigo) {
+        int tamañoCodigo = codigo.length();
+        if (tamañoCodigo == 1) {
+            return true;
+        } else if (tamañoCodigo == 2) {
+            String verificarCodigo = codigo.substring(0,1);
+            int size = catalogoServices.searchLike(verificarCodigo);
+            if (size >= 1) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } else if((tamañoCodigo%2) == 1){
+            String verificarCodigo = codigo.substring(0,tamañoCodigo - 3);
+            int size = catalogoServices.searchLike(verificarCodigo);
+            if (size >= 1) {
+                return true;
+            } else {
+                return false;
+            }
+        }else{
+            String verificarCodigo = codigo.substring(0,tamañoCodigo - 2);
+            int size = catalogoServices.searchLike(verificarCodigo);
+            if (size >= 1) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
 
     @PostMapping("/buscarcatalogo")
     public String BuscarCatalogo(@PathVariable String buscar, Model model) {
@@ -98,10 +138,10 @@ public class CatalogoController {
     public String eliminarContacto(@PathVariable Integer id, RedirectAttributes redirect) {
         Catalogo catalogo = catalogoRespositoryInt.getById(id);//Busca por id
         int size = catalogoServices.searchLike(catalogo.getCodigo());
-        if(size == 1){
+        if (size == 1) {
             catalogoServices.delete(catalogo);//Eliminado
             redirect.addFlashAttribute("msgExito", "activo");
-        }else{
+        } else {
             redirect.addFlashAttribute("msgErrorELiminarCuenta", "activo");
         }
 

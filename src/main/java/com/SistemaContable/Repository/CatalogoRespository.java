@@ -48,11 +48,12 @@ public class CatalogoRespository {
         int resultadofinal = 0;
         if (buscar != "") {
             //
-            String query = " select c FROM Catalogo as c WHERE c.codigo LIKE '%" + buscar + "%'";
+            String query = " select c FROM Catalogo as c WHERE c.codigo LIKE '" + buscar + "%'";
             List<Catalogo> resultado = entityManager.createQuery(query).getResultList();
             resultadofinal = resultado.size();
         }
         return resultadofinal;
     }
+
 
 }

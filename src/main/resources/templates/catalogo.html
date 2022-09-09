@@ -163,6 +163,16 @@
             })
         </script>
     </div>
+    <div th:if="${msgErrorNoExisteDatos != null}">
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'No se puede agregar, Está cuenta no tiene cuenta principal!',
+
+            })
+        </script>
+    </div>
     <div th:if="${msgErrorDatos != null}">
         <script>
             Swal.fire({
