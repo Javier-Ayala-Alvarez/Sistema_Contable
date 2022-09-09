@@ -37,6 +37,9 @@ public class CatalogoServices   {
         catalogoRepositoryInt.delete(id);
         return "true";
     }
+    public int searchLike(String buscar){
+        return catalogoRespository.searchLike(buscar);
+    }
 
 }
 

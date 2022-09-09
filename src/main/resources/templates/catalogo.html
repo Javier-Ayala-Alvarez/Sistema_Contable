@@ -72,9 +72,8 @@
                             <tr>
                                 <th scope="col align-center">Código</th>
                                 <th scope="col">Nombre</th>
-
                                 <th scope="col">Saldo de cuenta</th>
-                                <th scope="col">Estado</th>
+                                <th scope="col">Tipo de cuenta</th>
                                 <th scope="col">Opciones</th>
                             </tr>
                             </thead>
@@ -85,7 +84,8 @@
 
                                 <td th:text="${catalogo.saldoCuenta}"/>
 
-                                <td th:text="${catalogo.estado}"/>
+                                <td th:text="${catalogo.tipoCuenta}"/>
+
 
 
                                 <td>
@@ -93,8 +93,8 @@
                                     <a th:href="@{/Catalogo/{id}/editar/(id=${catalogo.id})}" class="btn btn-warning" data-bs-toggle="modal"
                                        data-bs-target="#nuevoCatalogo"><i class="fas fa-edit"></i>&nbsp;Editar</a>
                                     <button type="button" class="btn btn-secondary mb-3
-                                        " onclick="modificarEstado(this)">
-                                        Estado
+                                        " onclick="eliminar(this)">
+                                        Eliminar
                                     </button>
                                     <!--Agregamos el boton modificar este va a un script y
                                     luego segun respuesta llega al formulario de abajo para segir con el proceso-->
@@ -102,15 +102,18 @@
                                           method="post"></form>
                                 </td>
                                 </td>
+
                             </tr>
 
 
                             </tbody>
+
                         </table>
                         <div class="row">
 
                             <div class="col-md-2"></div>
                             <div class="col-md-8">
+                                <p th:text="${pie}"></p>
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination justify-content-center">
                                         <li class="page-item" th:each="page : ${pages}">
@@ -142,12 +145,22 @@
     <script th:src="@{/sweetalert2/sweetalert2.min.js}"></script>
     <div th:if="${msgExito != null}">
         <script>
-            var dato = "La cuenta ha sido agregado con exito";
+            var dato = "Su transacción ha sido exitosa!";
             Swal.fire(
                 dato,
                 '!ya puedes usarla¡',
                 'success'
             )
+        </script>
+    </div>
+    <div th:if="${msgErrorELiminarCuenta != null}">
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'No se puede eliminar, está cuenta contiene sub cuentas!',
+
+            })
         </script>
     </div>
     <div th:if="${msgErrorDatos != null}">
@@ -175,7 +188,7 @@
     </script>
     <script>
 
-        function modificarEstado(id) {
+        function eliminar(id) {
             const swalWithBootstrapButtons = Swal.mixin({
                 customClass: {
                     confirmButton: 'btn btn-success',
@@ -194,18 +207,14 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     id.nextElementSibling.submit();
-                    swalWithBootstrapButtons.fire(
-                        'Modificado!',
-                        'Su cuenta ha sido modificada de estado.',
-                        'success'
-                    )
+
                 } else if (
                     /* Read more about handling dismissals below */
                     result.dismiss === Swal.DismissReason.cancel
                 ) {
                     swalWithBootstrapButtons.fire(
                         'Cancelado',
-                        'Su cuenta no ha sido modificada de estado. :)',
+                        'Su cuenta no ha sido eliminada de estado. :)',
                         'error'
                     )
                 }

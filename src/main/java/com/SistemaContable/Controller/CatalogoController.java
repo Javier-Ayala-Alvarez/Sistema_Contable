@@ -1,6 +1,7 @@
 package com.SistemaContable.Controller;
 
 import com.SistemaContable.Repository.CatalogoRepositoryInt;
+import com.SistemaContable.Repository.CatalogoRespository;
 import com.SistemaContable.model.Catalogo;
 import com.SistemaContable.servicio.CatalogoServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,6 @@ public class CatalogoController {
     @Autowired
     private CatalogoRepositoryInt catalogoRespositoryInt;
 
-
     @GetMapping()
     public String catalogo(@RequestParam Map<String, Object> params, Model model, Catalogo catalogo) {
         int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;//obteniendo la cantidad de paginas
@@ -38,6 +38,8 @@ public class CatalogoController {
         if (totalPage > 0) {
             List<Integer> pages = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());
             model.addAttribute("pages", pages);//lista de paginas
+        }else{
+            model.addAttribute("pie", "EL catálogo está vacío debe registrar datos");
         }
         model.addAttribute("catalogos", pageCatalogo.getContent());//enviando la lista
         model.addAttribute("current", page + 1);//
@@ -53,13 +55,11 @@ public class CatalogoController {
     public String save(@Validated Catalogo catalogo, BindingResult bindingResult, RedirectAttributes redirect, Model model) {
         if (catalogo.getId() == null) {
 
-            if (catalogoServices.buscar("codigo", catalogo.getCodigo()) == "true" && catalogoServices.buscar("nombre", catalogo.getNombre()) == "true") {
+            if (catalogo.getSaldoCuenta() != "" && catalogo.getTipoCuenta() != "" && catalogoServices.buscar("codigo", catalogo.getCodigo()) == "true" && catalogoServices.buscar("nombre", catalogo.getNombre()) == "true") {
                 if (bindingResult.hasErrors()) {
                     model.addAttribute("catalogo", catalogo);
                     return "Catalogo";
                 }
-
-                catalogo.setEstado(true);
                 catalogoServices.save(catalogo);
                 redirect.addFlashAttribute("msgExito", "activo");
                 return "redirect:/Catalogo";
@@ -97,14 +97,14 @@ public class CatalogoController {
     @PostMapping("/{id}/eliminar")
     public String eliminarContacto(@PathVariable Integer id, RedirectAttributes redirect) {
         Catalogo catalogo = catalogoRespositoryInt.getById(id);//Busca por id
-        if (catalogo.isEstado() == true) {//Segun el valor cambia el dato
-            catalogo.setEstado(false);
-        } else {
-            catalogo.setEstado(true);
+        int size = catalogoServices.searchLike(catalogo.getCodigo());
+        if(size == 1){
+            catalogoServices.delete(catalogo);//Eliminado
+            redirect.addFlashAttribute("msgExito", "activo");
+        }else{
+            redirect.addFlashAttribute("msgErrorELiminarCuenta", "activo");
         }
 
-        catalogoServices.save(catalogo);//modifica
-        redirect.addFlashAttribute("msgExito", "El contacto ha sido eliminado correctamente");
         return "redirect:/Catalogo";
     }
 }

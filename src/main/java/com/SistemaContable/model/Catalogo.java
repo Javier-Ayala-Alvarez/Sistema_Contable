@@ -28,12 +28,10 @@ public class Catalogo {
    @NotBlank(message = "Debe ingresar el nombre")//si esta vacio mensaje de validación
     //@Min(3)//minimo 5 carácteres
     private String nombre;
-
-    @Column(name = "estado")
-    private boolean estado;
-
     @Column(name = "saldo_cuenta")
     private String saldoCuenta;
 
+    @Column(name = "tipo_cuenta")
+    private String tipoCuenta;
 
 }
