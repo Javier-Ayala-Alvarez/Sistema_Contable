@@ -1,4 +1,4 @@
-package com.SistemaContable.model;
+package com.SistemaContable.model.JavierAyala;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

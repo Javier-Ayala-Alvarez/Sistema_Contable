@@ -1,10 +1,8 @@
-package com.SistemaContable.Repository;
+package com.SistemaContable.Repository.JavierAyala.Interfaces;
 
-import com.SistemaContable.model.Catalogo;
+import com.SistemaContable.model.JavierAyala.Catalogo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.List;
 
 public interface CatalogoRepositoryInt extends JpaRepository<Catalogo, Integer> {
 

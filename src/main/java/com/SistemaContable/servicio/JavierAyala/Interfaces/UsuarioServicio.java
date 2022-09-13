@@ -1,7 +1,7 @@
-package com.SistemaContable.servicio;
+package com.SistemaContable.servicio.JavierAyala.Interfaces;
 
-import com.SistemaContable.Controller.dto.UsuarioRegistroDTO;
-import com.SistemaContable.model.Usuario;
+import com.SistemaContable.model.dto.UsuarioRegistroDTO;
+import com.SistemaContable.model.JavierAyala.Usuario;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 

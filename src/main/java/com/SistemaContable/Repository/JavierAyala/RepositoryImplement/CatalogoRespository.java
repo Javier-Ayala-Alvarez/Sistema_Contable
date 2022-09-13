@@ -1,17 +1,17 @@
-package com.SistemaContable.Repository;
+package com.SistemaContable.Repository.JavierAyala.RepositoryImplement;
 
-import com.SistemaContable.model.Catalogo;
+import com.SistemaContable.Repository.JavierAyala.Interfaces.CatalogoRepositoryInterface;
+import com.SistemaContable.model.JavierAyala.Catalogo;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import java.awt.print.Pageable;
 import java.util.List;
 
 @Repository
 @Transactional
-public class CatalogoRespository {
+public class CatalogoRespository  implements CatalogoRepositoryInterface {
     @PersistenceContext
     EntityManager entityManager;
 

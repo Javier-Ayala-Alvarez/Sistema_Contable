@@ -1,31 +1,41 @@
-package com.SistemaContable.servicio;
+package com.SistemaContable.servicio.JavierAyala.ServicesImplements;
 
-import com.SistemaContable.Repository.CatalogoRepositoryInt;
-import com.SistemaContable.Repository.CatalogoRespository;
-import com.SistemaContable.model.Catalogo;
+import com.SistemaContable.Repository.JavierAyala.Interfaces.CatalogoRepositoryInt;
+import com.SistemaContable.Repository.JavierAyala.Interfaces.CatalogoRepositoryInterface;
+import com.SistemaContable.model.JavierAyala.Catalogo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CatalogoServices   {
+public class CatalogoServices  implements CatalogoRepositoryInterface {
+
     @Autowired
-    CatalogoRespository catalogoRespository;
+
+    CatalogoRepositoryInterface catalogoRespositoryInterface;
     @Autowired
     CatalogoRepositoryInt catalogoRepositoryInt;
+
 
     public Page<Catalogo> mostrarCatalogo(Pageable pageable) {
         return catalogoRepositoryInt.findAll(pageable);
         //Sort.by("codigo").ascending(),
     }
-    public List<Catalogo> buscar(String buscar) {
-        return catalogoRespository.buscar(buscar);
+
+    @Override
+    public List<Catalogo> mostrarCatalogo() {
+        return null;
     }
+
+    @Override
+    public List<Catalogo> buscar(String buscar) {
+        return catalogoRespositoryInterface.buscar(buscar);
+    }
+    @Override
     public String buscar(String dato,String buscar) {
-        return catalogoRespository.buscar(dato, buscar);
+        return catalogoRespositoryInterface.buscar(dato, buscar);
     }
 
     public String save(Catalogo catalogo){
@@ -37,16 +47,18 @@ public class CatalogoServices   {
         catalogoRepositoryInt.delete(id);
         return "true";
     }
+    @Override
     public int searchLike(String buscar){
-        return catalogoRespository.searchLike(buscar);
+        return catalogoRespositoryInterface.searchLike(buscar);
     }
+
     public Boolean validarCodigo(String codigo) {
         int tamañoCodigo = codigo.length();
         if (tamañoCodigo == 1) {
             return true;
         } else if (tamañoCodigo == 2) {
             String verificarCodigo = codigo.substring(0,1);
-            int size = catalogoRespository.searchLike(verificarCodigo);
+            int size = catalogoRespositoryInterface.searchLike(verificarCodigo);
             if (size >= 1) {
                 return true;
             } else {
@@ -55,7 +67,7 @@ public class CatalogoServices   {
 
         } else if((tamañoCodigo%2) == 1){
             String verificarCodigo = codigo.substring(0,tamañoCodigo - 3);
-            int size = catalogoRespository.searchLike(verificarCodigo);
+            int size = catalogoRespositoryInterface.searchLike(verificarCodigo);
             if (size >= 1) {
                 return true;
             } else {
@@ -63,7 +75,7 @@ public class CatalogoServices   {
             }
         }else{
             String verificarCodigo = codigo.substring(0,tamañoCodigo - 2);
-            int size = catalogoRespository.searchLike(verificarCodigo);
+            int size = catalogoRespositoryInterface.searchLike(verificarCodigo);
             if (size >= 1) {
                 return true;
             } else {

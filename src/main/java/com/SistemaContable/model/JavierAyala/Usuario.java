@@ -1,10 +1,9 @@
-package com.SistemaContable.model;
+package com.SistemaContable.model.JavierAyala;
 
 import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.List;
 
 @Entity
 @Table(name = "usuarios", uniqueConstraints = @UniqueConstraint(columnNames = "email"))

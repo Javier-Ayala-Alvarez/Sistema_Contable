@@ -1,6 +1,6 @@
-package com.SistemaContable.Repository;
+package com.SistemaContable.Repository.JavierAyala.Interfaces;
 
-import com.SistemaContable.model.Usuario;
+import com.SistemaContable.model.JavierAyala.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

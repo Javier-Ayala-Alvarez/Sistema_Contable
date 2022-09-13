@@ -1,9 +1,8 @@
-package com.SistemaContable.Controller;
+package com.SistemaContable.Controller.JavierAyala;
 
-import com.SistemaContable.Repository.CatalogoRepositoryInt;
-import com.SistemaContable.Repository.CatalogoRespository;
-import com.SistemaContable.model.Catalogo;
-import com.SistemaContable.servicio.CatalogoServices;
+import com.SistemaContable.Repository.JavierAyala.Interfaces.CatalogoRepositoryInt;
+import com.SistemaContable.model.JavierAyala.Catalogo;
+import com.SistemaContable.servicio.JavierAyala.ServicesImplements.CatalogoServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

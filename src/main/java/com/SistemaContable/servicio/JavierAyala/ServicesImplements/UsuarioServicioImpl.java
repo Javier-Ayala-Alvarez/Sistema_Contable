@@ -1,4 +1,4 @@
-package com.SistemaContable.servicio;
+package com.SistemaContable.servicio.JavierAyala.ServicesImplements;
 
 
 import java.util.Arrays;
@@ -6,10 +6,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.SistemaContable.Controller.dto.UsuarioRegistroDTO;
-import com.SistemaContable.Repository.UsuarioRepositorio;
-import com.SistemaContable.model.Rol;
-import com.SistemaContable.model.Usuario;
+import com.SistemaContable.model.dto.UsuarioRegistroDTO;
+import com.SistemaContable.Repository.JavierAyala.Interfaces.UsuarioRepositorio;
+import com.SistemaContable.model.JavierAyala.Rol;
+import com.SistemaContable.model.JavierAyala.Usuario;
+import com.SistemaContable.servicio.JavierAyala.Interfaces.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

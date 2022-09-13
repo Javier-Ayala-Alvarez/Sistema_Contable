@@ -1,7 +1,7 @@
-package com.SistemaContable.Controller;
+package com.SistemaContable.Controller.JavierAyala;
 
-import com.SistemaContable.Controller.dto.UsuarioRegistroDTO;
-import com.SistemaContable.servicio.UsuarioServicio;
+import com.SistemaContable.model.dto.UsuarioRegistroDTO;
+import com.SistemaContable.servicio.JavierAyala.Interfaces.UsuarioServicio;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;

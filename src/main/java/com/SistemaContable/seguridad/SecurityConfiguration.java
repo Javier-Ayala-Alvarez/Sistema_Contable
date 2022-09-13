@@ -1,6 +1,6 @@
 package com.SistemaContable.seguridad;
 
-import com.SistemaContable.servicio.UsuarioServicio;
+import com.SistemaContable.servicio.JavierAyala.Interfaces.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

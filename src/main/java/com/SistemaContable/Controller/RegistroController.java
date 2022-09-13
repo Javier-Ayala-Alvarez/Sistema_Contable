@@ -3,13 +3,14 @@
 
 package com.SistemaContable.Controller;
 
-import com.SistemaContable.servicio.UsuarioServicio;
+import com.SistemaContable.servicio.JavierAyala.Interfaces.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+
 public class RegistroController {
 
     //@Autowired es una dependencia para inyectar una clase en otra
