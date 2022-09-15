@@ -6,6 +6,7 @@ import com.SistemaContable.model.JavierAyala.Catalogo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -19,9 +20,13 @@ public class CatalogoServices  implements CatalogoRepositoryInterface {
     CatalogoRepositoryInt catalogoRepositoryInt;
 
 
-    public Page<Catalogo> mostrarCatalogo(Pageable pageable) {
-        return catalogoRepositoryInt.findAll(pageable);
-        //Sort.by("codigo").ascending(),
+    public Page<Catalogo> mostrarCatalogo(String frase, Pageable pageable) {
+
+        if(frase != null) {
+            return catalogoRepositoryInt.mostrarCatalogo(frase, pageable);
+        }else{
+            return catalogoRepositoryInt.findAll(pageable);
+        }
     }
 
     @Override
@@ -29,10 +34,6 @@ public class CatalogoServices  implements CatalogoRepositoryInterface {
         return null;
     }
 
-    @Override
-    public List<Catalogo> buscar(String buscar) {
-        return catalogoRespositoryInterface.buscar(buscar);
-    }
     @Override
     public String buscar(String dato,String buscar) {
         return catalogoRespositoryInterface.buscar(dato, buscar);

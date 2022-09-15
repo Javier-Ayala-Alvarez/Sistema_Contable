@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,10 +30,11 @@ public class CatalogoController {
     private CatalogoRepositoryInt catalogoRespositoryInt;
 
     @GetMapping()
-    public String catalogo(@RequestParam Map<String, Object> params, Model model, Catalogo catalogo) {
+    public String catalogo(@RequestParam Map<String, Object> params, Model model, Catalogo catalogo,String buscar) {
         int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;//obteniendo la cantidad de paginas
         PageRequest pageRequest = PageRequest.of(page, 5, Sort.by("codigo").ascending()); //pagina que va a buscar y el numero de registros ademas ordena la pagina
-        Page<Catalogo> pageCatalogo = catalogoServices.mostrarCatalogo(pageRequest); //la pagina
+
+        Page<Catalogo> pageCatalogo = catalogoServices.mostrarCatalogo(buscar,pageRequest); //la pagina
         int totalPage = pageCatalogo.getTotalPages(); //total de pagina
         if (totalPage > 0) {
             List<Integer> pages = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());
@@ -46,6 +48,7 @@ public class CatalogoController {
         model.addAttribute("prev", page);
         model.addAttribute("last", totalPage);//obteniendo el parametro
         model.addAttribute("tituloDeLaPagina", "Catálogo");
+        model.addAttribute("buscar",buscar);
         return "catalogo";
 
     }
@@ -85,16 +88,7 @@ public class CatalogoController {
     }
 
 
-    @PostMapping("/buscarcatalogo")
-    public String BuscarCatalogo(@PathVariable String buscar, Model model) {
-        model.addAttribute("tituloDeLaPagina", "Catálogo");
-        List<Catalogo> catalogo = catalogoServices.buscar(buscar);
-        model.addAttribute("catalogos", catalogo);
-        return "catalogo";
-
-    }
-
-    @GetMapping("/{id}/editar")
+    @PostMapping("/{id}/editar")
     public String mostrarEditar(@PathVariable Integer id, Model modelo) {
         Catalogo catalogo = catalogoRespositoryInt.getById(id);
         modelo.addAttribute("catalogo", catalogo);

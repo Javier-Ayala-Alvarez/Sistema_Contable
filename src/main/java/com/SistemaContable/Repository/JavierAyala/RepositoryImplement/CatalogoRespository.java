@@ -22,7 +22,7 @@ public class CatalogoRespository  implements CatalogoRepositoryInterface {
     }
 
     public List<Catalogo> buscar(String buscar) {
-        String query = "FROM Catalogo where codigo = " + buscar + " or nombre = " + buscar + " or saldo_cuenta = " + buscar + " ORDER BY codigo ASC;";
+        String query = "FROM Catalogo where codigo = '" + buscar + "' or nombre = '" + buscar + "' or saldoCuenta = '" + buscar + "' ORDER BY codigo ASC";
         List<Catalogo> resultado = entityManager.createQuery(query).getResultList();
         return resultado;
     }

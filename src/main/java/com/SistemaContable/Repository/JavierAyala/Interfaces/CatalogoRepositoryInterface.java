@@ -8,9 +8,6 @@ public interface CatalogoRepositoryInterface {
     //mostrar todos los registros de catalogo
     public List<Catalogo> mostrarCatalogo();
 
-    //mostrar registros por busqueda
-    public List<Catalogo> buscar(String buscar);
-
     //mostrar registros por busqueda de valor y dato
     public String buscar(String valor, String buscar);
 
