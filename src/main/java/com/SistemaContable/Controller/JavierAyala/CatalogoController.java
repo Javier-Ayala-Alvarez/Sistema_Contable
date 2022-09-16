@@ -30,11 +30,11 @@ public class CatalogoController {
     private CatalogoRepositoryInt catalogoRespositoryInt;
 
     @GetMapping()
-    public String catalogo(@RequestParam Map<String, Object> params, Model model, Catalogo catalogo,String buscar) {
+    public String catalogo(@RequestParam Map<String, Object> params, Model model, Catalogo catalogo, String buscar) {
         int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;//obteniendo la cantidad de paginas
         PageRequest pageRequest = PageRequest.of(page, 5, Sort.by("codigo").ascending()); //pagina que va a buscar y el numero de registros ademas ordena la pagina
 
-        Page<Catalogo> pageCatalogo = catalogoServices.mostrarCatalogo(buscar,pageRequest); //la pagina
+        Page<Catalogo> pageCatalogo = catalogoServices.mostrarCatalogo(buscar, pageRequest); //la pagina
         int totalPage = pageCatalogo.getTotalPages(); //total de pagina
         if (totalPage > 0) {
             List<Integer> pages = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());
@@ -48,7 +48,7 @@ public class CatalogoController {
         model.addAttribute("prev", page);
         model.addAttribute("last", totalPage);//obteniendo el parametro
         model.addAttribute("tituloDeLaPagina", "Catálogo");
-        model.addAttribute("buscar",buscar);
+        model.addAttribute("buscar", buscar);
         return "catalogo";
 
     }
@@ -88,11 +88,28 @@ public class CatalogoController {
     }
 
 
-    @PostMapping("/{id}/editar")
-    public String mostrarEditar(@PathVariable Integer id, Model modelo) {
-        Catalogo catalogo = catalogoRespositoryInt.getById(id);
-        modelo.addAttribute("catalogo", catalogo);
-        return "catalogo";
+    @PostMapping("/modificar")
+    public String modificar(@RequestParam("codigo") String codigo,
+                            @RequestParam("nombre") String nombre,
+                            @RequestParam("saldo_cuenta") String saldo_cuenta,
+                            @RequestParam("tipo_cuenta") String tipo_cuenta,
+                            Catalogo catalogo, RedirectAttributes redirect) {
+
+        catalogo = catalogoRespositoryInt.buscarCodigo(codigo);
+        catalogo.setNombre(nombre);
+        catalogo.setSaldoCuenta(saldo_cuenta);
+        catalogo.setTipoCuenta(tipo_cuenta);
+        if (catalogo.getSaldoCuenta() != "" && catalogo.getTipoCuenta() != ""
+                && catalogoServices.buscar("nombre", catalogo.getNombre()) == "true") {
+            catalogoServices.save(catalogo);
+            redirect.addFlashAttribute("msgExito", "activo");
+            return "redirect:/Catalogo";
+        }else {
+            redirect.addFlashAttribute("msgErrorDatos", "activo");
+            return "redirect:/Catalogo";
+        }
+
+
     }
 
     @PostMapping("/{id}/eliminar")
@@ -108,4 +125,6 @@ public class CatalogoController {
 
         return "redirect:/Catalogo";
     }
+
+
 }
