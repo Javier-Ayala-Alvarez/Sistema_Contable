@@ -45,7 +45,8 @@
                             <div class="row">
                                 <div class="col-md-7 align-self-end ">
 
-                                    <input type="text" class="form-control" name="buscar" id="buscar" th:value="${buscar}"
+                                    <input type="text" class="form-control" name="buscar" id="buscar"
+                                           th:value="${buscar}"
                                            placeholder="Buscar...">
                                 </div>
                                 <div class="col-md-5 align-self-end ">
@@ -68,9 +69,9 @@
                     </div>
 
                     <div class="col-md-3 align-self-end ">
-                        <button type="button" class="btn btn-info col-8">
+                        <a href="/Catalogo/report" class="btn btn-info col-8">
                             Generar reporte
-                        </button> <!--Boton para mostrar la modal de nuevo-->
+                        </a> <!--Boton para mostrar la modal de nuevo-->
                     </div>
 
                 </div>
@@ -84,6 +85,7 @@
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Saldo de cuenta</th>
                                 <th scope="col">Tipo de cuenta</th>
+                                <th scope="col">Descripción</th>
                                 <th scope="col">Opciones</th>
                             </tr>
                             </thead>
@@ -91,60 +93,121 @@
                             <tr th:each="catalogo : ${catalogos}">
                                 <th scope="row" th:text="${catalogo.codigo}"/>
                                 <td th:text="${catalogo.nombre}"/>
-
                                 <td th:text="${catalogo.saldoCuenta}"/>
-
                                 <td th:text="${catalogo.tipoCuenta}"/>
-
-
                                 <td>
 
+                                    <!--Inicio Modal de descripción-->
 
-                                    <a  class="btn btn-warning" data-bs-toggle="modal" th:attr="data-bs-target='#modificarCatalogo'+ *{catalogo.codigo}"><i class="fas fa-edit"></i>Editar</a>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-primary"  th:attr="data-bs-target='#staticBackdrop'+ *{catalogo.codigo}" data-bs-toggle="modal" >
+                                        Mostrar
+                                    </button>
 
-
-
-                                    <!--Inicio del Moda-->
-                                    <div class="modal fade" th:id="*{'modificarCatalogo'+ {catalogo.codigo}}" data-bs-backdrop="static" data-bs-keyboard="false"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <!-- Modal -->
+                                    <div class="modal fade" th:id="*{'staticBackdrop'+ {catalogo.codigo}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Modificar Cuenta </h5>
+                                                    <h5 class="modal-title" id="staticBackdropLabel">Descripción de la cuenta:
+                                                         </h5>
+                                                    <h7 th:text="' Codigo: '+*{catalogo.codigo}+' - Nombre: '+*{catalogo.nombre}"/>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
-                                                <form th:action="@{/Catalogo/modificar}" method="post" >
+                                                <div class="modal-body">
+                                                    <p th:text="*{catalogo.descripcion}"/>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--Fin de modal de descripción-->
+
+
+                                </td>
+                                <td>
+
+
+                                    <a class="btn btn-warning" data-bs-toggle="modal"
+                                       th:attr="data-bs-target='#modificarCatalogo'+ *{catalogo.codigo}"><i
+                                            class="fas fa-edit"></i>Editar</a>
+
+
+                                    <!--Inicio del Moda-->
+                                    <div class="modal fade" th:id="*{'modificarCatalogo'+ {catalogo.codigo}}"
+                                         data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Modificar
+                                                        Cuenta </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                </div>
+                                                <form th:action="@{/Catalogo/modificar}" method="post">
 
                                                     <div class="modal-body">
 
                                                         <div class="mb-3">
                                                             <label for="codigo" class="col-form-label">Código:</label>
-                                                            <input type="text" class="form-control" th:value="*{catalogo.codigo}" readonly id="codigo" name="codigo" >
+                                                            <input type="text" class="form-control"
+                                                                   th:value="*{catalogo.codigo}" readonly id="codigo"
+                                                                   name="codigo">
 
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="nombre" class="col-form-label">Nombre:</label>
-                                                            <input type="text" class="form-control"  th:value="*{catalogo.nombre}" id="nombre" name="nombre" autofocus="autofocus" placeholder="Ingrese el nombre de la cuenta">
+                                                            <input type="text" class="form-control"
+                                                                   th:value="*{catalogo.nombre}" id="nombre"
+                                                                   name="nombre" autofocus="autofocus"
+                                                                   placeholder="Ingrese el nombre de la cuenta">
 
                                                         </div>
+
                                                         <div class="mb-3">
-                                                            <label for="saldo_cuenta" class="col-form-label">Saldo de cuenta:</label>
-                                                            <select class="form-select form-select-sm"  aria-label=".form-select-lg example" id="saldo_cuenta" name="saldo_cuenta" >
-                                                                <option selected th:value="${catalogo.saldoCuenta}"  th:text="${catalogo.saldoCuenta}"> </option>
+                                                            <label for="saldo_cuenta" class="col-form-label">Saldo de
+                                                                cuenta:</label>
+                                                            <select class="form-select form-select-sm"
+                                                                    aria-label=".form-select-lg example"
+                                                                    id="saldo_cuenta" name="saldo_cuenta">
+                                                                <option selected th:value="${catalogo.saldoCuenta}"
+                                                                        th:text="${catalogo.saldoCuenta}"></option>
                                                                 <option th:value="'Deudor'">Deudor</option>
                                                                 <option th:value="'Acreedor'">Acreedor</option>
                                                             </select>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="tipo_cuenta" class="col-form-label">Tipo de cuenta:</label>
-                                                            <select class="form-select form-select-sm"  aria-label=".form-select-lg example" id="tipo_cuenta" name="tipo_cuenta">
-                                                                <option selected th:value="${catalogo.tipoCuenta}" th:text="${catalogo.tipoCuenta}" ></option>
+                                                            <label for="tipo_cuenta" class="col-form-label">Tipo de
+                                                                cuenta:</label>
+                                                            <select class="form-select form-select-sm"
+                                                                    aria-label=".form-select-lg example"
+                                                                    id="tipo_cuenta" name="tipo_cuenta">
+                                                                <option selected th:value="${catalogo.tipoCuenta}"
+                                                                        th:text="${catalogo.tipoCuenta}"></option>
                                                                 <option th:value="'Resumen'">Resumen</option>
                                                                 <option th:value="'Detalle'">Detalle</option>
                                                             </select>
                                                         </div>
+                                                        <div class="form-floating">
+                                                            <textarea class="form-control"
+                                                                      placeholder="Ingrese la descripción de está cuenta" id="descripcion"
+                                                                      name="descripcion" style="height: 100px" th:text="${catalogo.descripcion}">
+
+                                                            </textarea>
+                                                            <label for="descripcion">Descripción</label>
+                                                        </div>
                                                     </div>
+
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> <i class="fas fa-backward"></i> Cancelar</button>
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal"><i class="fas fa-backward"></i>
+                                                            Cancelar
+                                                        </button>
                                                         <input type="submit" class="btn btn-primary " value="Guardar"/>
                                                     </div>
                                                 </form>
@@ -153,8 +216,6 @@
                                     </div>
 
                                     <!--Fin de modal-->
-
-
 
 
                                 </td>

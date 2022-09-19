@@ -7,7 +7,8 @@
 <body>
 <!-- Modal -->
 
-<div class="modal fade" th:id="${'nuevoCatalogo'}" data-bs-backdrop="static" data-bs-keyboard="false"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" th:id="${'nuevoCatalogo'}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -18,35 +19,53 @@
 
                 <div class="modal-body">
 
-                        <div class="mb-3">
-                            <label for="codigo" class="col-form-label">Código:</label>
-                            <input type="text" class="form-control" id="codigo" th:field="*{codigo}" th:errorClass="is-invalid" autofocus="autofocus" placeholder="Ingrese el código de la cuenta">
-                            <div th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}" class="invalid-feedback"></div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="nombre" class="col-form-label">Nombre:</label>
-                            <input type="text" class="form-control" id="nombre" th:field="*{nombre}" th:errorClass="is-invalid" autofocus="autofocus" placeholder="Ingrese el nombre de la cuenta">
-                            <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="invalid-feedback"></div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="saldo_cuenta" class="col-form-label">Saldo de cuenta:</label>
-                            <select class="form-select form-select-sm"  aria-label=".form-select-lg example" id="saldo_cuenta" th:field="*{saldoCuenta}">
-                                <option selected th:value="''" >Seleccione el saldo de cuenta</option>
-                                <option th:value="'Deudor'">Deudor</option>
-                                <option th:value="'Acreedor'">Acreedor</option>
-                            </select>
-                        </div>
+                    <div class="mb-3">
+                        <label for="codigo" class="col-form-label">Código:</label>
+                        <input type="text" class="form-control" id="codigo" th:field="*{codigo}"
+                               th:errorClass="is-invalid" autofocus="autofocus"
+                               placeholder="Ingrese el código de la cuenta">
+                        <div th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}"
+                             class="invalid-feedback"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nombre" class="col-form-label">Nombre:</label>
+                        <input type="text" class="form-control" id="nombre" th:field="*{nombre}"
+                               th:errorClass="is-invalid" autofocus="autofocus"
+                               placeholder="Ingrese el nombre de la cuenta">
+                        <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"
+                             class="invalid-feedback"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="saldo_cuenta" class="col-form-label">Saldo de cuenta:</label>
+                        <select class="form-select form-select-sm" aria-label=".form-select-lg example"
+                                id="saldo_cuenta" th:field="*{saldoCuenta}">
+                            <option selected th:value="''">Seleccione el saldo de cuenta</option>
+                            <option th:value="'Deudor'">Deudor</option>
+                            <option th:value="'Acreedor'">Acreedor</option>
+                        </select>
+                    </div>
                     <div class="mb-3">
                         <label for="tipo_cuenta" class="col-form-label">Tipo de cuenta:</label>
-                        <select class="form-select form-select-sm"  aria-label=".form-select-lg example" id="tipo_cuenta" th:field="*{tipoCuenta}">
-                            <option selected th:value="''" >Seleccione el tipo de cuenta</option>
+                        <select class="form-select form-select-sm" aria-label=".form-select-lg example" id="tipo_cuenta"
+                                th:field="*{tipoCuenta}">
+                            <option selected th:value="''">Seleccione el tipo de cuenta</option>
                             <option th:value="'Resumen'">Resumen</option>
                             <option th:value="'Detalle'">Detalle</option>
                         </select>
                     </div>
+                    <div class="form-floating">
+                         <textarea class="form-control"
+                              placeholder="Ingrese la descripción de está cuenta"
+                              id="descripcion"
+                              name="descripcion"
+                               style="height: 100px"></textarea>
+                        <label for="descripcion">Descripción</label>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> <i class="fas fa-backward"></i> Cancelar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i
+                            class="fas fa-backward"></i> Cancelar
+                    </button>
                     <input type="submit" class="btn btn-primary " value="Guardar"/>
                 </div>
             </form>

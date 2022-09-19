@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteCatalogo" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="61c9dc6f-092e-4d98-a3fa-fee28d64aa89">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter"/>
+	<queryString language="SQL">
+		<![CDATA[Select * from catalogo ORDER BY codigo ASC]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="catalogo"/>
+	</field>
+	<field name="codigo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="codigo"/>
+		<property name="com.jaspersoft.studio.field.label" value="codigo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="catalogo"/>
+	</field>
+	<field name="estado" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="estado"/>
+		<property name="com.jaspersoft.studio.field.label" value="estado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="catalogo"/>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="catalogo"/>
+	</field>
+	<field name="saldo_cuenta" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="saldo_cuenta"/>
+		<property name="com.jaspersoft.studio.field.label" value="saldo_cuenta"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="catalogo"/>
+	</field>
+	<field name="tipo_cuenta" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tipo_cuenta"/>
+		<property name="com.jaspersoft.studio.field.label" value="tipo_cuenta"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="catalogo"/>
+	</field>
+	<group name="codigo">
+		<groupExpression><![CDATA[$F{codigo}]]></groupExpression>
+	</group>
+	<group name="estado">
+		<groupExpression><![CDATA[$F{estado}]]></groupExpression>
+	</group>
+	<group name="nombre">
+		<groupExpression><![CDATA[$F{nombre}]]></groupExpression>
+	</group>
+	<group name="saldo_cuenta">
+		<groupExpression><![CDATA[$F{saldo_cuenta}]]></groupExpression>
+	</group>
+	<group name="tipo_cuenta">
+		<groupExpression><![CDATA[$F{tipo_cuenta}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="66" splitType="Stretch">
+			<staticText>
+				<reportElement x="220" y="20" width="100" height="30" uuid="ac1efc34-2901-426c-9f4f-c93d450a3b04"/>
+				<textElement>
+					<font size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cátalogo]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="46" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="560" height="40" backcolor="#8558E0" uuid="681a86ba-5560-4599-9f36-5deb6007a150"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="10" y="5" width="100" height="30" uuid="af05ab73-1f75-4a6e-9781-fe327aa45675">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dcc162a3-4148-42e6-abda-2321be0c5aa9"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Código]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="5" width="160" height="30" uuid="3e337537-f9f4-437a-9a9a-711fc401e17f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="acf8c7f4-a1f7-4bb1-b5f0-45e0284277ec"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="294" y="5" width="110" height="30" uuid="d0877aff-fac3-4cc6-920b-74e11352c21a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0356d754-dceb-4d5c-96ab-f34909981eea"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Tipo de cuenta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="6" width="124" height="30" uuid="73d49a6b-94dc-427c-a91c-81938c492b1b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7680bfa5-a875-42b3-bb2c-01f6faf7d353"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Saldo de cuenta]]></text>
+			</staticText>
+			<line>
+				<reportElement x="287" y="1" width="1" height="39" uuid="1b255cea-e21a-4645-bb6a-20b8c5c33aa3"/>
+			</line>
+			<line>
+				<reportElement x="412" y="1" width="1" height="39" uuid="0473a039-0fde-4ace-ada7-dd9b0b44e1a3"/>
+			</line>
+			<line>
+				<reportElement x="115" y="1" width="1" height="39" uuid="345c7c0e-0566-4969-a24c-7764b6d248da"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="53" splitType="Stretch">
+			<textField>
+				<reportElement x="9" y="5" width="100" height="30" uuid="49f5b301-556d-45c0-baf1-aa8597cf47d7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dcc162a3-4148-42e6-abda-2321be0c5aa9"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="125" y="7" width="150" height="30" uuid="b06286f2-3ba6-4bb3-a194-33687598bf23">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="acf8c7f4-a1f7-4bb1-b5f0-45e0284277ec"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="297" y="9" width="100" height="30" uuid="7b687e7a-80c8-4a50-8f8d-40d0af43fc55">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0356d754-dceb-4d5c-96ab-f34909981eea"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipo_cuenta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="429" y="8" width="100" height="30" uuid="b96d5dcb-b475-4b40-a1b1-a72d212910a0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7680bfa5-a875-42b3-bb2c-01f6faf7d353"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldo_cuenta}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="49" width="560" height="1" uuid="a6e8398d-8815-41da-8e03-864c6b661cc9"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="353" splitType="Stretch">
+			<textField>
+				<reportElement x="160" y="307" width="100" height="30" uuid="60b5f86a-e0fb-4d38-8551-f851606dc5a1"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="275" y="307" width="100" height="30" uuid="1a39e628-76a1-4f44-89c4-31152121cd4f"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="432" y="260" width="100" height="30" uuid="6a523240-53b9-4972-bf5b-c77fc667c38a"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="58" splitType="Stretch"/>
+	</summary>
+</jasperReport>

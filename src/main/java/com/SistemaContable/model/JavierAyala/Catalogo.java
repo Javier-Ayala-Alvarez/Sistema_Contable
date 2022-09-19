@@ -1,13 +1,9 @@
 package com.SistemaContable.model.JavierAyala;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "catalogo")
@@ -34,4 +30,6 @@ public class Catalogo {
     @Column(name = "tipo_cuenta")
     private String tipoCuenta;
 
+    @Column(name = "descipcion")
+    private String descripcion;
 }
