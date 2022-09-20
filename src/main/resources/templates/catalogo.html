@@ -64,15 +64,17 @@
                            data-bs-target="#nuevoCatalogo"><i class="fas fa-user-plus"></i> Añadir Cuenta</a>
                         <!--Boton para mostrar la modal de nuevo-->
                     </div>
-                    <div class="col-md-6 align-self-start ">
-
+                    <div class="col-md-5 align-self-end ">
                     </div>
 
-                    <div class="col-md-3 align-self-end ">
-                        <a href="/Catalogo/report" class="btn btn-info col-8">
-                            Generar reporte
+
+                    <div class="col-md-4 align-self-end ">
+
+                        <a href="/Catalogo/reporte" class="btn btn-info col-8">
+                            Generar reporte PDF
                         </a> <!--Boton para mostrar la modal de nuevo-->
                     </div>
+
 
                 </div>
                 <div class="row p-2 border-top">
@@ -115,7 +117,10 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p th:text="*{catalogo.descripcion}"/>
+                                                    <div class="modal-dialog modal-dialog-scrollable">
+                                                        <p th:text="*{catalogo.descripcion}"/>
+                                                    </div>
+
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

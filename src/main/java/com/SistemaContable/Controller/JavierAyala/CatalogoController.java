@@ -9,22 +9,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.ResourceUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
 @Controller
 @RequestMapping("/Catalogo")
 public class CatalogoController {
@@ -62,30 +60,13 @@ public class CatalogoController {
 
     }
 
-    @GetMapping("/report")
-    public ResponseEntity<byte[]> getCatalogoReport() {
-        try {
-            JasperPrint empReport =
-                    JasperFillManager.fillReport
-                            (
-                                    JasperCompileManager.compileReport(
-                                            ResourceUtils.getFile("classpath:ReporteCatalogo.jrxml")
-                                                    .getAbsolutePath()) // path of the jasper report
-                                    , null //empParams dynamic parameters
-                                    , new  JREmptyDataSource()
-                            );
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_PDF);
-            headers.setContentDispositionFormData("filename", "Catalogo.pdf");
-            return new ResponseEntity<byte[]>
-                    (JasperExportManager.exportReportToPdf(empReport), headers, HttpStatus.OK);
+    @GetMapping("/reporte")
+    public ResponseEntity<byte[]> getCatalogoReportPDF() throws JRException, FileNotFoundException {
 
-        } catch (Exception e) {
-            return new ResponseEntity<byte[]>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
+        return catalogoServices.exportReport();
 
     }
+
 
 
     @PostMapping()
