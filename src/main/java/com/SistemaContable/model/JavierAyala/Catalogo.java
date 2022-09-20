@@ -22,7 +22,7 @@ public class Catalogo {
     private String codigo;
 
 
-    @Column(name = "nombre", length = 50, unique = true)//validando, nombre del campo, tamaño de 8 y debe ser unico
+    @Column(name = "nombre")//validando, nombre del campo, tamaño de 8 y debe ser unico
    @NotBlank(message = "Debe ingresar el nombre")//si esta vacio mensaje de validación
     //@Min(3)//minimo 5 carácteres
     private String nombre;

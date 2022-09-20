@@ -66,6 +66,12 @@ public class CatalogoController {
         return catalogoServices.exportReport();
 
     }
+    @GetMapping("/manual")
+    public ResponseEntity<byte[]> getCatalogomanual() throws JRException, FileNotFoundException {
+
+        return catalogoServices.exportManual();
+
+    }
 
 
 
@@ -76,8 +82,7 @@ public class CatalogoController {
             if (catalogo.getSaldoCuenta() != ""
                     && catalogo.getTipoCuenta() != ""
                     && catalogo.getDescripcion() != ""
-                    && catalogoServices.buscar("codigo", catalogo.getCodigo()) == "true"
-                    && catalogoServices.buscar("nombre", catalogo.getNombre()) == "true") {
+                    && catalogoServices.buscar("codigo", catalogo.getCodigo()) == "true") {
 
                 if (catalogoServices.validarCodigo(catalogo.getCodigo()) == true) {
                     if (bindingResult.hasErrors()) {

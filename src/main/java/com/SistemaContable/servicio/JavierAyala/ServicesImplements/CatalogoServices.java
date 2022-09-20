@@ -122,6 +122,28 @@ public class CatalogoServices implements CatalogoRepositoryInterface {
         }
 
     }
+    public ResponseEntity<byte[]> exportManual() throws FileNotFoundException, JRException {
+        try {
+            List<Catalogo> catalogo = catalogoRepositoryInt.findAll(Sort.by("codigo").ascending());
+            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(catalogo);
+
+            JasperPrint empReport = JasperFillManager.fillReport(JasperCompileManager.compileReport(ResourceUtils.getFile("classpath:ReporteManual.jrxml").getAbsolutePath()) // path of the jasper report
+                    , null //empParams dynamic parameters
+                    ,dataSource);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+
+
+            headers.setContentDispositionFormData("filename", "Manual.pdf");
+
+
+            return new ResponseEntity<byte[]>(JasperExportManager.exportReportToPdf(empReport), headers, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<byte[]>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
 }
 
 

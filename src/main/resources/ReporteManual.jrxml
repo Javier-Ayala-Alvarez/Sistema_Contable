@@ -15,7 +15,7 @@
 	<field name="nombre" class="java.lang.String">
 		</field>
 	<field name="saldoCuenta" class="java.lang.String">
-	</field>
+		</field>
 	<field name="tipoCuenta" class="java.lang.String">
 	</field>
 	<group name="codigo">
@@ -24,23 +24,17 @@
 	<group name="nombre">
 		<groupExpression><![CDATA[$F{nombre}]]></groupExpression>
 	</group>
-	<group name="saldo_cuenta">
-		<groupExpression><![CDATA[$F{saldoCuenta}]]></groupExpression>
-	</group>
-	<group name="tipo_cuenta">
-		<groupExpression><![CDATA[$F{tipoCuenta}]]></groupExpression>
-	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
 		<band height="66" splitType="Stretch">
 			<staticText>
-				<reportElement x="148" y="0" width="293" height="30" uuid="ac1efc34-2901-426c-9f4f-c93d450a3b04"/>
+				<reportElement x="90" y="0" width="450" height="30" uuid="ac1efc34-2901-426c-9f4f-c93d450a3b04"/>
 				<textElement>
 					<font size="22" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Cátalogo de Cuentas]]></text>
+				<text><![CDATA[Manual de Aplicación de cuentas]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -63,61 +57,15 @@
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="46" splitType="Stretch">
-			<rectangle>
-				<reportElement x="0" y="0" width="560" height="40" backcolor="#8558E0" uuid="681a86ba-5560-4599-9f36-5deb6007a150"/>
-			</rectangle>
-			<staticText>
-				<reportElement x="0" y="5" width="60" height="30" uuid="af05ab73-1f75-4a6e-9781-fe327aa45675">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dcc162a3-4148-42e6-abda-2321be0c5aa9"/>
-				</reportElement>
-				<textElement textAlignment="Center">
-					<font size="16"/>
-				</textElement>
-				<text><![CDATA[Código]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="100" y="5" width="240" height="30" uuid="3e337537-f9f4-437a-9a9a-711fc401e17f">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="acf8c7f4-a1f7-4bb1-b5f0-45e0284277ec"/>
-				</reportElement>
-				<textElement textAlignment="Center">
-					<font size="16"/>
-				</textElement>
-				<text><![CDATA[Nombre]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="371" y="5" width="85" height="30" uuid="d0877aff-fac3-4cc6-920b-74e11352c21a">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0356d754-dceb-4d5c-96ab-f34909981eea"/>
-				</reportElement>
-				<textElement textAlignment="Center">
-					<font size="16"/>
-				</textElement>
-				<text><![CDATA[Tipo]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="476" y="6" width="59" height="30" uuid="73d49a6b-94dc-427c-a91c-81938c492b1b">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7680bfa5-a875-42b3-bb2c-01f6faf7d353"/>
-				</reportElement>
-				<textElement textAlignment="Center">
-					<font size="16"/>
-				</textElement>
-				<text><![CDATA[Saldo]]></text>
-			</staticText>
-			<line>
-				<reportElement x="361" y="2" width="1" height="39" uuid="1b255cea-e21a-4645-bb6a-20b8c5c33aa3"/>
-			</line>
-			<line>
-				<reportElement x="464" y="1" width="1" height="39" uuid="0473a039-0fde-4ace-ada7-dd9b0b44e1a3"/>
-			</line>
-			<line>
-				<reportElement x="87" y="1" width="1" height="39" uuid="345c7c0e-0566-4969-a24c-7764b6d248da"/>
-			</line>
-		</band>
+		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="45" splitType="Stretch">
+		<band height="245" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="558" height="43" backcolor="#80B0FF" uuid="10a51c97-a750-4e49-b4b9-6d5106904160"/>
+			</rectangle>
 			<textField>
-				<reportElement x="9" y="4" width="71" height="40" uuid="49f5b301-556d-45c0-baf1-aa8597cf47d7">
+				<reportElement x="17" y="20" width="71" height="18" uuid="c763af21-e90b-42d0-859e-85fc5aeb0557">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dcc162a3-4148-42e6-abda-2321be0c5aa9"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
@@ -126,35 +74,79 @@
 				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="100" y="4" width="250" height="40" uuid="b06286f2-3ba6-4bb3-a194-33687598bf23">
+				<reportElement x="110" y="19" width="178" height="20" uuid="9e07e801-7ed7-4111-bccb-90a017be36a5">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="acf8c7f4-a1f7-4bb1-b5f0-45e0284277ec"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
-					<font size="12"/>
+					<font size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="374" y="4" width="82" height="40" uuid="7b687e7a-80c8-4a50-8f8d-40d0af43fc55">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0356d754-dceb-4d5c-96ab-f34909981eea"/>
-				</reportElement>
-				<textElement verticalAlignment="Middle">
-					<font size="12"/>
+				<reportElement x="10" y="75" width="535" height="170" uuid="a5fc94c5-bb72-45b3-a250-7179a0342407"/>
+				<textElement>
+					<font size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{tipoCuenta}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="10" y="49" width="100" height="30" uuid="7b802625-f9ef-4073-8107-078e0ae65306"/>
+				<textElement>
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descripción: ]]></text>
+			</staticText>
 			<textField>
-				<reportElement x="475" y="4" width="83" height="40" uuid="b96d5dcb-b475-4b40-a1b1-a72d212910a0">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7680bfa5-a875-42b3-bb2c-01f6faf7d353"/>
-				</reportElement>
+				<reportElement x="319" y="21" width="103" height="18" uuid="25023a1c-4d50-4156-a9d3-6b887115d2ac"/>
 				<textElement verticalAlignment="Middle">
-					<font size="12"/>
+					<font size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{saldoCuenta}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="456" y="23" width="88" height="16" uuid="0da7bf46-57d6-41e0-bad6-ec8c2c9d568c"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipoCuenta}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="458" y="3" width="50" height="16" forecolor="#FFFFFF" uuid="bf59067a-dcbb-4582-92ba-880c5b341fa8"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TIpo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="319" y="0" width="50" height="20" forecolor="#FCFCFC" uuid="22518af2-1982-49cf-a1b0-5a07b3e82328"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Saldo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="112" y="0" width="50" height="22" forecolor="#FFFFFF" uuid="cd9e0781-cf45-4617-bcb4-f8202993febf"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre:]]></text>
+			</staticText>
 			<line>
-				<reportElement x="0" y="43" width="560" height="1" uuid="a6e8398d-8815-41da-8e03-864c6b661cc9"/>
+				<reportElement x="102" y="0" width="1" height="41" uuid="25dc01c7-9047-4240-841b-537dab5e3fe4"/>
 			</line>
+			<line>
+				<reportElement x="303" y="0" width="1" height="41" uuid="1d31c59d-f069-4f7b-bc9e-94c6486d5e93"/>
+			</line>
+			<line>
+				<reportElement x="436" y="0" width="1" height="41" uuid="d8376ab9-4be6-458f-841b-a238ef7cd1a8"/>
+			</line>
+			<staticText>
+				<reportElement x="21" y="-2" width="50" height="22" forecolor="#FFFFFF" uuid="70c1a933-a318-4546-bde8-fd1766c63683"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código]]></text>
+			</staticText>
 		</band>
 	</detail>
 	<columnFooter>
