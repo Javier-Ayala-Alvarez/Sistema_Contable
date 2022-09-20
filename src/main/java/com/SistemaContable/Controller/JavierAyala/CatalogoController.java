@@ -3,20 +3,23 @@ package com.SistemaContable.Controller.JavierAyala;
 import com.SistemaContable.Repository.JavierAyala.Interfaces.CatalogoRepositoryInt;
 import com.SistemaContable.model.JavierAyala.Catalogo;
 import com.SistemaContable.servicio.JavierAyala.ServicesImplements.CatalogoServices;
+
+import net.sf.jasperreports.engine.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.Param;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
-import java.util.Map;
+import java.io.FileNotFoundException;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -31,6 +34,8 @@ public class CatalogoController {
 
     @GetMapping()
     public String catalogo(@RequestParam Map<String, Object> params, Model model, Catalogo catalogo, String buscar) {
+
+
         int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;//obteniendo la cantidad de paginas
         PageRequest pageRequest = PageRequest.of(page, 5, Sort.by("codigo").ascending()); //pagina que va a buscar y el numero de registros ademas ordena la pagina
 
@@ -42,6 +47,7 @@ public class CatalogoController {
         } else {
             model.addAttribute("pie", "EL catálogo está vacío debe registrar datos");
         }
+
         model.addAttribute("catalogos", pageCatalogo.getContent());//enviando la lista
         model.addAttribute("current", page + 1);//
         model.addAttribute("next", page + 2);
@@ -49,17 +55,34 @@ public class CatalogoController {
         model.addAttribute("last", totalPage);//obteniendo el parametro
         model.addAttribute("tituloDeLaPagina", "Catálogo");
         model.addAttribute("buscar", buscar);
+
         return "catalogo";
 
     }
+
+    @GetMapping("/reporte")
+    public ResponseEntity<byte[]> getCatalogoReportPDF() throws JRException, FileNotFoundException {
+
+        return catalogoServices.exportReport();
+
+    }
+    @GetMapping("/manual")
+    public ResponseEntity<byte[]> getCatalogomanual() throws JRException, FileNotFoundException {
+
+        return catalogoServices.exportManual();
+
+    }
+
+
 
     @PostMapping()
     public String save(@Validated Catalogo catalogo, BindingResult bindingResult, RedirectAttributes redirect, Model model) {
         if (catalogo.getId() == null) {
 
-            if (catalogo.getSaldoCuenta() != "" && catalogo.getTipoCuenta() != ""
-                    && catalogoServices.buscar("codigo", catalogo.getCodigo()) == "true"
-                    && catalogoServices.buscar("nombre", catalogo.getNombre()) == "true") {
+            if (catalogo.getSaldoCuenta() != ""
+                    && catalogo.getTipoCuenta() != ""
+                    && catalogo.getDescripcion() != ""
+                    && catalogoServices.buscar("codigo", catalogo.getCodigo()) == "true") {
 
                 if (catalogoServices.validarCodigo(catalogo.getCodigo()) == true) {
                     if (bindingResult.hasErrors()) {
@@ -93,19 +116,24 @@ public class CatalogoController {
                             @RequestParam("nombre") String nombre,
                             @RequestParam("saldo_cuenta") String saldo_cuenta,
                             @RequestParam("tipo_cuenta") String tipo_cuenta,
+                            @RequestParam("descripcion") String descripcion,
+
                             Catalogo catalogo, RedirectAttributes redirect) {
 
         catalogo = catalogoRespositoryInt.buscarCodigo(codigo);
         catalogo.setNombre(nombre);
         catalogo.setSaldoCuenta(saldo_cuenta);
         catalogo.setTipoCuenta(tipo_cuenta);
-        if (catalogo.getSaldoCuenta() != "" && catalogo.getTipoCuenta() != ""
+        catalogo.setDescripcion(descripcion);
+        if (catalogo.getSaldoCuenta() != ""
+                && catalogo.getTipoCuenta() != ""
+                && catalogo.getDescripcion() != ""
                 && catalogoServices.buscar("nombre", catalogo.getNombre()) == "true") {
             catalogoServices.save(catalogo);
             redirect.addFlashAttribute("msgExito", "activo");
             return "redirect:/Catalogo";
-        }else {
-            redirect.addFlashAttribute("msgErrorDatos", "activo");
+        } else {
+            redirect.addFlashAttribute("msgExito", "activo");
             return "redirect:/Catalogo";
         }
 
