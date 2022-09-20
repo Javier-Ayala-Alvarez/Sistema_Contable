@@ -73,7 +73,9 @@ public class CatalogoController {
     public String save(@Validated Catalogo catalogo, BindingResult bindingResult, RedirectAttributes redirect, Model model) {
         if (catalogo.getId() == null) {
 
-            if (catalogo.getSaldoCuenta() != "" && catalogo.getTipoCuenta() != ""
+            if (catalogo.getSaldoCuenta() != ""
+                    && catalogo.getTipoCuenta() != ""
+                    && catalogo.getDescripcion() != ""
                     && catalogoServices.buscar("codigo", catalogo.getCodigo()) == "true"
                     && catalogoServices.buscar("nombre", catalogo.getNombre()) == "true") {
 
@@ -118,13 +120,15 @@ public class CatalogoController {
         catalogo.setSaldoCuenta(saldo_cuenta);
         catalogo.setTipoCuenta(tipo_cuenta);
         catalogo.setDescripcion(descripcion);
-        if (catalogo.getSaldoCuenta() != "" && catalogo.getTipoCuenta() != ""
+        if (catalogo.getSaldoCuenta() != ""
+                && catalogo.getTipoCuenta() != ""
+                && catalogo.getDescripcion() != ""
                 && catalogoServices.buscar("nombre", catalogo.getNombre()) == "true") {
             catalogoServices.save(catalogo);
             redirect.addFlashAttribute("msgExito", "activo");
             return "redirect:/Catalogo";
         } else {
-            redirect.addFlashAttribute("msgErrorDatos", "activo");
+            redirect.addFlashAttribute("msgExito", "activo");
             return "redirect:/Catalogo";
         }
 

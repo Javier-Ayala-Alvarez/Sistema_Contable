@@ -26,17 +26,26 @@
         <!-- Example single danger button -->
 
         <ul class="navbar-nav ms-4 mt-3 mt-lg-2">
-            <li class="nav-item active"><a class="btn btn-primary bi bi-border-width p-3" href="Catalogo">Catálogo</a>
+
+            <li class="nav-item active">
+
+                <a class="btn btn-primary bi bi-border-width p-3" href="Catalogo"><i
+                        class="fas fa-table fa-primary"></i> Catálogo</a>
             </li>
-            <li class="nav-item active"><a class="btn btn-primary bi bi-border-width p-3" href="LibroDiario">Libro
+            <li class="nav-item active"><a class="btn btn-primary bi bi-border-width p-3" href="LibroDiario"> <i
+                    class="fas fa-fw fa-folder"></i> Libro
                 diario</a></li>
-            <li class="nav-item active"><a class="btn btn-primary bi bi-border-width p-3" href="LibroMayor">Libro
+            <li class="nav-item active"><a class="btn btn-primary bi bi-border-width p-3" href="LibroMayor"> <i
+                    class="fas fa-fw fa-folder"></i> Libro
                 mayor</a></li>
-            <li class="nav-item active"><a class="btn btn-primary bi bi-border-width p-3" href="BalanceDeComprobacion">Balance
+            <li class="nav-item active"><a class="btn btn-primary bi bi-border-width p-3" href="BalanceDeComprobacion">
+                <i class="fas fa-fw fa-folder"></i> Balance
                 de comprobación</a></li>
-            <li class="nav-item active"><a class="btn btn-primary bi bi-border-width p-3" href="EstadoDeResultado">Estado
+            <li class="nav-item active"><a class="btn btn-primary bi bi-border-width p-3" href="EstadoDeResultado"> <i
+                    class="fas fa-fw fa-folder"></i> Estado
                 de resultado</a></li>
-            <li class="nav-item active"><a class="btn btn-primary bi bi-border-width p-3" href="BalanceGeneral">Balance
+            <li class="nav-item active"><a class="btn btn-primary bi bi-border-width p-3" href="BalanceGeneral"> <i
+                    class="fas fa-fw fa-folder"></i> Balance
                 general</a></li>
         </ul>
 
@@ -46,8 +55,7 @@
     <!-- Page content wrapper-->
     <div id="page-content-wrapper">
         <!-- Top navigation-->
-        <nav
-                class="navbar navbar-expand-lg navbar-primary bg-primary border-bottom">
+        <nav class="navbar navbar-expand-lg navbar-primary bg-primary border-bottom">
             <div class="container-fluid">
                 <button class="btn btn-primary bi bi-border-width" id="sidebarToggle">Menu</button>
                 <button class="navbar-toggler" type="button"
@@ -75,7 +83,10 @@
     </div>
 </div>
 
-
+<!-- Bootstrap core JS-->
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<!-- Core theme JS-->
+<script th:src="@{/js/scripts.js}"></script>
 <!--OTRO SCRIPTS PARA PAGINAS-->
 <th:block layout:fragment="page-scripts">
     <link rel="stylesheet" th:href="@{sweetalert2/sweetalert2.min.css}">
