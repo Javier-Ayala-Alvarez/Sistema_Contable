@@ -1,11 +1,14 @@
 package com.SistemaContable.model.JavierAyala;
 
+import com.SistemaContable.model.DiegoMejia.RegistroPartida;
 import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import java.util.List;
 
 @Entity
 @Table(name = "catalogo")
@@ -31,6 +34,9 @@ public class Catalogo {
 
     @Column(name = "tipoCuenta")
     private String tipoCuenta;
+
+    @OneToMany(mappedBy = "catalogo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RegistroPartida> registroPartidas;
 
 
     @Column(name = "descripcion")
