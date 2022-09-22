@@ -41,31 +41,43 @@ public class RegistroController {
 
     /*@GetMapping("/LibroDiario")
     public String LibroDiario(Model model) {
-        model.addAttribute("tituloDeLaPagina", "Libro Diario");
+        model.addAttribute("tituloDeLaPagina", "Libro Diario: Diego Mejia");
         return "LibroDiario";
+<<<<<<< HEAD
     }*/
+
+    @GetMapping("/Configuracion")
+    public String Configuracion(Model model) {
+        model.addAttribute("tituloDeLaPagina", "Configuración: Gerson");
+        return "configuracion";
+    }
 
     @GetMapping("/LibroMayor")
     public String LibroMayor(Model model) {
-        model.addAttribute("tituloDeLaPagina", "Libro Mayor");
+        model.addAttribute("tituloDeLaPagina", "Libro Mayor: Deras");
         return "LibroMayor";
+    }
+    @GetMapping("/Cierre")
+    public String cierre(Model model) {
+        model.addAttribute("tituloDeLaPagina", "Cierre contable: Deras");
+        return "cierre";
     }
 
     @GetMapping("/BalanceDeComprobacion")
     public String BalanceDeComprobacion(Model model) {
-        model.addAttribute("tituloDeLaPagina", "Balance de comprobación");
+        model.addAttribute("tituloDeLaPagina", "Balance de comprobación: Gerson");
         return "BalanceDeComprobacion";
     }
 
     @GetMapping("/EstadoDeResultado")
     public String EstadoDeResultado(Model model) {
-        model.addAttribute("tituloDeLaPagina", "Estado de Resultado");
+        model.addAttribute("tituloDeLaPagina", "Estado de Resultado: Javier Ayala");
         return "EstadoDeResultado";
     }
 
     @GetMapping("/BalanceGeneral")
     public String BalanceGeneral(Model model) {
-        model.addAttribute("tituloDeLaPagina", "Balance General");
+        model.addAttribute("tituloDeLaPagina", "Balance General: Diego");
         return "BalanceGeneral";
     }
 
