@@ -6,7 +6,9 @@ import com.SistemaContable.model.DiegoMejia.Partida;
 import com.SistemaContable.servicio.DiegoMejia.Interfaces.PartidaServiceApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PartidaServiceImpl extends GenericServiceApiImpl<Partida,Long>
         implements PartidaServiceApi {
 

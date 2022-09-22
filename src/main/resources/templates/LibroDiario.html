@@ -21,7 +21,36 @@
           integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 
 
-    <h1 th:text="${tituloDeLaPagina}"/> <!--Muestra el mensaje que viene del back-end-->
+    <div class="container">
+        <h2 th:if="${list.isEmpty()}"> No existen Partidas</h2>
+        <div th:if="${!list.isEmpty()}">
+            <h2>Personas</h2>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Descripción</th>
+                    <th>Fecha</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="partida : ${list}">
+                    <td th:text="${partida.id}"></td>
+                    <td th:text="${partida.descripcion}"></td>
+                    <td th:text="${partida.fecha}"></td>
+
+
+                    <td><a class="btn btn-warning">Editar</a></td>
+                    <td><a class="btn btn-danger">Eliminar</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
 </div>
 
 
