@@ -39,16 +39,19 @@ public class RegistroController {
     //@GetMapping va a direccionar al catálogo cuando la url defina eso despues de /
 
 
-    @GetMapping("/LibroDiario")
+    /*@GetMapping("/LibroDiario")
     public String LibroDiario(Model model) {
         model.addAttribute("tituloDeLaPagina", "Libro Diario: Diego Mejia");
         return "LibroDiario";
-    }
+<<<<<<< HEAD
+    }*/
+
     @GetMapping("/Configuracion")
     public String Configuracion(Model model) {
         model.addAttribute("tituloDeLaPagina", "Configuración: Gerson");
         return "configuracion";
     }
+
     @GetMapping("/LibroMayor")
     public String LibroMayor(Model model) {
         model.addAttribute("tituloDeLaPagina", "Libro Mayor: Deras");
