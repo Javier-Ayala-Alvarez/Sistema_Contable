@@ -22,6 +22,7 @@ import org.springframework.util.ResourceUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -124,10 +125,15 @@ public class CatalogoServices implements CatalogoRepositoryInterface {
     public ResponseEntity<byte[]> exportManual() throws FileNotFoundException, JRException {
         try {
             List<Catalogo> catalogo = catalogoRepositoryInt.findAll(Sort.by("codigo").ascending());
+
+            final HashMap<String, Object> parameters = new HashMap<>();
+            parameters.put("nombreempresa1"," nombreempresa1");
+
             JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(catalogo);
 
+
             JasperPrint empReport = JasperFillManager.fillReport(JasperCompileManager.compileReport(ResourceUtils.getFile("classpath:ReporteManual.jrxml").getAbsolutePath()) // path of the jasper report
-                    , null //empParams dynamic parameters
+                    , parameters //empParams dynamic parameters
                     ,dataSource);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_PDF);

@@ -41,4 +41,8 @@ public class Catalogo {
 
     @Column(name = "descripcion")
     private String descripcion;
+
+
+
+
 }

@@ -37,7 +37,7 @@ public class CatalogoController {
 
 
         int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;//obteniendo la cantidad de paginas
-        PageRequest pageRequest = PageRequest.of(page, 5, Sort.by("codigo").ascending()); //pagina que va a buscar y el numero de registros ademas ordena la pagina
+        PageRequest pageRequest = PageRequest.of(page, 10, Sort.by("codigo").ascending()); //pagina que va a buscar y el numero de registros ademas ordena la pagina
 
         Page<Catalogo> pageCatalogo = catalogoServices.mostrarCatalogo(buscar, pageRequest); //la pagina
         int totalPage = pageCatalogo.getTotalPages(); //total de pagina
