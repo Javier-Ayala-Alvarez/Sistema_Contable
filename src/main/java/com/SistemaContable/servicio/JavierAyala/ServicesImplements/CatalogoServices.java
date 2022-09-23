@@ -104,9 +104,10 @@ public class CatalogoServices implements CatalogoRepositoryInterface {
         try {
             List<Catalogo> catalogo = catalogoRepositoryInt.findAll(Sort.by("codigo").ascending());
             JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(catalogo);
-
+            final HashMap<String, Object> parameters = new HashMap<>();
+            parameters.put("nombreempresa1"," nombreempresa1");
             JasperPrint empReport = JasperFillManager.fillReport(JasperCompileManager.compileReport(ResourceUtils.getFile("classpath:ReporteCatalogo.jrxml").getAbsolutePath()) // path of the jasper report
-                    , null //empParams dynamic parameters
+                    , parameters //empParams dynamic parameters
                     ,dataSource);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_PDF);
@@ -124,7 +125,7 @@ public class CatalogoServices implements CatalogoRepositoryInterface {
     }
     public ResponseEntity<byte[]> exportManual() throws FileNotFoundException, JRException {
         try {
-            List<Catalogo> catalogo = catalogoRepositoryInt.findAll(Sort.by("codigo").ascending());
+            List<Catalogo> catalogo = catalogoRepositoryInt.mostrarManual();
 
             final HashMap<String, Object> parameters = new HashMap<>();
             parameters.put("nombreempresa1"," nombreempresa1");
