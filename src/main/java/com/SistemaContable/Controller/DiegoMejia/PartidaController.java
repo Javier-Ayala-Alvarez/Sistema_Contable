@@ -7,16 +7,23 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class PartidaController {
     @Autowired
     private PartidaServiceApi partidaServiceApi;
 
     @RequestMapping("/LibroDiario")
-    public String incioVistaDiario(Model model){
-        model.addAttribute("list", partidaServiceApi.getAll());
+    public String startViewDiario(Model model, HttpSession session){
+        model.addAttribute("tituloDeLaPagina", "Libro Diario");
 
+        model.addAttribute("list", partidaServiceApi.getAll());
         return "LibroDiario";
+    }
+    @RequestMapping("/libro")
+    public String saveCookiePartida(){
+    return "";
     }
 
 }
