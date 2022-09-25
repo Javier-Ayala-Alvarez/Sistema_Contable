@@ -2,6 +2,8 @@ package com.SistemaContable.model.DiegoMejia;
 
 import com.SistemaContable.model.JavierAyala.Catalogo;
 
+import com.SistemaContable.model.JavierAyala.RegistrosEstadosResultado;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 

@@ -1,5 +1,8 @@
 package com.SistemaContable.model.DiegoMejia;
 
+import com.SistemaContable.model.JavierAyala.CicloContable;
+import com.SistemaContable.model.JavierAyala.Empresa;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -19,7 +22,12 @@ public class Partida {
 
     @Column()
     private boolean activo;
-
+    @ManyToOne
+    @JoinColumn(name = "id_Empresa")
+    private Empresa empresa;
+    @ManyToOne
+    @JoinColumn(name = "id_cierre")
+    private CicloContable cicloContable;
     @OneToMany(mappedBy = "partida", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RegistroPartida> registroPartidas;
 
