@@ -1,0 +1,202 @@
+--FUNCTION DEL DISPARADOR PARA ACUMULAR A CUENTAS A SEGUNDO NIVEL
+CREATE OR REPLACE FUNCTION func_TotalResultadoSegundoNivel()
+RETURNS TRIGGER
+AS
+$BODY$
+--Variables
+		DECLARE
+		id1 INT := 0;
+		id_ciclo INT :=0;
+		catalogo_id1 INT :=0;
+		partida_id INT :=0;
+		total1 FLOAT :=0;
+		codigo_catalogo VARCHAR :='';
+		idRegistro_Resultado INT := 0;
+		id_catalogoResumen INT := 0;
+		totalCuentasR FLOAT :=0;
+		
+		
+BEGIN
+		--Trae el numero más alto del id de la tabla registros_estados_resultado y suma 1
+
+		--trae el id del catalogo que contiene el registro de la partida
+		catalogo_id1 := NEW.catalogo_id;
+		--trae el id de la partida que contiene el registro de la partida
+		partida_id := NEW.partida_id;
+		--trae el id del ciclo
+		id_ciclo := (SELECT p.id_cierre FROM partida p WHERE id = partida_id);
+		--Trae el valor del codigo del catalogo
+		codigo_catalogo := (SELECT substring(codigo, 1, 2) FROM catalogo WHERE id=catalogo_id1);
+		--Traer el id de la cuenta detalle del catalogo
+		id_catalogoResumen := (SELECT id FROM catalogo WHERE codigo=codigo_catalogo);
+		--Trae el id del registro
+		idRegistro_Resultado :=(SELECT id FROM registros_estados_resultado r
+		WHERE r.id_cierre = id_ciclo and r.catalogo_id =	id_catalogoResumen);
+		--Trae el total de las cuentas r
+		
+
+		--Trae la suma de total1
+		total1 :=(SELECT Sum(r.haber)+Sum(r.debe) FROM catalogo c 
+					INNER JOIN registro_partida r ON r.catalogo_id = c.id	
+					INNER JOIN partida p ON p.id = r.partida_id
+					WHERE c.codigo LIKE  concat(codigo_catalogo,'%') AND id_cierre = id_ciclo);
+		
+		
+		totalCuentasR := (SELECT  Sum(r.debe) FROM catalogo c 
+					INNER JOIN registro_partida r ON r.catalogo_id = c.id	
+					INNER JOIN partida p ON p.id = r.partida_id
+					WHERE c.codigo LIKE  concat(codigo_catalogo,'%') 
+					AND id_cierre = id_ciclo AND c.codigo LIKE  '%R%');
+		IF totalCuentasR >0
+					THEN
+						total1 := total1 - (totalCuentasR + totalCuentasR);
+		END IF;
+		--condicional si el id_cierre existe entonces modifica
+		IF EXISTS (SELECT * FROM registros_estados_resultado r WHERE r.id_cierre = id_ciclo and r.catalogo_id =	id_catalogoResumen)
+		THEN
+				UPDATE registros_estados_resultado SET  total = total1, catalogo_id = id_catalogoResumen, id_cierre = id_ciclo 
+				WHERE id = idRegistro_Resultado;
+		ELSE
+			INSERT INTO registros_estados_resultado (total, catalogo_id, id_cierre) VALUES(total1,id_catalogoResumen,id_ciclo);
+		END IF;
+		RETURN NEW;
+		END
+$BODY$
+LANGUAGE plpgsql;
+
+
+--CREACIÓN DEL TRIGGER
+CREATE TRIGGER estado_resultadoSegundoNivel AFTER INSERT ON registro_partida
+FOR EACH ROW
+EXECUTE PROCEDURE func_TotalResultadoSegundoNivel();
+
+
+
+--FUNCTION DEL DISPARADOR PARA ACUMULAR A CUENTAS A TERCER NIVEL
+CREATE OR REPLACE FUNCTION func_TotalResultado()
+RETURNS TRIGGER
+AS
+$BODY$
+--Variables
+		DECLARE
+		id1 INT := 0;
+		id_ciclo INT :=0;
+		catalogo_id1 INT :=0;
+		partida_id INT :=0;
+		total1 FLOAT :=0;
+		codigo_catalogo VARCHAR :='';
+		idRegistro_Resultado INT := 0;
+		id_catalogoResumen INT := 0;
+		totalCuentasR FLOAT :=0;
+BEGIN
+		--Trae el numero más alto del id de la tabla registros_estados_resultado y suma 1
+
+		--trae el id del catalogo que contiene el registro de la partida
+		catalogo_id1 := NEW.catalogo_id;
+		--trae el id de la partida que contiene el registro de la partida
+		partida_id := NEW.partida_id;
+		--trae el id del ciclo
+		id_ciclo := (SELECT p.id_cierre FROM partida p WHERE id = partida_id);
+		--Trae el valor del codigo del catalogo
+		codigo_catalogo := (SELECT substring(codigo, 1, 4) FROM catalogo WHERE id=catalogo_id1);
+		--Traer el id de la cuenta detalle del catalogo
+		id_catalogoResumen := (SELECT id FROM catalogo WHERE codigo=codigo_catalogo);
+		--Trae el id del registro
+		idRegistro_Resultado :=(SELECT id FROM registros_estados_resultado r
+		WHERE r.id_cierre = id_ciclo and r.catalogo_id =	id_catalogoResumen);
+		
+		--Trae la suma de total1
+		total1 := (SELECT Sum(r.haber)+Sum(r.debe) FROM catalogo c 
+					INNER JOIN registro_partida r ON r.catalogo_id = c.id	
+					INNER JOIN partida p ON p.id = r.partida_id
+					WHERE c.codigo LIKE  concat(codigo_catalogo,'%') AND id_cierre = id_ciclo);
+					
+		totalCuentasR := (SELECT  Sum(r.debe) FROM catalogo c 
+					INNER JOIN registro_partida r ON r.catalogo_id = c.id	
+					INNER JOIN partida p ON p.id = r.partida_id
+					WHERE c.codigo LIKE  concat(codigo_catalogo,'%') 
+					AND id_cierre = id_ciclo AND c.codigo LIKE  '%R%');
+		IF totalCuentasR >0
+					THEN
+						total1 := total1 - (totalCuentasR + totalCuentasR);
+		END IF;
+		
+		--condicional si el id_cierre existe entonces modifica
+		IF EXISTS (SELECT * FROM registros_estados_resultado r WHERE r.id_cierre = id_ciclo and r.catalogo_id =	id_catalogoResumen)
+		THEN
+				UPDATE registros_estados_resultado SET  total = total1, catalogo_id = id_catalogoResumen, id_cierre = id_ciclo 
+				WHERE id = idRegistro_Resultado;
+		ELSE
+			INSERT INTO registros_estados_resultado (total, catalogo_id, id_cierre) VALUES(total1,id_catalogoResumen,id_ciclo);
+		END IF;
+		RETURN NEW;
+		END
+$BODY$
+LANGUAGE plpgsql;
+
+
+--CREACIÓN DEL TRIGGER
+CREATE TRIGGER estado_resultado AFTER INSERT ON registro_partida
+FOR EACH ROW
+EXECUTE PROCEDURE func_TotalResultado();
+
+
+
+
+
+--FUNCTION DEL DISPARADOR PARA ACUMULAR A CUENTAS A MISMO NIVEL
+
+
+CREATE OR REPLACE FUNCTION func_TotalResultadoMismoNivel()
+RETURNS TRIGGER
+AS
+$BODY$
+--Variables
+		DECLARE
+		id1 INT := 0;
+		id_ciclo INT :=0;
+		catalogo_id1 INT :=0;
+		partida_id INT :=0;
+		total1 FLOAT :=0;
+		idRegistro_Resultado INT := 0;
+		
+BEGIN
+		--Trae el numero más alto del id de la tabla registros_estados_resultado y suma 1
+
+		--trae el id del catalogo que contiene el registro de la partida
+		catalogo_id1 := NEW.catalogo_id;
+		--trae el id de la partida que contiene el registro de la partida
+		partida_id := NEW.partida_id;
+		--trae el id del ciclo
+		id_ciclo := (SELECT p.id_cierre FROM partida p WHERE id = partida_id);
+		
+		--Trae el id del registro
+		idRegistro_Resultado :=(SELECT id FROM registros_estados_resultado r WHERE r.id_cierre = id_ciclo and r.catalogo_id =	catalogo_id1);
+		--Trae la suma de total1
+		total1 := 
+				(
+					SELECT Sum(r.haber)+Sum(r.debe) FROM catalogo c 
+					INNER JOIN registro_partida r ON r.catalogo_id = c.id	
+					INNER JOIN partida p ON p.id = r.partida_id
+					WHERE c.id = catalogo_id1 AND id_cierre = id_ciclo
+				);
+	
+	
+		--condicional si el id_cierre existe entonces modifica
+		IF EXISTS (SELECT * FROM registros_estados_resultado r WHERE r.id_cierre = id_ciclo and r.catalogo_id =	catalogo_id1)
+		THEN
+			UPDATE registros_estados_resultado SET  total = total1, catalogo_id = catalogo_id1, id_cierre = id_ciclo
+			 WHERE id = idRegistro_Resultado;
+		ELSE
+			INSERT INTO registros_estados_resultado (total, catalogo_id, id_cierre) VALUES(total1,catalogo_id1,id_ciclo);
+		END IF;
+		RETURN NEW;
+		END
+$BODY$
+LANGUAGE plpgsql;
+
+
+--CREACIÓN DEL TRIGGER
+CREATE TRIGGER estado_resultadoMismoNivel AFTER INSERT ON registro_partida
+FOR EACH ROW
+EXECUTE PROCEDURE func_TotalResultadoMismoNivel();
