@@ -155,4 +155,14 @@ public class CatalogoController {
     }
 
 
+    @GetMapping("/buscar/{textoBuscar}")
+    String searchByLike(Model model ,@PathVariable("textoBuscar")  String textoBuscar){
+        List<Catalogo> listaCatalogo = catalogoServices.BuscarOpcionesCatalogo(textoBuscar);
+        model.addAttribute("listaCatalogo",listaCatalogo);
+
+
+        return "modalNuevaPartida.html :: Optionbuscar";
+    }
+
+
 }

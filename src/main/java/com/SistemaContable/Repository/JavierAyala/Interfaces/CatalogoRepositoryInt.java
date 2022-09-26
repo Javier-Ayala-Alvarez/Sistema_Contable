@@ -20,4 +20,7 @@ public interface CatalogoRepositoryInt extends JpaRepository<Catalogo, Integer> 
 
     @Query("select c from Catalogo c where c.codigo = ?1")
     public Catalogo buscarCodigo(String codigo);
+
+    @Query(value = "SELECT c FROM Catalogo c WHERE concat(c.nombre,c.codigo) like %?1%  order by c.codigo " )
+    public List<Catalogo> BuscarOpcionesCatalogo(String codigo);
 }

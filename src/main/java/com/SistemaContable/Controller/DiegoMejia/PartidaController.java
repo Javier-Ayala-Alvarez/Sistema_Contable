@@ -1,6 +1,7 @@
 package com.SistemaContable.Controller.DiegoMejia;
 
 import com.SistemaContable.model.DiegoMejia.Partida;
+import com.SistemaContable.model.DiegoMejia.RegistroPartida;
 import com.SistemaContable.servicio.DiegoMejia.Interfaces.PartidaServiceApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -26,7 +28,7 @@ public class PartidaController {
 
         model.addAttribute("list", partidaServiceApi.getAll());
 
-        return "redirect:/LibroDiario";
+        return "/LibroDiario";
     }
 
     @PostMapping("/LibroDiario/save")
@@ -37,9 +39,11 @@ public class PartidaController {
         partida.setFecha(new Date());
         partida.setActivo(true);
         partida.setRegistroPartidas(new ArrayList<>());
+
+
         sesion.setAttribute("partidaSesion", partida);
 
-        return "redirect:/LibroDiario";
+        return "redirect:/LibroDiario/registroPartida";
     }
 
     @GetMapping("/LibroDiario/modal")
