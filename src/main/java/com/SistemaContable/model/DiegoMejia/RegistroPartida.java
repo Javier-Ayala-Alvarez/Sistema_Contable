@@ -14,10 +14,10 @@ public class RegistroPartida {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column
     private BigDecimal debe;
 
-    @Column(nullable = false)
+    @Column
     private BigDecimal haber;
 
     @ManyToOne()
@@ -29,6 +29,14 @@ public class RegistroPartida {
     private Catalogo catalogo;
 
     public RegistroPartida() {
+    }
+
+    public Catalogo getCatalogo() {
+        return catalogo;
+    }
+
+    public void setCatalogo(Catalogo catalogo) {
+        this.catalogo = catalogo;
     }
 
     public Long getId() {

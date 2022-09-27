@@ -65,4 +65,12 @@ public class Partida {
     public void setRegistroPartidas(List<RegistroPartida> registroPartidas) {
         this.registroPartidas = registroPartidas;
     }
+
+    public boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
 }

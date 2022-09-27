@@ -149,7 +149,15 @@ public class CatalogoServices implements CatalogoRepositoryInterface {
             return new ResponseEntity<byte[]>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+
+
     }
+
+    public List<Catalogo> BuscarOpcionesCatalogo(String data){
+        return catalogoRepositoryInt.BuscarOpcionesCatalogo(data);
+
+    }
+
 }
 
 
