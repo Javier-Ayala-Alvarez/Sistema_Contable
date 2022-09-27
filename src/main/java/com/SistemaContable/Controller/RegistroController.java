@@ -69,11 +69,7 @@ public class RegistroController {
         return "BalanceDeComprobacion";
     }
 
-    @GetMapping("/EstadoDeResultado")
-    public String EstadoDeResultado(Model model) {
-        model.addAttribute("tituloDeLaPagina", "Estado de Resultado: Javier Ayala");
-        return "EstadoDeResultado";
-    }
+
 
     @GetMapping("/BalanceGeneral")
     public String BalanceGeneral(Model model) {
