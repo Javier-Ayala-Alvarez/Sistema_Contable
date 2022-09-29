@@ -14,18 +14,20 @@ function getModal() {
 
 }
 
-function sendFormModal(){
+function sendFormModal() {
     document.formModal.submit();
 }
-function getCuentas(){
+
+function getCuentas() {
     //dataCuentas
     const input = document.getElementById("numeroCuenta");
-    const url = "/Catalogo/buscar/"+ input.value;
+    const url = "/Catalogo/buscar/" + input.value;
     const data = null;
-    getData( url,data).then((response) => response.text())
+    getData(url, data).then((response) => response.text())
         .then(text => {
-
-            document.getElementById("dataCuentas").innerHTML = text;
+            let input = document.getElementById("numeroCuenta");
+            input.innerHTML = text;
+           input.setAttribute("list","dataCuentas")
 
         })
         .catch(function (err) {

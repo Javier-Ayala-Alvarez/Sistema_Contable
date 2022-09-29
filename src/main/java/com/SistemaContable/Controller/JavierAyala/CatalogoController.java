@@ -161,7 +161,7 @@ public class CatalogoController {
         model.addAttribute("listaCatalogo",listaCatalogo);
 
 
-        return "modalNuevaPartida.html :: Optionbuscar";
+        return "fragment/buscarOption.html :: Optionbuscar";
     }
 
 

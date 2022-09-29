@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<datalist id="dataCuentas"  th:fragment="Optionbuscar">
+    <option th:each="valor : ${listaCatalogo}" th:value="${valor.codigo}" th:text="${valor.codigo +' '+ valor.nombre}"> </option>
+</datalist>
+
+
+</body>
+</html>
