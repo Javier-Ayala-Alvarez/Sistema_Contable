@@ -14,6 +14,8 @@ $BODY$
 		idRegistro_Resultado INT := 0;
 		id_catalogoResumen INT := 0;
 		totalCuentasR FLOAT :=0;
+		debe FLOAT :=0;
+		haber FLOAT :=0;
 		
 		
 BEGIN
@@ -34,14 +36,22 @@ BEGIN
 		WHERE r.id_cierre = id_ciclo and r.catalogo_id =	id_catalogoResumen);
 		--Trae el total de las cuentas r
 		
-
-		--Trae la suma de total1
-		total1 :=(SELECT Sum(r.haber)+Sum(r.debe) FROM catalogo c 
+		debe := (SELECT Sum(r.debe) FROM catalogo c 
 					INNER JOIN registro_partida r ON r.catalogo_id = c.id	
 					INNER JOIN partida p ON p.id = r.partida_id
 					WHERE c.codigo LIKE  concat(codigo_catalogo,'%') AND id_cierre = id_ciclo);
-		
-		
+		haber := (SELECT Sum(r.haber) FROM catalogo c 
+					INNER JOIN registro_partida r ON r.catalogo_id = c.id	
+					INNER JOIN partida p ON p.id = r.partida_id
+					WHERE c.codigo LIKE  concat(codigo_catalogo,'%') AND id_cierre = id_ciclo);
+		--Trae la suma de total1
+		IF debe > haber 
+			THEN
+				total1 := debe - haber;
+			ELSE
+				total1 := haber - debe;
+			END IF;
+				
 		totalCuentasR := (SELECT  Sum(r.debe) FROM catalogo c 
 					INNER JOIN registro_partida r ON r.catalogo_id = c.id	
 					INNER JOIN partida p ON p.id = r.partida_id
@@ -52,12 +62,16 @@ BEGIN
 						total1 := total1 - (totalCuentasR + totalCuentasR);
 		END IF;
 		--condicional si el id_cierre existe entonces modifica
-		IF EXISTS (SELECT * FROM registros_estados_resultado r WHERE r.id_cierre = id_ciclo and r.catalogo_id =	id_catalogoResumen)
+		IF EXISTS (SELECT * FROM registros_estados_resultado r
+		WHERE r.id_cierre = id_ciclo and r.catalogo_id =	id_catalogoResumen)
 		THEN
-				UPDATE registros_estados_resultado SET  total = total1, catalogo_id = id_catalogoResumen, id_cierre = id_ciclo 
+				UPDATE registros_estados_resultado 
+				SET  total_cuentas_segundo = total1, catalogo_id = id_catalogoResumen, id_cierre = id_ciclo, 
+				total_cuentas = 0, total_cuentas_tercer = 0
 				WHERE id = idRegistro_Resultado;
 		ELSE
-			INSERT INTO registros_estados_resultado (total, catalogo_id, id_cierre) VALUES(total1,id_catalogoResumen,id_ciclo);
+			INSERT INTO registros_estados_resultado (total_cuentas, total_cuentas_tercer, total_cuentas_segundo, catalogo_id, id_cierre) 
+			VALUES(0,0,total1,id_catalogoResumen,id_ciclo);
 		END IF;
 		RETURN NEW;
 		END
@@ -65,10 +79,6 @@ $BODY$
 LANGUAGE plpgsql;
 
 
---CREACIÓN DEL TRIGGER
-CREATE TRIGGER estado_resultadoSegundoNivel AFTER INSERT ON registro_partida
-FOR EACH ROW
-EXECUTE PROCEDURE func_TotalResultadoSegundoNivel();
 
 
 
@@ -88,6 +98,9 @@ $BODY$
 		idRegistro_Resultado INT := 0;
 		id_catalogoResumen INT := 0;
 		totalCuentasR FLOAT :=0;
+		debe FLOAT :=0;
+		haber FLOAT :=0;
+		
 BEGIN
 		--Trae el numero más alto del id de la tabla registros_estados_resultado y suma 1
 
@@ -106,10 +119,21 @@ BEGIN
 		WHERE r.id_cierre = id_ciclo and r.catalogo_id =	id_catalogoResumen);
 		
 		--Trae la suma de total1
-		total1 := (SELECT Sum(r.haber)+Sum(r.debe) FROM catalogo c 
+		debe := (SELECT Sum(r.debe) FROM catalogo c 
 					INNER JOIN registro_partida r ON r.catalogo_id = c.id	
 					INNER JOIN partida p ON p.id = r.partida_id
 					WHERE c.codigo LIKE  concat(codigo_catalogo,'%') AND id_cierre = id_ciclo);
+		haber := (SELECT Sum(r.haber) FROM catalogo c 
+					INNER JOIN registro_partida r ON r.catalogo_id = c.id	
+					INNER JOIN partida p ON p.id = r.partida_id
+					WHERE c.codigo LIKE  concat(codigo_catalogo,'%') AND id_cierre = id_ciclo);
+		--Trae la suma de total1
+		IF debe > haber 
+			THEN
+				total1 := debe - haber;
+			ELSE
+				total1 := haber - debe;
+			END IF;
 					
 		totalCuentasR := (SELECT  Sum(r.debe) FROM catalogo c 
 					INNER JOIN registro_partida r ON r.catalogo_id = c.id	
@@ -124,10 +148,13 @@ BEGIN
 		--condicional si el id_cierre existe entonces modifica
 		IF EXISTS (SELECT * FROM registros_estados_resultado r WHERE r.id_cierre = id_ciclo and r.catalogo_id =	id_catalogoResumen)
 		THEN
-				UPDATE registros_estados_resultado SET  total = total1, catalogo_id = id_catalogoResumen, id_cierre = id_ciclo 
+				UPDATE registros_estados_resultado 
+				SET  total_cuentas_tercer = total1, catalogo_id = id_catalogoResumen, id_cierre = id_ciclo, total_cuentas = 0,
+				total_cuentas_segundo =0
 				WHERE id = idRegistro_Resultado;
 		ELSE
-			INSERT INTO registros_estados_resultado (total, catalogo_id, id_cierre) VALUES(total1,id_catalogoResumen,id_ciclo);
+			INSERT INTO registros_estados_resultado (total_cuentas, total_cuentas_segundo ,total_cuentas_tercer, catalogo_id, id_cierre) 
+			VALUES(0,0,total1,id_catalogoResumen,id_ciclo);
 		END IF;
 		RETURN NEW;
 		END
@@ -135,10 +162,7 @@ $BODY$
 LANGUAGE plpgsql;
 
 
---CREACIÓN DEL TRIGGER
-CREATE TRIGGER estado_resultado AFTER INSERT ON registro_partida
-FOR EACH ROW
-EXECUTE PROCEDURE func_TotalResultado();
+
 
 
 
@@ -159,6 +183,9 @@ $BODY$
 		partida_id INT :=0;
 		total1 FLOAT :=0;
 		idRegistro_Resultado INT := 0;
+		debe FLOAT :=0;
+		haber FLOAT :=0;
+		
 		
 BEGIN
 		--Trae el numero más alto del id de la tabla registros_estados_resultado y suma 1
@@ -173,22 +200,31 @@ BEGIN
 		--Trae el id del registro
 		idRegistro_Resultado :=(SELECT id FROM registros_estados_resultado r WHERE r.id_cierre = id_ciclo and r.catalogo_id =	catalogo_id1);
 		--Trae la suma de total1
-		total1 := 
-				(
-					SELECT Sum(r.haber)+Sum(r.debe) FROM catalogo c 
+		debe := (SELECT Sum(r.debe) FROM catalogo c 
 					INNER JOIN registro_partida r ON r.catalogo_id = c.id	
 					INNER JOIN partida p ON p.id = r.partida_id
-					WHERE c.id = catalogo_id1 AND id_cierre = id_ciclo
-				);
+					WHERE c.id = catalogo_id1 AND id_cierre = id_ciclo);
+		haber := (SELECT Sum(r.haber) FROM catalogo c 
+					INNER JOIN registro_partida r ON r.catalogo_id = c.id	
+					INNER JOIN partida p ON p.id = r.partida_id
+					WHERE c.id = catalogo_id1 AND id_cierre = id_ciclo);
+		--Trae la suma de total1
+		IF debe > haber 
+			THEN
+				total1 := debe - haber;
+			ELSE
+				total1 := haber - debe;
+			END IF;
 	
 	
 		--condicional si el id_cierre existe entonces modifica
 		IF EXISTS (SELECT * FROM registros_estados_resultado r WHERE r.id_cierre = id_ciclo and r.catalogo_id =	catalogo_id1)
 		THEN
-			UPDATE registros_estados_resultado SET  total = total1, catalogo_id = catalogo_id1, id_cierre = id_ciclo
+			UPDATE registros_estados_resultado SET  total_cuentas = total1, catalogo_id = catalogo_id1, id_cierre = id_ciclo,
+			total_cuentas_segundo =0,total_cuentas_tercer =0
 			 WHERE id = idRegistro_Resultado;
 		ELSE
-			INSERT INTO registros_estados_resultado (total, catalogo_id, id_cierre) VALUES(total1,catalogo_id1,id_ciclo);
+			INSERT INTO registros_estados_resultado (total_cuentas,total_cuentas_segundo, total_cuentas_tercer, catalogo_id, id_cierre) VALUES(total1,0,0,catalogo_id1,id_ciclo);
 		END IF;
 		RETURN NEW;
 		END
@@ -200,3 +236,16 @@ LANGUAGE plpgsql;
 CREATE TRIGGER estado_resultadoMismoNivel AFTER INSERT ON registro_partida
 FOR EACH ROW
 EXECUTE PROCEDURE func_TotalResultadoMismoNivel();
+
+
+--CREACIÓN DEL TRIGGER
+CREATE TRIGGER estado_resultadoSegundoNivel AFTER INSERT ON registro_partida
+FOR EACH ROW
+EXECUTE PROCEDURE func_TotalResultadoSegundoNivel();
+
+
+
+
+
+
+INSERT INTO registro_partida (debe, haber,catalogo_id, partida_id) VALUES(2.5,0,144,2);
