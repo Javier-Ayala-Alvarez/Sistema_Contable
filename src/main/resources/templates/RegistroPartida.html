@@ -31,7 +31,7 @@
             <h5>Descripción: <label th:text="${p.descripcion}" ></label> </h5>
         </div>
         <div class="col-md-4">
-          <h4> Fecha: <label th:text="${#dates.format(p.fecha, 'dd-MM-yyyy HH:mm')}"></label> </h4>
+          <h4> Fecha: <label th:text="${#dates.format(p.fecha, 'dd-MM-yyyy')}"></label> </h4>
         </div>
     </div>
 
@@ -45,20 +45,20 @@
                     <label for="debe" class="col-form-label">
                         Debe
                     </label>
-                    <input type="number" id="debe" class="form-control" th:field="*{debe}">
+                    <input type="number" id="debe" class="form-control" step="0.01" th:field="*{debe}" min="0" required>
                 </div>
                 <div class="mb-3">
                     <label for="haber" class="col-form-label" >
                         Haber
                     </label>
-                    <input type="number" id="haber" class="form-control" th:field="*{haber}">
+                    <input type="number" id="haber" class="form-control"  step="0.01" th:field="*{haber}"  min="0" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="numeroCuenta" class="col-form-label">
                         Codigo de cuenta
                     </label>
-                    <input type="search" id="numeroCuenta"  class="form-control" th:field="*{catalogo.id}" th:oninput="getCuentas()">
+                    <input type="search" id="numeroCuenta"  class="form-control" th:field="*{catalogo.id}" th:oninput="getCuentas()" required>
 
 
 
@@ -81,18 +81,28 @@
 
                 </thead>
                 <tbody >
-                <tr th:each="registro,stat : ${p.registroPartidas}">
+                <tr th:each="registro,stat : ${p.registroPartidas}" >
                     <td th:text="${registro.debe}"></td>
                     <td th:text="${registro.haber}"></td>
-                    <td th:text="${registro.catalogo.id}"></td>
-                    <td ><button type="submit" th:value="${stat.count}" class="btn btn-danger">Eliminar</button></td>
+                    <td th:text="${registro.catalogo.id}" ></td>
+                    <td ><button type="submit" th:value="${stat.index}" class="btn btn-danger">Eliminar</button></td>
 
                 </tr>
 
                 </tbody>
 
             </table>
+
+            <div>
+                <h5><label th:text="${'Debe: $'+ debe}" ></label> </h5>
+                <h5><label th:text="${'Haber: $'+ haber}" ></label> </h5>
+            </div>
+
         </div>
+
+    </div>
+    <div class="row p-2 justify-content-center">
+
 
     </div>
 
