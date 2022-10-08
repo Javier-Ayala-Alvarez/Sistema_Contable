@@ -36,3 +36,14 @@ function getCuentas() {
         });
 
 }
+function guardarPartida(e){
+    e.preventDefault();
+    let debe = document.getElementById("idDebe").value;
+    let haber = document.getElementById("idHaber").value;
+    if (debe != haber){
+        alert("Verifique que debe sea igual a haber");
+        return;
+    }
+    document.formPartida.submit();
+
+}

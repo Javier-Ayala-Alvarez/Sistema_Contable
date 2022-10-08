@@ -4,6 +4,8 @@ import com.SistemaContable.model.DiegoMejia.Partida;
 import com.SistemaContable.model.DiegoMejia.RegistroPartida;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -52,8 +54,20 @@ public class RegistroPartidaController {
             return "redirect:/LibroDiario";
         }
         Partida p = (Partida) session.getAttribute("partidaSesion");
+        registroPartida.setPartida(p);
         p.getRegistroPartidas().add(registroPartida);
         return "redirect:/LibroDiario/registroPartida";
 
+    }
+
+    @GetMapping("/LibroDiario/registroPartida/delete/{id}")
+    String deleteRegistroPartida(@PathVariable("id")  String id, HttpSession session){
+        if (session.getAttribute("partidaSesion") == null) {
+            return "redirect:/LibroDiario";
+        }
+
+        Partida p = (Partida) session.getAttribute("partidaSesion");
+        p.getRegistroPartidas().remove(Integer.valueOf(id));
+        return "redirect:/LibroDiario/registroPartida";
     }
 }

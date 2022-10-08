@@ -7,7 +7,7 @@
 </head>
 <body>
 <datalist id="dataCuentas"  th:fragment="Optionbuscar">
-    <option th:each="valor : ${listaCatalogo}" th:value="${valor.codigo}" th:text="${valor.codigo +' '+ valor.nombre}"> </option>
+    <option th:each="valor : ${listaCatalogo}" th:value="${valor.id}" th:text="${valor.codigo +' '+ valor.nombre}"> </option>
 </datalist>
 
 

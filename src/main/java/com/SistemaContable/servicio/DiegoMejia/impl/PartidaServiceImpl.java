@@ -5,6 +5,7 @@ import com.SistemaContable.commons.GenericServiceApiImpl;
 import com.SistemaContable.model.DiegoMejia.Partida;
 import com.SistemaContable.servicio.DiegoMejia.Interfaces.PartidaServiceApi;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,4 +20,11 @@ public class PartidaServiceImpl extends GenericServiceApiImpl<Partida,Long>
     public CrudRepository <Partida,Long> getDao() {
         return partidaDaoApi;
     }
+
+
+    @Override
+    public Long getLastId() {
+        return partidaDaoApi.getLastId();
+    }
 }
+
