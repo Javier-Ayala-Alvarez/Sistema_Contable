@@ -7,12 +7,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class EstadoResultadoImpl implements EstadoResultadoInter {
     @Autowired
     EstadoResultadoInt estadoResultadoInt;
+
     @Override
-    public List<RegistrosEstadosResultado> mostrar() {
-        return estadoResultadoInt.mostrar();
+    public List<RegistrosEstadosResultado> mostrar(Integer dato) {
+        if (dato != null) {
+            return estadoResultadoInt.mostrar(dato);
+        } else {
+            Integer dato1 = 2021;
+            return estadoResultadoInt.mostrar(dato1);
+        }
+
     }
 }

@@ -36,15 +36,16 @@
                     <div class="col-md-6 align-self-end ">
 
 
-                        <form th:action="@{/Catalogo}" method="GET">
+                        <form th:action="@{/EstadoDeResultado}" method="GET">
                             <div class="row p-2">
                                 <div class="col-md-6">
-                                <select class="form-select form-select-sm" aria-label=".form-select-lg example" id="tipo_cuenta"
-                                       >
-                                    <option selected th:value="''">Seleccione El año</option>
-                                    <option th:value="'Resumen'">Resumen</option>
-                                    <option th:value="'Detalle'">Detalle</option>
-                                </select>
+                                <select class="form-select form-select-sm" aria-label=".form-select-lg example" id="dato" name="dato"
+                                        th:field="${anios}">
+                                    <option selected th:value="''">Seleccione el año ha buscar</option>
+                                        <option th:each="anio: ${anios}"
+                                                th:value="${#dates.year(anio.getFecha_fin())}"
+                                                th:text="${#dates.year(anio.getFecha_fin())}"/>
+                                    </select>
                                 </div>
                                 <div class="col-md-5 align-self-end ">
                                     <input type="submit" class="btn btn-primary col-8" value="Buscar"/>
@@ -52,6 +53,18 @@
                             </div>
                         </form>
                     </div>
+                </div>
+                <div class="row p-2">
+                    <div class="col-md-7"></div>
+                    <div class="col-md-5">
+                        <div class="col-md-12 align-self-end ">
+                        <a href="/Catalogo/reporte" class="btn btn-info col-8">
+                            Exportar Estado de resultado
+                        </a>
+
+                    </div>
+                    </div>
+
                 </div>
 
 
@@ -62,9 +75,8 @@
                             <tr>
                                 <th scope="col align-center">Código</th>
                                 <th scope="col">Nombre</th>
-                                <th scope="col">Saldo</th>
-                                <th scope="col">Saldo</th>
-                                <th scope="col">Saldo</th>
+                                <th scope="col" colspan="3"><center>Saldo</center></th>
+
                                 <th scope="col">Año</th>
 
                             </tr>
@@ -78,7 +90,7 @@
 
                                 <td th:text="${estado.total_cuentas_tercer}"/>
                                 <td th:text="${estado.total_cuentas_segundo}"/>
-                                <td th:text="${estado.getCicloContable().getFecha_fin().getYear()}"/>
+                                <td th:text="${#dates.year(estado.getCicloContable().getFecha_fin())}"/>
                             </tr>
 
 

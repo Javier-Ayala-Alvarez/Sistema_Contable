@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface EstadoResultadoInt extends JpaRepository<RegistrosEstadosResultado, Integer> {
-
-    @Query(value = "SELECT r FROM  RegistrosEstadosResultado r  WHERE r.cicloContable.id = 2 order by r.catalogo.codigo asc ")
-    public List<RegistrosEstadosResultado> mostrar();
+//error de datos
+    @Query(value = "SELECT r FROM  RegistrosEstadosResultado r  WHERE EXTRACT(YEAR from r.cicloContable.fecha_fin) = ?1 order by r.catalogo.codigo asc ")
+    public List<RegistrosEstadosResultado> mostrar(Integer dato);
 }
