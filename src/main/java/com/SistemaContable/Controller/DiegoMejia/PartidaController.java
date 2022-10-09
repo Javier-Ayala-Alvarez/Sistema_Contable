@@ -20,7 +20,7 @@ public class PartidaController {
     private PartidaServiceApi partidaServiceApi;
 
     @RequestMapping("/LibroDiario")
-    public String startViewDiario(Model model, HttpSession session) {
+    public String startViewDiario(Model model) {
 
         model.addAttribute("tituloDeLaPagina", "Libro Diario");
 
@@ -28,6 +28,15 @@ public class PartidaController {
 
         return "/LibroDiario";
     }
+
+    @GetMapping("/LibroDiario/detalle/{id}")
+    public String getPartidaById (Model model, @PathVariable("id")  String id) {
+
+        model.addAttribute("partidaRegistro",partidaServiceApi.get(Long.valueOf(id)));
+
+        return "/fragment/modalRegistrosPartida.html:: modalRegistroPartida";
+    }
+
 
     @PostMapping("/LibroDiario/save")
     public String savePartida(Partida partida, Model model, HttpSession sesion) {

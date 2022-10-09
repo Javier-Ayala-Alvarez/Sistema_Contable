@@ -71,7 +71,7 @@
 
             </form>
         </div>
-        <div class="col-6 align-items-center" th:onclick="">
+        <div class="col-6 align-items-center" id="tablaRegistroPartida">
             <table class="table text-center">
                 <thead>
                 <tr>
@@ -85,9 +85,9 @@
                 <tr th:each="registro,stat : ${p.registroPartidas}">
                     <td th:text="${registro.debe}"></td>
                     <td th:text="${registro.haber}"></td>
-                    <td th:text="${registro.catalogo.id}"></td>
+                    <td th:text="${registro.catalogo.codigo}"></td>
                     <td>
-                        <button type="button" th:value="${stat.index}" class="btn btn-danger" >Eliminar</button>
+                        <button type="button" th:value="${stat.index}" class="btn btn-danger" name = "deleteRegistro">Eliminar</button>
                     </td>
 
                 </tr>
@@ -106,7 +106,7 @@
             <div class="row p-2 ">
                 <div class="col-6">
                     <form method="post" th:action="@{/LibroDiario/saveBD}"
-                          name="formPartida" onsubmit="guardarPartida(e)">
+                          name="formPartida" id="formPartida">
 
                         <input type="hidden" th:value="${debe}" id="idDebe" th:name="nameDebe">
                         <input type="hidden" th:value="${haber}" id="idHaber" th:name="nameHaber">
@@ -131,7 +131,7 @@
 
 <th:block layout:fragment="page-scripts">
     <script type="text/javascript" th:src="@{/js/peticionesAjax.js}"></script>
-    <script type="text/javascript" th:src="@{/js/JsForLibroDiario.js}"></script>
+    <script type="text/javascript" th:src="@{/js/JsForRegistroPartida.js}"></script>
 
 </th:block>
 

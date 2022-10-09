@@ -67,7 +67,11 @@ public class RegistroPartidaController {
         }
 
         Partida p = (Partida) session.getAttribute("partidaSesion");
-        p.getRegistroPartidas().remove(Integer.valueOf(id));
+        RegistroPartida r = p.getRegistroPartidas().get(Integer.valueOf(id));
+        if(p.getRegistroPartidas().remove(r)){
+            System.out.println("exito");
+        }
+
         return "redirect:/LibroDiario/registroPartida";
     }
 }

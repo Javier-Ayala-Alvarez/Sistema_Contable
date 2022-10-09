@@ -17,8 +17,7 @@
     <!-- fin llamado Assets -->
 
 
-
-    <div class="row p-2 align-items-center" >
+    <div class="row p-2 align-items-center">
         <div class="col-md-4"></div>
         <div class="col-md-4 align-self-start ">
             <caption><h1 th:text="${tituloDeLaPagina}"/></caption>
@@ -28,14 +27,17 @@
     </div>
 
 
-  <div id="getPartida"></div>
+    <div id="getPartida"></div>
+    <div id="detallePartida"></div>
+
     <!--  llamado de la modal agregar partida -->
     <div class="row p-2 align-items-center">
 
         <div class="col-4">
             <a th:onclick="getModal()" class="btn btn-success col-8">
                 <i class="fas fa-user-plus"></i> Añadir partida</a>
-            <a  hidden class="btn btn-success col-8" data-bs-toggle="modal" data-bs-target="#modalPartida" id="openModal"> </a>
+            <a hidden class="btn btn-success col-8" data-bs-toggle="modal" data-bs-target="#modalPartida"
+               id="openModal"> </a>
         </div>
         <!-- fin llamado modal agregar partida -->
 
@@ -43,8 +45,7 @@
     </div>
     <div class="container">
         <h2 th:if="${list.isEmpty()}"> No existen Partidas</h2>
-        <div th:if="${!list.isEmpty()}">
-            <h2>Personas</h2>
+        <div th:if="${!list.isEmpty()}" id="tablaLibroDiario">
             <table class="table">
                 <thead>
                 <tr>
@@ -59,10 +60,16 @@
                 <tr th:each="partida : ${list}">
                     <td th:text="${partida.id}"></td>
                     <td th:text="${partida.descripcion}"></td>
-                    <td th:text="${partida.fecha}"></td>
+                    <td th:text="${#dates.format(partida.fecha, 'dd-MM-yyyy')}"></td>
 
 
-                    <td><a class="btn btn-warning">Ver registros</a></td>
+                    <td>
+                        <a  class="btn btn-warning col-8" th:value="${partida.id}" id="btnRegistroModal">
+                            <i class="fas fa-user-plus"></i> Ver registros</a>
+                        <a hidden class="btn btn-success col-8" data-bs-toggle="modal" data-bs-target="#modalRegistroPartida"
+                           id="openModalRegistro"> </a>
+
+                    </td>
 
                 </tr>
                 </tbody>
