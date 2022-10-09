@@ -1,3 +1,26 @@
+
+
+const tablaLibroDiario = document.getElementById("tablaLibroDiario");
+tablaLibroDiario.addEventListener("click" , e =>{
+    console.log(e.target.tagName)
+    if (e.target && e.target.tagName === "A" &&( e.target.getAttribute("id")) ==="btnRegistroModal" ) {
+        let url = "/LibroDiario/detalle/"+ e.target.getAttribute("value");
+
+        getData(url, null).then((response) => response.text())
+            .then(text => {
+
+                document.getElementById("detallePartida").innerHTML = text;
+                document.getElementById("openModalRegistro").click();
+            })
+            .catch(function (err) {
+                console.log(err);
+                alert("a ocurrido un errror"); // si ocurrio un error
+            });
+
+    }
+});
+
+
 function getModal() {
     let url = "LibroDiario/modal";
 
@@ -18,21 +41,6 @@ function sendFormModal() {
     document.formModal.submit();
 }
 
-function getCuentas() {
-    //dataCuentas
-    const input = document.getElementById("numeroCuenta");
-    const url = "/Catalogo/buscar/" + input.value;
-    const data = null;
-    getData(url, data).then((response) => response.text())
-        .then(text => {
-            let input = document.getElementById("numeroCuenta");
-            input.innerHTML = text;
-           input.setAttribute("list","dataCuentas")
 
-        })
-        .catch(function (err) {
-            console.log(err);
-            alert("a ocurrido un errror"); // si ocurrio un error
-        });
 
-}
+

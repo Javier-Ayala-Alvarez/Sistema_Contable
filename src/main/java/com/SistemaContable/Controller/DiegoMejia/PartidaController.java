@@ -6,15 +6,13 @@ import com.SistemaContable.servicio.DiegoMejia.Interfaces.PartidaServiceApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Optional;
 
 @Controller
 public class PartidaController {
@@ -22,7 +20,7 @@ public class PartidaController {
     private PartidaServiceApi partidaServiceApi;
 
     @RequestMapping("/LibroDiario")
-    public String startViewDiario(Model model, HttpSession session){
+    public String startViewDiario(Model model) {
 
         model.addAttribute("tituloDeLaPagina", "Libro Diario");
 
@@ -31,11 +29,26 @@ public class PartidaController {
         return "/LibroDiario";
     }
 
+    @GetMapping("/LibroDiario/detalle/{id}")
+    public String getPartidaById (Model model, @PathVariable("id")  String id) {
+
+        model.addAttribute("partidaRegistro",partidaServiceApi.get(Long.valueOf(id)));
+
+        return "/fragment/modalRegistrosPartida.html:: modalRegistroPartida";
+    }
+
+
     @PostMapping("/LibroDiario/save")
-    public String savePartida(Partida partida, Model model, HttpSession sesion){
-        if(partida.getDescripcion().isEmpty()){
+    public String savePartida(Partida partida, Model model, HttpSession sesion) {
+
+        if (partida.getDescripcion().isEmpty()) {
             return "redirect:/LibroDiario";
         }
+
+
+        Optional<Long> checkNull = Optional.ofNullable(partidaServiceApi.getLastId());
+        Long id = checkNull.isPresent() ? partidaServiceApi.getLastId() +1: 1;
+        partida.setId(id);
         partida.setFecha(new Date());
         partida.setActivo(true);
         partida.setRegistroPartidas(new ArrayList<>());
@@ -47,9 +60,24 @@ public class PartidaController {
     }
 
     @GetMapping("/LibroDiario/modal")
-    public String sendModalPartida( Model model){
-        model.addAttribute("partida",new Partida());
-    return "modalNuevaPartida.html :: modalPartida";
+    public String sendModalPartida(Model model) {
+        model.addAttribute("partida", new Partida());
+        return "modalNuevaPartida.html :: modalPartida";
+    }
+
+    @PostMapping("/LibroDiario/saveBD")
+    public String savePartidaBD(
+            @RequestParam("nameDebe") String debe,
+            @RequestParam("nameHaber") String haber,
+            HttpSession session) {
+
+        if (!debe.equals(haber)){
+            return "redirect:/LibroDiario/registroPartida";
+        }
+
+        Partida p = (Partida) session.getAttribute("partidaSesion");
+        partidaServiceApi.save(p);
+        return "redirect:/LibroDiario";
     }
 
 }

@@ -1,13 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head th:fragment="head"
+      th:replace="layout/layout :: head">
+
+
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Menu principal</title>
 
 </head>
 <body>
-<datalist id="dataCuentas"  th:fragment="Optionbuscar">
-    <option th:each="valor : ${listaCatalogo}" th:value="${valor.codigo}" th:text="${valor.codigo +' '+ valor.nombre}"> </option>
+<datalist id="dataCuentas" th:fragment="Optionbuscar">
+    <option th:each="valor : ${listaCatalogo}" th:value="${valor.codigo}"
+            th:text="${valor.codigo +' '+ valor.nombre}" th:name="${valor.id}"></option>
 </datalist>
 
 
