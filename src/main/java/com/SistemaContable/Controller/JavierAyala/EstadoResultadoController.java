@@ -164,7 +164,7 @@ public class EstadoResultadoController {
 
         });
 
-        RegistrosEstadosResultadoDAO registro = new RegistrosEstadosResultadoDAO(catalogoRepositoryInt.buscarCodigo("2101"));
+        RegistrosEstadosResultadoDAO registro = new RegistrosEstadosResultadoDAO(catalogoRepositoryInt.buscarCodigo("6"));
         registro.getCatalogo().setNombre("UTILIDAD OPERACIÓN");
         registro.setTotal_cuentas_segundo(String.valueOf(Precision.round(utilidadBruta - gastosOperaciones,2)));
         Double utilidadoperciones = Double.valueOf(registro.getTotal_cuentas_segundo());
