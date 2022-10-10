@@ -23,4 +23,13 @@ public class EstadoResultadoImpl implements EstadoResultadoInter {
         }
 
     }
+
+
+
+    public RegistrosEstadosResultado mostrarId(String id) {
+
+            return estadoResultadoInt.mostrarId(id);
+
+
+    }
 }

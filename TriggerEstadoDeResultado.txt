@@ -45,22 +45,14 @@ BEGIN
 					INNER JOIN partida p ON p.id = r.partida_id
 					WHERE c.codigo LIKE  concat(codigo_catalogo,'%') AND id_cierre = id_ciclo);
 		--Trae la suma de total1
-		IF debe > haber 
+		IF debe >= haber 
 			THEN
 				total1 := debe - haber;
 			ELSE
 				total1 := haber - debe;
 			END IF;
 				
-		totalCuentasR := (SELECT  Sum(r.debe) FROM catalogo c 
-					INNER JOIN registro_partida r ON r.catalogo_id = c.id	
-					INNER JOIN partida p ON p.id = r.partida_id
-					WHERE c.codigo LIKE  concat(codigo_catalogo,'%') 
-					AND id_cierre = id_ciclo AND c.codigo LIKE  '%R%');
-		IF totalCuentasR >0
-					THEN
-						total1 := total1 - (totalCuentasR + totalCuentasR);
-		END IF;
+	
 		--condicional si el id_cierre existe entonces modifica
 		IF EXISTS (SELECT * FROM registros_estados_resultado r
 		WHERE r.id_cierre = id_ciclo and r.catalogo_id =	id_catalogoResumen)
@@ -122,28 +114,19 @@ BEGIN
 		debe := (SELECT Sum(r.debe) FROM catalogo c 
 					INNER JOIN registro_partida r ON r.catalogo_id = c.id	
 					INNER JOIN partida p ON p.id = r.partida_id
-					WHERE c.codigo LIKE  concat(codigo_catalogo,'%') AND id_cierre = id_ciclo);
+					WHERE c.codigo LIKE  concat(codigo_catalogo,'%') AND id_cierre = id_ciclo); /*11000.00*/
 		haber := (SELECT Sum(r.haber) FROM catalogo c 
 					INNER JOIN registro_partida r ON r.catalogo_id = c.id	
 					INNER JOIN partida p ON p.id = r.partida_id
-					WHERE c.codigo LIKE  concat(codigo_catalogo,'%') AND id_cierre = id_ciclo);
+					WHERE c.codigo LIKE  concat(codigo_catalogo,'%') AND id_cierre = id_ciclo);/*24000.00*/
 		--Trae la suma de total1
-		IF debe > haber 
+		IF debe >= haber 
 			THEN
 				total1 := debe - haber;
 			ELSE
 				total1 := haber - debe;
 			END IF;
 					
-		totalCuentasR := (SELECT  Sum(r.debe) FROM catalogo c 
-					INNER JOIN registro_partida r ON r.catalogo_id = c.id	
-					INNER JOIN partida p ON p.id = r.partida_id
-					WHERE c.codigo LIKE  concat(codigo_catalogo,'%') 
-					AND id_cierre = id_ciclo AND c.codigo LIKE  '%R%');
-		IF totalCuentasR >0
-					THEN
-						total1 := total1 - (totalCuentasR + totalCuentasR);
-		END IF;
 		
 		--condicional si el id_cierre existe entonces modifica
 		IF EXISTS (SELECT * FROM registros_estados_resultado r WHERE r.id_cierre = id_ciclo and r.catalogo_id =	id_catalogoResumen)
@@ -209,7 +192,7 @@ BEGIN
 					INNER JOIN partida p ON p.id = r.partida_id
 					WHERE c.id = catalogo_id1 AND id_cierre = id_ciclo);
 		--Trae la suma de total1
-		IF debe > haber 
+		IF debe >= haber 
 			THEN
 				total1 := debe - haber;
 			ELSE
@@ -243,9 +226,26 @@ CREATE TRIGGER estado_resultadoSegundoNivel AFTER INSERT ON registro_partida
 FOR EACH ROW
 EXECUTE PROCEDURE func_TotalResultadoSegundoNivel();
 
+--CREACIÓN DEL TRIGGER
+CREATE TRIGGER estado_TotalResultado AFTER INSERT ON registro_partida
+FOR EACH ROW
+EXECUTE PROCEDURE func_TotalResultado();
 
 
 
 
 
-INSERT INTO registro_partida (debe, haber,catalogo_id, partida_id) VALUES(2.5,0,144,2);
+INSERT INTO registro_partida (debe, haber,catalogo_id, partida_id) VALUES(0,97345.13,206,2);/*Si VEntas*/
+INSERT INTO registro_partida (debe, haber,catalogo_id, partida_id) VALUES(2654.87,0,207,2);/*Si Rebajas sobre ventas*/
+INSERT INTO registro_partida (debe, haber,catalogo_id, partida_id) VALUES(100000,0,142,2);/*Si compras*/
+INSERT INTO registro_partida (debe, haber,catalogo_id, partida_id) VALUES(1700,0,143,2);/*Si gastos sobre compras*/
+INSERT INTO registro_partida (debe, haber,catalogo_id, partida_id) VALUES(0,13200,144,2);/*Si
+rebajas y devoluciones*/
+INSERT INTO registro_partida (debe, haber,catalogo_id, partida_id) VALUES(0,150000,43,1);/*Si
+inventario inicial*/
+INSERT INTO registro_partida (debe, haber,catalogo_id, partida_id) VALUES(0,200000,43,2);/*Si inventario final*/
+
+INSERT INTO registro_partida (debe, haber,catalogo_id, partida_id) VALUES(0,6110,13,2);/*Si*/
+
+
+

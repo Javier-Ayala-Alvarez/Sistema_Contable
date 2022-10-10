@@ -31,6 +31,10 @@ public class RegistroPartida {
     public RegistroPartida() {
     }
 
+    public RegistroPartida(Catalogo catalogo) {
+        this.catalogo = catalogo;
+    }
+
     public Catalogo getCatalogo() {
         return catalogo;
     }

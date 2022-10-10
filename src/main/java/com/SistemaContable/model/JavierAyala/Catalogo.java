@@ -20,13 +20,11 @@ public class Catalogo {
     private Integer id;
 
 
-    @Column(name = "codigo", length = 8, unique = true)//validando, nombre del campo, tamaño de 8 y debe ser unico
-   @NotBlank(message = "Debe ingresar el codigo")//si esta vacio mensaje de validación
+    @Column(name = "codigo", length = 8)//validando, nombre del campo, tamaño de 8 y debe ser unico
     private String codigo;
 
 
     @Column(name = "nombre")//validando, nombre del campo, tamaño de 8 y debe ser unico
-   @NotBlank(message = "Debe ingresar el nombre")//si esta vacio mensaje de validación
     //@Min(3)//minimo 5 carácteres
     private String nombre;
     @Column(name = "saldoCuenta")

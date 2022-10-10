@@ -1,12 +1,10 @@
 package com.SistemaContable.model.JavierAyala;
 
-import com.SistemaContable.model.DiegoMejia.RegistroPartida;
 import lombok.Data;
-import org.springframework.lang.NonNullFields;
 
 import javax.persistence.*;
 import javax.validation.constraints.Null;
-import java.text.DecimalFormat;
+import javax.validation.valueextraction.ExtractedValue;
 
 @Entity
 @Table(name="RegistrosEstadosResultado")

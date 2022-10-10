@@ -29,6 +29,7 @@
                 <div class="row p-2">
                     <div class="col-md-6 align-self-start ">
                         <caption><h1 th:text="${tituloDeLaPagina}"/></caption>
+                        <h2 th:text="'Año: '+${#dates.year(anioActual)}"/></h2>
                         <!--Muestra el mensaje que viene del back-end-->
                     </div>
 
@@ -73,24 +74,22 @@
 
                             <thead>
                             <tr>
-                                <th scope="col align-center">Código</th>
+                                <!--<th scope="col align-center">Código</th>-->
                                 <th scope="col">Nombre</th>
                                 <th scope="col" colspan="3"><center>Saldo</center></th>
 
-                                <th scope="col">Año</th>
 
                             </tr>
                             </thead>
                             <tbody>
                             <tbody>
                             <tr th:each="estado : ${estados}">
-                                <th scope="row" th:text="${estado.getCatalogo().codigo}"/>
-                                <td th:text="${estado.getCatalogo().nombre}"/>
+                             <!---   <th scope="row" th:text="${estado.getCatalogo().codigo}"/>-->
+                                <td th:text="${estado.getCatalogo().getNombre()}"/>
                                 <td th:text="${estado.total_cuentas}"/>
 
                                 <td th:text="${estado.total_cuentas_tercer}"/>
                                 <td th:text="${estado.total_cuentas_segundo}"/>
-                                <td th:text="${#dates.year(estado.getCicloContable().getFecha_fin())}"/>
                             </tr>
 
 
