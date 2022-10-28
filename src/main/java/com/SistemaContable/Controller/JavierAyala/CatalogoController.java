@@ -83,7 +83,8 @@ public class CatalogoController {
                     && catalogo.getTipoCuenta() != ""
                     && catalogo.getDescripcion() != ""
                     && catalogoServices.buscar("codigo", catalogo.getCodigo()) == "true") {
-
+//DATO
+            if(catalogoServices.validarCodigo(catalogo.getCodigo()) == true){
                 if (catalogoServices.validarCodigo(catalogo.getCodigo()) == true) {
                     if (bindingResult.hasErrors()) {
                         model.addAttribute("catalogo", catalogo);
@@ -97,6 +98,10 @@ public class CatalogoController {
                     redirect.addFlashAttribute("msgErrorNoExisteDatos", "activo");
                     return "redirect:/Catalogo";
                 }
+            }else{
+                redirect.addFlashAttribute("msgYaTieneSaldo", "activo");
+                return "redirect:/Catalogo";
+            }
             } else {
                 redirect.addFlashAttribute("msgErrorDatos", "activo");
                 return "redirect:/Catalogo";
