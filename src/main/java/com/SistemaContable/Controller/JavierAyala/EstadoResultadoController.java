@@ -7,12 +7,15 @@ import com.SistemaContable.Repository.JavierAyala.Interfaces.RegistrosPartidaRep
 import com.SistemaContable.model.JavierAyala.RegistrosEstadosResultado;
 import com.SistemaContable.model.JavierAyala.RegistrosEstadosResultadoDAO;
 import com.SistemaContable.servicio.JavierAyala.ServicesImplements.EstadoResultadoImpl;
+import net.sf.jasperreports.engine.JRException;
 import org.apache.commons.math3.util.Precision;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -42,7 +45,12 @@ public class EstadoResultadoController {
     Double costoVenta = 0.0;
     Double utilidadBruta = 0.0;
     Double gastosOperaciones = 0.0;
+    @GetMapping("/reporte")
+    public ResponseEntity<byte[]> getCatalogoReportPDF() throws JRException, FileNotFoundException {
 
+        return estadoResultado.exportReport();
+
+    }
 
     @GetMapping("/EstadoDeResultado")
     public String EstadoDeResultado(Model model, Integer dato) {
