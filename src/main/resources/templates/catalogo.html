@@ -316,6 +316,16 @@
             })
         </script>
     </div>
+    <div th:if="${msgYaTieneSaldo != null}">
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'No se puede eliminar esta cuenta por que ya fue utilizada y tiene saldo!',
+
+            })
+        </script>
+    </div>
     <div th:if="${msgErrorDatos != null}">
         <script>
             Swal.fire({

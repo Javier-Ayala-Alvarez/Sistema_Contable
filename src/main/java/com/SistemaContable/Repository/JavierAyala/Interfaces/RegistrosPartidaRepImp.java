@@ -13,6 +13,8 @@ public interface RegistrosPartidaRepImp extends JpaRepository<RegistroPartida, L
     @Query("SELECT r FROM RegistroPartida r where r.catalogo.codigo = '1109' AND EXTRACT(YEAR from r.partida.cicloContable.fecha_fin) <= ?1 order by r.partida.cicloContable.fecha_fin desc ")
     public List<RegistroPartida> mostrarPartida(Integer anio);
 
+    @Query("select count(r) from RegistroPartida r where r.catalogo.id = ?1")
+    public int numeroRegistrosSaldo(Integer id);
 
 }
 

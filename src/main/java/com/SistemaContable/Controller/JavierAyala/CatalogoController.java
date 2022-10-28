@@ -1,6 +1,7 @@
 package com.SistemaContable.Controller.JavierAyala;
 
 import com.SistemaContable.Repository.JavierAyala.Interfaces.CatalogoRepositoryInt;
+import com.SistemaContable.Repository.JavierAyala.Interfaces.RegistrosPartidaRepImp;
 import com.SistemaContable.model.JavierAyala.Catalogo;
 import com.SistemaContable.servicio.JavierAyala.ServicesImplements.CatalogoServices;
 
@@ -31,6 +32,9 @@ public class CatalogoController {
 
     @Autowired
     private CatalogoRepositoryInt catalogoRespositoryInt;
+
+    @Autowired
+    private RegistrosPartidaRepImp registrosPartidaRepImp;
 
     @GetMapping()
     public String catalogo(@RequestParam Map<String, Object> params, Model model, Catalogo catalogo, String buscar) {
@@ -66,13 +70,13 @@ public class CatalogoController {
         return catalogoServices.exportReport();
 
     }
+
     @GetMapping("/manual")
     public ResponseEntity<byte[]> getCatalogomanual() throws JRException, FileNotFoundException {
 
         return catalogoServices.exportManual();
 
     }
-
 
 
     @PostMapping()
@@ -84,7 +88,7 @@ public class CatalogoController {
                     && catalogo.getDescripcion() != ""
                     && catalogoServices.buscar("codigo", catalogo.getCodigo()) == "true") {
 //DATO
-            if(catalogoServices.validarCodigo(catalogo.getCodigo()) == true){
+
                 if (catalogoServices.validarCodigo(catalogo.getCodigo()) == true) {
                     if (bindingResult.hasErrors()) {
                         model.addAttribute("catalogo", catalogo);
@@ -98,10 +102,7 @@ public class CatalogoController {
                     redirect.addFlashAttribute("msgErrorNoExisteDatos", "activo");
                     return "redirect:/Catalogo";
                 }
-            }else{
-                redirect.addFlashAttribute("msgYaTieneSaldo", "activo");
-                return "redirect:/Catalogo";
-            }
+
             } else {
                 redirect.addFlashAttribute("msgErrorDatos", "activo");
                 return "redirect:/Catalogo";
@@ -150,20 +151,27 @@ public class CatalogoController {
         Catalogo catalogo = catalogoRespositoryInt.getById(id);//Busca por id
         int size = catalogoServices.searchLike(catalogo.getCodigo());
         if (size == 1) {
-            catalogoServices.delete(catalogo);//Eliminado
-            redirect.addFlashAttribute("msgExito", "activo");
+            if (this.registrosPartidaRepImp.numeroRegistrosSaldo(catalogo.getId()) <= 0) {
+
+                catalogoServices.delete(catalogo);//Eliminado
+                redirect.addFlashAttribute("msgExito", "activo");
+            } else {
+                redirect.addFlashAttribute("msgYaTieneSaldo", "activo");
+                return "redirect:/Catalogo";
+            }
         } else {
             redirect.addFlashAttribute("msgErrorELiminarCuenta", "activo");
         }
+
 
         return "redirect:/Catalogo";
     }
 
 
     @GetMapping("/buscar/{textoBuscar}")
-    String searchByLike(Model model ,@PathVariable("textoBuscar")  String textoBuscar){
+    String searchByLike(Model model, @PathVariable("textoBuscar") String textoBuscar) {
         List<Catalogo> listaCatalogo = catalogoServices.BuscarOpcionesCatalogo(textoBuscar);
-        model.addAttribute("listaCatalogo",listaCatalogo);
+        model.addAttribute("listaCatalogo", listaCatalogo);
 
 
         return "fragment/buscarOption.html :: Optionbuscar";
