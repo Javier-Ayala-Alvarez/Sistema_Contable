@@ -5,42 +5,42 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="126"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="863"/>
-
 	<queryString language="SQL">
-		<![CDATA[SELECT ca.nombre,r.total_cuentas,r.total_cuentas_segundo,r.total_cuentas_tercer, p.fecha  FROM  registros_estados_resultado r  
-INNER JOIN catalogo ca on r.catalogo_id = ca."id"
-INNER JOIN partida p on p.id_cierre = r.id_cierre]]>
+		<![CDATA[select * from estado_resultado]]>
 	</queryString>
-	<field name="nombre" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
-
+	<field name="id" class="java.lang.Integer">
 	</field>
-	<field name="total_cuentas" class="java.lang.Float">
+	<field name="dato1" class="java.lang.String">
 		</field>
-	<field name="total_cuentas_segundo" class="java.lang.Float">
-		</field>
-	<field name="total_cuentas_tercer" class="java.lang.Float">
+	<field name="dato2" class="java.lang.String">
 	</field>
+	<field name="dato3" class="java.lang.String">
+		</field>
 	<field name="fecha" class="java.sql.Timestamp">
+		</field>
+	<field name="nombre" class="java.lang.String">
 	</field>
-
+	<group name="nombre">
+		<groupExpression><![CDATA[$F{nombre}]]></groupExpression>
+	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="95" splitType="Stretch">
+		<band height="105" splitType="Stretch">
 			<staticText>
-				<reportElement x="9" y="40" width="535" height="30" uuid="ac1efc34-2901-426c-9f4f-c93d450a3b04"/>
+				<reportElement x="0" y="50" width="420" height="30" uuid="ac1efc34-2901-426c-9f4f-c93d450a3b04"/>
 				<textElement textAlignment="Center">
 					<font size="16" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Cátalogo de Cuentas]]></text>
+				<text><![CDATA[Estado de Resultado del 1 de enero al 31 de diciembre del]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="9" y="10" width="535" height="30" uuid="0d84a3d3-2ad1-4725-9008-72177e9f0818"/>
-				<textElement textAlignment="Center">
-					<font size="19" isBold="true"/>
+				<reportElement x="430" y="50" width="115" height="30" uuid="4a1677a2-65ff-464f-90a3-e2b3fabcd38e"/>
+				<textElement>
+					<font size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha} ]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -96,31 +96,28 @@ INNER JOIN partida p on p.id_cierre = r.id_cierre]]>
 				<reportElement x="0" y="22" width="560" height="1" uuid="a6e8398d-8815-41da-8e03-864c6b661cc9"/>
 			</line>
 			<textField>
-				<reportElement x="9" y="0" width="240" height="20" uuid="bc1d0417-7197-427e-936d-94c02e9eb4f3">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="37fa4bfd-6d44-4370-b003-3ed269c4447f"/>
+				<reportElement x="0" y="0" width="249" height="22" uuid="6e0ffcee-0f51-41d4-8ab0-aafe92f00eda">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="49da081f-453e-469f-be07-ae2c5270eb9c"/>
 				</reportElement>
-				<textElement>
-					<font size="12"/>
-				</textElement>
 				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="369" y="0" width="80" height="20" uuid="0c9c33d0-102e-441d-834c-156cb7d3beba">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e601098b-dce0-43c9-8a0e-66578a5a2048"/>
+				<reportElement x="251" y="0" width="119" height="22" uuid="048142e5-3b6c-452e-b2bf-faa258be8f42">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a4611b3e-117e-4010-86a0-fc1bfab4441c"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{total_cuentas_tercer}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{dato1}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="472" y="0" width="80" height="20" uuid="6fc87226-0f45-42cc-a722-0d2173e29698">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="02f5d900-bed0-45e2-90b0-5fd4639267ff"/>
+				<reportElement x="370" y="0" width="100" height="22" uuid="a6f9f410-ca95-41a9-9e3a-e60c0e502e74">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5c275c13-253d-4999-b1c7-100585f205d6"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{total_cuentas_segundo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{dato2}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="260" y="0" width="85" height="20" uuid="b7d8c8a4-b005-4a7f-a2bc-f4ad99c9a874">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c56a6880-6695-497d-87d7-b71f7d8210cc"/>
+				<reportElement x="470" y="0" width="82" height="22" uuid="2e81cde2-7244-4e73-a33d-b7a233ef53ca">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d712a282-421f-4dfa-a0dc-b29e2126d9ad"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{total_cuentas}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{dato3}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

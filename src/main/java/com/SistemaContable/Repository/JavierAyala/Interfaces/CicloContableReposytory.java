@@ -9,5 +9,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface CicloContableReposytory extends JpaRepository<CicloContable, Integer> {
-
+    @Query("select  EXTRACT(YEAR from r.fecha_fin) from CicloContable r ")
+    public int[] anioactual();
 }

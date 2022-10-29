@@ -16,5 +16,7 @@ public interface RegistrosPartidaRepImp extends JpaRepository<RegistroPartida, L
     @Query("select count(r) from RegistroPartida r where r.catalogo.id = ?1")
     public int numeroRegistrosSaldo(Integer id);
 
+
+
 }
 

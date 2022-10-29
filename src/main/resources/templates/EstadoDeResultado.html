@@ -40,13 +40,21 @@
                         <form th:action="@{/EstadoDeResultado}" method="GET">
                             <div class="row p-2">
                                 <div class="col-md-6">
-                                <select class="form-select form-select-sm" aria-label=".form-select-lg example" id="dato" name="dato"
-                                        th:field="${anios}">
-                                    <option selected th:value="''">Seleccione el año ha buscar</option>
+
+
+                                   <input type="number" class="form-control" name="dato" id="dato"
+                                          th:value="${dato}"
+                                          placeholder="Buscar...">
+                                    <!--
+                                    <select class="form-select form-select-sm" aria-label=".form-select-lg example"
+                                            name="dato"
+                                            th:field="${anios}" th:value="${dato}">
+
                                         <option th:each="anio: ${anios}"
                                                 th:value="${#dates.year(anio.getFecha_fin())}"
-                                                th:text="${#dates.year(anio.getFecha_fin())}"/>
+                                                th:text="${#dates.year(anio.getFecha_fin())}" id="dato" name="dato"/>
                                     </select>
+                                    -->
                                 </div>
                                 <div class="col-md-5 align-self-end ">
                                     <input type="submit" class="btn btn-primary col-8" value="Buscar"/>
@@ -59,47 +67,50 @@
                     <div class="col-md-7"></div>
                     <div class="col-md-5">
                         <div class="col-md-12 align-self-end ">
-                        <a href="/reporte" class="btn btn-info col-8">
-                            Exportar Estado de resultado
-                        </a>
+                            <a href="/reporte" class="btn btn-info col-8">
+                                Exportar Estado de resultado
+                            </a>
 
-                    </div>
+                        </div>
                     </div>
 
                 </div>
 
 
-                    <div class="col-md-12">
-                        <table class="table caption-top">
+                <div class="col-md-12">
+                    <table class="table caption-top">
 
-                            <thead>
-                            <tr>
-                                <!--<th scope="col align-center">Código</th>-->
-                                <th scope="col">Nombre</th>
-                                <th scope="col" colspan="3"><center>Saldo</center></th>
-
-
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tbody>
-                            <tr th:each="estado : ${estados}">
-                             <!---   <th scope="row" th:text="${estado.getCatalogo().codigo}"/>-->
-                                <td th:text="${estado.getCatalogo().getNombre()}"/>
-                                <td th:text="${estado.total_cuentas}"/>
-
-                                <td th:text="${estado.total_cuentas_tercer}"/>
-                                <td th:text="${estado.total_cuentas_segundo}"/>
-                            </tr>
+                        <thead>
+                        <tr>
+                            <!--<th scope="col align-center">Código</th>-->
+                            <th scope="col">Nombre</th>
+                            <th scope="col" colspan="3">
+                                <center>Saldo</center>
+                            </th>
 
 
-                            </tbody>
-                        </table>
-                    </div>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tbody>
+                        <tr th:each="estado : ${estados}">
+                            <!---   <th scope="row" th:text="${estado.getCatalogo().codigo}"/>-->
+                            <td th:text="${estado.getNombre()}"/>
+                            <td th:text="${estado.getDato1()}"/>
+
+                            <td th:text="${estado.getDato2()}"/>
+                            <td th:text="${estado.getDato3()}"/>
+                        </tr>
+
+
+                        </tbody>
+                    </table>
+                    <p th:text="${pie}"></p>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 
 </div>

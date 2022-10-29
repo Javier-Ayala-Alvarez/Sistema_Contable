@@ -26,12 +26,9 @@ public class EstadoResultadoImpl implements EstadoResultadoInter {
 
     @Override
     public List<RegistrosEstadosResultado> mostrar(Integer dato) {
-        if (dato != null) {
+
             return estadoResultadoInt.mostrar(dato);
-        } else {
-            Integer dato1 = 2021;
-            return estadoResultadoInt.mostrar(dato1);
-        }
+
 
     }
 
@@ -43,27 +40,5 @@ public class EstadoResultadoImpl implements EstadoResultadoInter {
 
 
     }
-    public ResponseEntity<byte[]> exportReport() throws FileNotFoundException, JRException {
-        try {
-            List<RegistrosEstadosResultado> registro =this.estadoResultadoInt.mostrar(2021); //= catalogoRepositoryInt.findAll(Sort.by("codigo").ascending());
-            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(registro);
-            final HashMap<String, Object> parameters = new HashMap<>();
-            parameters.put("nombreempresa1"," nombreempresa1");
-            JasperPrint empReport = JasperFillManager.fillReport(JasperCompileManager.compileReport(ResourceUtils.getFile("classpath:EstadoResultado.jrxml").getAbsolutePath()) // path of the jasper report
-                    , parameters //empParams dynamic parameters
-                    ,dataSource);
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_PDF);
 
-
-            headers.setContentDispositionFormData("filename", "EstadoResultado.pdf");
-
-
-            return new ResponseEntity<byte[]>(JasperExportManager.exportReportToPdf(empReport), headers, HttpStatus.OK);
-
-        } catch (Exception e) {
-            return new ResponseEntity<byte[]>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-    }
 }
