@@ -9,16 +9,34 @@
 		<![CDATA[select * from estado_resultado]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="estado_resultado"/>
 	</field>
 	<field name="dato1" class="java.lang.String">
-		</field>
+		<property name="com.jaspersoft.studio.field.name" value="dato1"/>
+		<property name="com.jaspersoft.studio.field.label" value="dato1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="estado_resultado"/>
+	</field>
 	<field name="dato2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="dato2"/>
+		<property name="com.jaspersoft.studio.field.label" value="dato2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="estado_resultado"/>
 	</field>
 	<field name="dato3" class="java.lang.String">
-		</field>
-	<field name="fecha" class="java.sql.Timestamp">
-		</field>
+		<property name="com.jaspersoft.studio.field.name" value="dato3"/>
+		<property name="com.jaspersoft.studio.field.label" value="dato3"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="estado_resultado"/>
+	</field>
+	<field name="fecha" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fecha"/>
+		<property name="com.jaspersoft.studio.field.label" value="fecha"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="estado_resultado"/>
+	</field>
 	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="estado_resultado"/>
 	</field>
 	<group name="nombre">
 		<groupExpression><![CDATA[$F{nombre}]]></groupExpression>
@@ -36,11 +54,11 @@
 				<text><![CDATA[Estado de Resultado del 1 de enero al 31 de diciembre del]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="430" y="50" width="115" height="30" uuid="4a1677a2-65ff-464f-90a3-e2b3fabcd38e"/>
+				<reportElement x="430" y="50" width="114" height="30" uuid="2d1672b7-f374-4e48-b799-0698b515db8f"/>
 				<textElement>
 					<font size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{fecha} ]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>

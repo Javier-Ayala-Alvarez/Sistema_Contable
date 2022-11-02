@@ -24,9 +24,9 @@ public class EstadoResultado {
     private String dato3;
 
     @Column(name = "fecha")
-    private Date fecha;
+    private String fecha;
 
-    public EstadoResultado(String nombre, String dato1, String dato2, String dato3, Date fecha) {
+    public EstadoResultado(String nombre, String dato1, String dato2, String dato3, String fecha) {
         this.nombre = nombre;
         this.dato1 = dato1;
         this.dato2 = dato2;

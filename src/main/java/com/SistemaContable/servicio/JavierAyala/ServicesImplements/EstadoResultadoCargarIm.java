@@ -18,7 +18,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
 import java.io.FileNotFoundException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 @Service
@@ -42,6 +45,9 @@ public class EstadoResultadoCargarIm implements EstadoResultadoCargarIn {
     public void cargaDatosEstado(Integer anio) {
         List<RegistrosEstadosResultadoDAO> estado = new ArrayList<>();
         List<RegistrosEstadosResultado> registrosBase = new ArrayList<>();
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yy");
+
+
         //-----------------------------------------------Areglar fecha-------------------------------------//
         estadoResultadoPercistencia.deleteAll();//Elimina los arcivos que ya estan.
         registrosBase = this.estadoResultado.mostrar(anio);
@@ -53,7 +59,7 @@ public class EstadoResultadoCargarIm implements EstadoResultadoCargarIn {
                         ((c.getTotal_cuentas() > 0) ? String.valueOf(c.getTotal_cuentas()) : ""),
                         ((c.getTotal_cuentas_tercer() > 0) ? String.valueOf(c.getTotal_cuentas_tercer()) : ""),
                         ((c.getTotal_cuentas_segundo() > 0) ? String.valueOf(c.getTotal_cuentas_segundo()) : ""),
-                        c.getCicloContable().getFecha_fin());
+                        String.valueOf(anio));
                 if (c.getCatalogo().getCodigo().equals("51")) {
                     c.getCatalogo().setNombre("VENTAS NETAS");
                     ventasNetas = Double.valueOf(c.getTotal_cuentas_segundo());
@@ -72,7 +78,7 @@ public class EstadoResultadoCargarIm implements EstadoResultadoCargarIn {
                         ((c.getTotal_cuentas() > 0) ? String.valueOf(c.getTotal_cuentas()) : ""),
                         ((c.getTotal_cuentas_tercer() > 0) ? String.valueOf(c.getTotal_cuentas_tercer()) : ""),
                         ((c.getTotal_cuentas_segundo() > 0) ? String.valueOf(c.getTotal_cuentas_segundo()) : ""),
-                        c.getCicloContable().getFecha_fin());
+                        String.valueOf(anio));
                 if (c.getCatalogo().getCodigo().equals("41")) {
                     c.getCatalogo().setNombre("COMPRAS NETAS");
                     comprasNetas = Double.valueOf(c.getTotal_cuentas_segundo());
@@ -89,23 +95,23 @@ public class EstadoResultadoCargarIm implements EstadoResultadoCargarIn {
             //Float total_cuentas_segundo, Catalogo catalogo, CicloContable cicloContable
 
             if (registrosPartidaRepImp.mostrarPartida(anio).size() >= 1) {
-                EstadoResultado registro = new EstadoResultado("INVENTARIO INICIAL","",String.valueOf(registrosPartidaRepImp.mostrarPartida(anio).get(1).getHaber()), "", this.estadoResultado.mostrar(anio).get(1).getCicloContable().getFecha_fin());
+                EstadoResultado registro = new EstadoResultado("INVENTARIO INICIAL","",String.valueOf(registrosPartidaRepImp.mostrarPartida(anio).get(1).getHaber()), "", String.valueOf(anio));
                 estadoResultadoPercistencia.save(registro);
                 balanceIncial = Double.valueOf(registro.getDato2());
 
-                EstadoResultado registro1 = new EstadoResultado("MERCADERIA DISPONIBLE PARA LA VENTA","","",String.valueOf(Precision.round(comprasNetas + balanceIncial,2)) , this.estadoResultado.mostrar(anio).get(1).getCicloContable().getFecha_fin());
+                EstadoResultado registro1 = new EstadoResultado("MERCADERIA DISPONIBLE PARA LA VENTA","","",String.valueOf(Precision.round(comprasNetas + balanceIncial,2)) , String.valueOf(anio));
                 mercancia = Double.valueOf(String.valueOf(Precision.round(comprasNetas + balanceIncial,2)));
                 estadoResultadoPercistencia.save(registro1);
 
-                EstadoResultado registro2 = new EstadoResultado("INVENTARIO FINAL","",String.valueOf(registrosPartidaRepImp.mostrarPartida(anio).get(0).getHaber()), "", this.estadoResultado.mostrar(anio).get(1).getCicloContable().getFecha_fin());
+                EstadoResultado registro2 = new EstadoResultado("INVENTARIO FINAL","",String.valueOf(registrosPartidaRepImp.mostrarPartida(anio).get(0).getHaber()), "", String.valueOf(anio));
                 estadoResultadoPercistencia.save(registro2);
                 balance = Double.valueOf(registro2.getDato2());
 
-                EstadoResultado registro3 = new EstadoResultado("COSTO DE VENTA","","", String.valueOf(Precision.round(mercancia - balance,2)), this.estadoResultado.mostrar(anio).get(1).getCicloContable().getFecha_fin());
+                EstadoResultado registro3 = new EstadoResultado("COSTO DE VENTA","","", String.valueOf(Precision.round(mercancia - balance,2)), String.valueOf(anio));
                 estadoResultadoPercistencia.save(registro3);
                 costoVenta = Double.valueOf(String.valueOf(Precision.round(mercancia - balance,2)));
 
-                EstadoResultado registro4 = new EstadoResultado("UTILIDAD BRUTA","","",String.valueOf(Precision.round(ventasNetas - costoVenta,2)), this.estadoResultado.mostrar(anio).get(1).getCicloContable().getFecha_fin());
+                EstadoResultado registro4 = new EstadoResultado("UTILIDAD BRUTA","","",String.valueOf(Precision.round(ventasNetas - costoVenta,2)), String.valueOf(anio));
                 estadoResultadoPercistencia.save(registro4);
                 utilidadBruta = Double.valueOf(String.valueOf(Precision.round(ventasNetas - costoVenta,2)));
 
@@ -127,7 +133,7 @@ public class EstadoResultadoCargarIm implements EstadoResultadoCargarIn {
                         ((c.getTotal_cuentas() > 0) ? String.valueOf(c.getTotal_cuentas()) : ""),
                         ((c.getTotal_cuentas_tercer() > 0) ? String.valueOf(c.getTotal_cuentas_tercer()) : ""),
                         ((c.getTotal_cuentas_segundo() > 0) ? String.valueOf(c.getTotal_cuentas_segundo()) : ""),
-                        c.getCicloContable().getFecha_fin());
+                        String.valueOf(anio));
                 if (c.getCatalogo().getCodigo().equals("42")) {
                     gastosOperaciones = Double.valueOf(Precision.round(c.getTotal_cuentas_segundo(),2));
                 }
@@ -136,21 +142,21 @@ public class EstadoResultadoCargarIm implements EstadoResultadoCargarIn {
 
         });
 
-        EstadoResultado registro4 = new EstadoResultado("UTILIDAD OPERACIÓN","","",String.valueOf(Precision.round(utilidadBruta - gastosOperaciones,2)), this.estadoResultado.mostrar(anio).get(1).getCicloContable().getFecha_fin());
+        EstadoResultado registro4 = new EstadoResultado("UTILIDAD OPERACIÓN","","",String.valueOf(Precision.round(utilidadBruta - gastosOperaciones,2)), String.valueOf(anio));
         estadoResultadoPercistencia.save(registro4);
         Double utilidadoperciones = Double.valueOf(String.valueOf(Precision.round(utilidadBruta - gastosOperaciones,2)));
 
-        EstadoResultado registro5 = new EstadoResultado("RESERVA LEGAL","","",String.valueOf(Precision.round((utilidadoperciones * 0.07),2)), this.estadoResultado.mostrar(anio).get(1).getCicloContable().getFecha_fin());
+        EstadoResultado registro5 = new EstadoResultado("RESERVA LEGAL","","",String.valueOf(Precision.round((utilidadoperciones * 0.07),2)), String.valueOf(anio));
         estadoResultadoPercistencia.save(registro5);
 
-        EstadoResultado registro7 = new EstadoResultado("UTILIDAD ANTES DE IMPUESTOS","","",String.valueOf(Precision.round((utilidadoperciones-utilidadoperciones * 0.07),2)), this.estadoResultado.mostrar(anio).get(1).getCicloContable().getFecha_fin());
+        EstadoResultado registro7 = new EstadoResultado("UTILIDAD ANTES DE IMPUESTOS","","",String.valueOf(Precision.round((utilidadoperciones-utilidadoperciones * 0.07),2)), String.valueOf(anio));
         estadoResultadoPercistencia.save(registro7);
         Double utilididadImpuesto = Double.valueOf(String.valueOf(Precision.round((utilidadoperciones-utilidadoperciones * 0.07),2)));
 
-        EstadoResultado registro8 = new EstadoResultado("IMPUESTO SOBRE LA RENTA","","",String.valueOf(Precision.round((utilididadImpuesto * 0.25),2)), this.estadoResultado.mostrar(anio).get(1).getCicloContable().getFecha_fin());
+        EstadoResultado registro8 = new EstadoResultado("IMPUESTO SOBRE LA RENTA","","",String.valueOf(Precision.round((utilididadImpuesto * 0.25),2)), String.valueOf(anio));
         estadoResultadoPercistencia.save(registro8);
 
-        EstadoResultado registro9 = new EstadoResultado("UTILIDAD DEL EJERCICIO","","",String.valueOf(Precision.round((utilididadImpuesto-(utilididadImpuesto * 0.25)),2)), this.estadoResultado.mostrar(anio).get(1).getCicloContable().getFecha_fin());
+        EstadoResultado registro9 = new EstadoResultado("UTILIDAD DEL EJERCICIO","","",String.valueOf(Precision.round((utilididadImpuesto-(utilididadImpuesto * 0.25)),2)), String.valueOf(anio));
         estadoResultadoPercistencia.save(registro9);
 
 
