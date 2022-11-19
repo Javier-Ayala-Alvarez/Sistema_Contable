@@ -95,21 +95,21 @@ public class CatalogoController {
                         return "Catalogo";
                     }
                     catalogoServices.save(catalogo);
-                    redirect.addFlashAttribute("msgExito", "activo");
+                    redirect.addFlashAttribute("msgExito", "Se ha guardado con éxito");
                     return "redirect:/Catalogo";
 
                 } else {
-                    redirect.addFlashAttribute("msgErrorNoExisteDatos", "activo");
+                    redirect.addFlashAttribute("msgError", "No se puede agregar, Está cuenta no tiene cuenta principal!");
                     return "redirect:/Catalogo";
                 }
 
             } else {
-                redirect.addFlashAttribute("msgErrorDatos", "activo");
+                redirect.addFlashAttribute("msgError", "Estos datos ya éxiste ó campos vacíos!");
                 return "redirect:/Catalogo";
             }
 
         } else {
-            redirect.addFlashAttribute("msgExito", "activo");
+            redirect.addFlashAttribute("msgExito", "Se ha guardado con éxito");
             return "redirect:/Catalogo";
         }
 
@@ -136,10 +136,10 @@ public class CatalogoController {
                 && catalogo.getDescripcion() != ""
                 && catalogoServices.buscar("nombre", catalogo.getNombre()) == "true") {
             catalogoServices.save(catalogo);
-            redirect.addFlashAttribute("msgExito", "activo");
+            redirect.addFlashAttribute("msgExito", "Se a modificado con éxito");
             return "redirect:/Catalogo";
         } else {
-            redirect.addFlashAttribute("msgExito", "activo");
+            redirect.addFlashAttribute("msgExito", "Se a modificado con éxito");
             return "redirect:/Catalogo";
         }
 
@@ -154,13 +154,13 @@ public class CatalogoController {
             if (this.registrosPartidaRepImp.numeroRegistrosSaldo(catalogo.getId()) <= 0) {
 
                 catalogoServices.delete(catalogo);//Eliminado
-                redirect.addFlashAttribute("msgExito", "activo");
+                redirect.addFlashAttribute("msgExito", "Se ha eliminado con éxito!");
             } else {
-                redirect.addFlashAttribute("msgYaTieneSaldo", "activo");
+                redirect.addFlashAttribute("msgError", "No se puede eliminar esta cuenta por que ya fue utilizada y tiene saldo!");
                 return "redirect:/Catalogo";
             }
         } else {
-            redirect.addFlashAttribute("msgErrorELiminarCuenta", "activo");
+            redirect.addFlashAttribute("msgError", "No se puede eliminar, está cuenta contiene sub cuentas!");
         }
 
 

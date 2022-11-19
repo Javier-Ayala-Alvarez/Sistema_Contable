@@ -141,24 +141,24 @@ public class EstadoResultadoCargarIm implements EstadoResultadoCargarIn {
             }
 
         });
+if(this.estadoResultado.mostrar(anio) != null) {
+    EstadoResultado registro4 = new EstadoResultado("UTILIDAD OPERACIÓN", "", "", String.valueOf(Precision.round(utilidadBruta - gastosOperaciones, 2)), String.valueOf(anio));
+    estadoResultadoPercistencia.save(registro4);
+    Double utilidadoperciones = Double.valueOf(String.valueOf(Precision.round(utilidadBruta - gastosOperaciones, 2)));
 
-        EstadoResultado registro4 = new EstadoResultado("UTILIDAD OPERACIÓN","","",String.valueOf(Precision.round(utilidadBruta - gastosOperaciones,2)), String.valueOf(anio));
-        estadoResultadoPercistencia.save(registro4);
-        Double utilidadoperciones = Double.valueOf(String.valueOf(Precision.round(utilidadBruta - gastosOperaciones,2)));
+    EstadoResultado registro5 = new EstadoResultado("RESERVA LEGAL", "", "", String.valueOf(Precision.round((utilidadoperciones * 0.07), 2)), String.valueOf(anio));
+    estadoResultadoPercistencia.save(registro5);
 
-        EstadoResultado registro5 = new EstadoResultado("RESERVA LEGAL","","",String.valueOf(Precision.round((utilidadoperciones * 0.07),2)), String.valueOf(anio));
-        estadoResultadoPercistencia.save(registro5);
+    EstadoResultado registro7 = new EstadoResultado("UTILIDAD ANTES DE IMPUESTOS", "", "", String.valueOf(Precision.round((utilidadoperciones - utilidadoperciones * 0.07), 2)), String.valueOf(anio));
+    estadoResultadoPercistencia.save(registro7);
+    Double utilididadImpuesto = Double.valueOf(String.valueOf(Precision.round((utilidadoperciones - utilidadoperciones * 0.07), 2)));
+    //25000 ventastotales
+    EstadoResultado registro8 = new EstadoResultado("IMPUESTO SOBRE LA RENTA", "", "", String.valueOf(Precision.round((utilididadImpuesto * 0.25), 2)), String.valueOf(anio));
+    estadoResultadoPercistencia.save(registro8);
 
-        EstadoResultado registro7 = new EstadoResultado("UTILIDAD ANTES DE IMPUESTOS","","",String.valueOf(Precision.round((utilidadoperciones-utilidadoperciones * 0.07),2)), String.valueOf(anio));
-        estadoResultadoPercistencia.save(registro7);
-        Double utilididadImpuesto = Double.valueOf(String.valueOf(Precision.round((utilidadoperciones-utilidadoperciones * 0.07),2)));
-
-        EstadoResultado registro8 = new EstadoResultado("IMPUESTO SOBRE LA RENTA","","",String.valueOf(Precision.round((utilididadImpuesto * 0.25),2)), String.valueOf(anio));
-        estadoResultadoPercistencia.save(registro8);
-
-        EstadoResultado registro9 = new EstadoResultado("UTILIDAD DEL EJERCICIO","","",String.valueOf(Precision.round((utilididadImpuesto-(utilididadImpuesto * 0.25)),2)), String.valueOf(anio));
-        estadoResultadoPercistencia.save(registro9);
-
+    EstadoResultado registro9 = new EstadoResultado("UTILIDAD DEL EJERCICIO", "", "", String.valueOf(Precision.round((utilididadImpuesto - (utilididadImpuesto * 0.25)), 2)), String.valueOf(anio));
+    estadoResultadoPercistencia.save(registro9);
+}
 
     }
     public ResponseEntity<byte[]> exportReport() throws FileNotFoundException, JRException {

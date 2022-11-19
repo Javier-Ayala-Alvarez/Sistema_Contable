@@ -284,71 +284,30 @@
 
 
 <th:block layout:fragment="page-scripts">
-    <link rel="stylesheet" th:href="@{sweetalert2/sweetalert2.min.css}">
-    <script th:src="@{/sweetalert2/sweetalert2.min.js}"></script>
+    <script src="sweetalert2.all.min.js"></script>
+    <!-- Optional: include a polyfill for ES6 Promises for IE11 -->
+    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
     <div th:if="${msgExito != null}">
         <script>
-            var dato = "Su transacción ha sido exitosa!";
+            var dato = "[[${msgExito}]]";
             Swal.fire(
                 dato,
-                '!ya puedes usarla¡',
-                'success'
             )
+
         </script>
     </div>
-    <div th:if="${msgErrorELiminarCuenta != null}">
+
+    <div th:if="${msgError != null}">
         <script>
+            var t = "[[${msgError}]]";
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'No se puede eliminar, está cuenta contiene sub cuentas!',
+                text: t,
 
             })
         </script>
     </div>
-    <div th:if="${msgErrorNoExisteDatos != null}">
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'No se puede agregar, Está cuenta no tiene cuenta principal!',
-
-            })
-        </script>
-    </div>
-    <div th:if="${msgYaTieneSaldo != null}">
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'No se puede eliminar esta cuenta por que ya fue utilizada y tiene saldo!',
-
-            })
-        </script>
-    </div>
-    <div th:if="${msgErrorDatos != null}">
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Estos datos ya éxiste ó campos vacíos!',
-
-            })
-        </script>
-    </div>
-
-    <script>
-
-        function mostrarModal() {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Estamos en mantenimiento!',
-
-            })
-        }
-
-    </script>
     <script>
 
         function eliminar(id) {
