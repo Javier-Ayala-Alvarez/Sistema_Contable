@@ -54,7 +54,7 @@ public class RegistroController {
 
     @GetMapping("/LibroMayor")
     public String LibroMayor(Model model) {
-        model.addAttribute("tituloDeLaPagina", "Libro Mayor: Deras");
+        model.addAttribute("tituloDeLaPagina", "Libro Mayor");
         return "LibroMayor";
     }
     @GetMapping("/Cierre")
