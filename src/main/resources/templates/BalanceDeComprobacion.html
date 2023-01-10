@@ -27,6 +27,30 @@
 
 
 </div>
+<!--- PROBANDO -->
+<div class="container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Cuenta</th>
+                <th>Debe</th>
+                <th>Haber</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="cuenta : ${BalanzaDeComprobacion}">
+                <td th:text="${cuenta.cuenta}"></td>
+                <td th:text="${cuenta.debe}"></td>
+                <td th:text="${cuenta.haber}"></td>
+            </tr>
+            </tbody>
+
+        </table>
+
+</div>
+<!-- Fin de probando -->
+
 
 
 <th:block layout:fragment="page-scripts">
