@@ -211,7 +211,13 @@ public class EstadoResultadoCargarIm implements EstadoResultadoCargarIn {
             estadoResultadoPercistencia.save(registro7);
             Double utilididadImpuesto = Double.valueOf(String.valueOf(Precision.round((utilidadoperciones - utilidadoperciones * 0.07), 2)));
             //25000 ventastotales
-            EstadoResultado registro8 = new EstadoResultado("IMPUESTO SOBRE LA RENTA", "", "", String.valueOf(Precision.round((utilididadImpuesto * 0.25), 2)), String.valueOf(anio));
+            Double renta = 0.0;
+            if(utilididadImpuesto <= 150000.00){
+                renta = 0.25;
+            }else{
+                renta = 0.30;
+            }
+            EstadoResultado registro8 = new EstadoResultado("IMPUESTO SOBRE LA RENTA", "", "", String.valueOf(Precision.round((utilididadImpuesto * renta), 2)), String.valueOf(anio));
             estadoResultadoPercistencia.save(registro8);
 
             EstadoResultado registro9 = new EstadoResultado("UTILIDAD DEL EJERCICIO", "", "", String.valueOf(Precision.round((utilididadImpuesto - (utilididadImpuesto * 0.25)), 2)), String.valueOf(anio));
