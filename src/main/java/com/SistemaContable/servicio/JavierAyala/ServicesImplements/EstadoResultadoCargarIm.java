@@ -166,7 +166,7 @@ if(this.estadoResultado.mostrar(anio) != null) {
             List<EstadoResultado> registro =estadoResultadoPercistencia.findAll(); //= catalogoRepositoryInt.findAll(Sort.by("codigo").ascending());
             JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(registro);
             final HashMap<String, Object> parameters = new HashMap<>();
-            parameters.put("nombreempresa1"," nombreempresa1");
+            parameters.put("empresa"," nombreempresa1");
             JasperPrint empReport = JasperFillManager.fillReport(JasperCompileManager.compileReport(ResourceUtils.getFile("classpath:EstadoResultado.jrxml").getAbsolutePath()) // path of the jasper report
                     , parameters //empParams dynamic parameters
                     ,dataSource);
