@@ -22,9 +22,86 @@
 
 
     <h1 th:text="${tituloDeLaPagina}"/> <!--Muestra el mensaje que viene del back-end-->
+
+
+    <div class="container">
+
+
+        <form th:action="@{/ConfiguracionGuardar}" method="post" th:object="${dataEmpresa}">
+
+
+            <div class="mb-3">
+                <label for="id" class="col-form-label">Código:</label>
+                <input type="text" class="form-control" id="id" th:field="*{id}"
+                       th:errorClass="is-invalid" autofocus="autofocus"
+                       placeholder="Ingrese el código de la cuenta" disabled>
+                <div th:if="${#fields.hasErrors('id')}" th:errors="*{id}"
+                     class="invalid-feedback"></div>
+            </div>
+            <div class="mb-3">
+                <label for="nombreEmpresa" class="col-form-label">Nombre:</label>
+                <input type="text" class="form-control" id="nombreEmpresa" th:field="*{nombreEmpresa}"
+                       th:errorClass="is-invalid" autofocus="autofocus"
+                       placeholder="Ingrese el nombre de la cuenta">
+                <div th:if="${#fields.hasErrors('nombreEmpresa')}" th:errors="*{nombreEmpresa}"
+                     class="invalid-feedback"></div>
+            </div>
+            <div class="mb-3">
+                <label for="direccionEmpresa" class="col-form-label">Direccion:</label>
+                <input type="text" class="form-control" id="direccionEmpresa" th:field="*{direccionEmpresa}"
+                       th:errorClass="is-invalid" autofocus="autofocus"
+                       placeholder="Ingrese la direccion">
+                <div th:if="${#fields.hasErrors('direccionEmpresa')}" th:errors="*{direccionEmpresa}"
+                     class="invalid-feedback"></div>
+            </div>
+            <div class="mb-3">
+                <label for="telefonoEmpresa" class="col-form-label">Telefono:</label>
+                <input type="number" class="form-control" id="telefonoEmpresa" th:field="*{telefonoEmpresa}"
+                       th:errorClass="is-invalid" autofocus="autofocus"
+                       placeholder="Ingrese el telefono">
+                <div th:if="${#fields.hasErrors('telefonoEmpresa')}" th:errors="*{telefonoEmpresa}"
+                     class="invalid-feedback"></div>
+            </div>
+            <div class="mb-3">
+                <label for="emailEmpresa" class="col-form-label">Email:</label>
+                <input type="email" class="form-control" id="emailEmpresa" th:field="*{emailEmpresa}"
+                       th:errorClass="is-invalid" autofocus="autofocus"
+                       placeholder="Ingrese el email">
+                <div th:if="${#fields.hasErrors('emailEmpresa')}" th:errors="*{emailEmpresa}"
+                     class="invalid-feedback"></div>
+            </div>
+
+            <input type="submit" class="btn btn-primary " value="Guardar"/>
+
+        </form>
+    </div>
+    <!--
+
+        <div class="row">
+            <h1>Informacion</h1>
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Direccion</th>
+                <th>Contacto</th>
+                <th>Email</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="dato: ${dataEmpresa}">
+                <td th:text="${data.nombreEmpresa}">Nombre</td>
+                <td th:text="${data.direccionEmpresa}">Direccion</td>
+                <td th:text="${data.telefonoEmpresa}">Contacto</td>
+                <td th:text="${data.emailEmpresa}">Email</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>-->
+    <!--Aqui agrega lo de la empresa esta vista ya la llamo en el boton-->
+
 </div>
-
-
 <th:block layout:fragment="page-scripts">
 
 </th:block>

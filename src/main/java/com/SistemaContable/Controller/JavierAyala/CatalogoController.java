@@ -126,7 +126,7 @@ public class CatalogoController {
 
                             Catalogo catalogo, RedirectAttributes redirect) {
 
-        catalogo = catalogoRespositoryInt.buscarCodigo(codigo);
+        catalogo = catalogoRespositoryInt.buscarCodigo(codigo);//Revisa como llamo este metodo y hace eso, lo que pasa es que le estabas mandando una lista y no un objeto copiado?
         catalogo.setNombre(nombre);
         catalogo.setSaldoCuenta(saldo_cuenta);
         catalogo.setTipoCuenta(tipo_cuenta);

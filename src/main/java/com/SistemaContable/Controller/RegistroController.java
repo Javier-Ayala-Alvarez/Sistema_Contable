@@ -46,11 +46,7 @@ public class RegistroController {
 <<<<<<< HEAD
     }*/
 
-    @GetMapping("/Configuracion")
-    public String Configuracion(Model model) {
-        model.addAttribute("tituloDeLaPagina", "Configuración: Gerson");
-        return "configuracion";
-    }
+
 
     @GetMapping("/LibroMayor")
     public String LibroMayor(Model model) {
