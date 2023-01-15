@@ -18,5 +18,6 @@ public interface RegistrosPartidaRepImp extends JpaRepository<RegistroPartida, L
 
 
 
+
 }
 
