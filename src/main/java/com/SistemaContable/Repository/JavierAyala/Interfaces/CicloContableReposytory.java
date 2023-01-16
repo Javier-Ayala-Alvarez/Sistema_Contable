@@ -15,6 +15,6 @@ public interface CicloContableReposytory extends JpaRepository<CicloContable, In
     @Query("select max(r.id) from CicloContable r")
     public int MaxId();
 
-    @Query("select r from CicloContable r where r.estado = true fetch first 1 rows only")
-    public CicloContable cicloactivo();
+
+    public CicloContable findFirstByOrderByIdDesc();
 }

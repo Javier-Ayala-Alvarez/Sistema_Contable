@@ -33,7 +33,7 @@ public class PartidaController {
     @RequestMapping("/LibroDiario")
     public String startViewDiario(Model model) {
 
-        Optional<CicloContable> obj = Optional.ofNullable(cicloContableReposytory.cicloactivo());
+        Optional<CicloContable> obj = Optional.ofNullable(cicloContableReposytory.findFirstByOrderByIdDesc());
         if (!obj.isPresent()) {
             return "redirect:/";
         }
@@ -88,8 +88,8 @@ public class PartidaController {
         BigDecimal bDebe = new BigDecimal(debe);
         BigDecimal bHaber = new BigDecimal(haber);
 
-        Optional<CicloContable> objCiclo = Optional.ofNullable(cicloContableReposytory.cicloactivo());
-        Optional<Empresa> objEmpresa = Optional.ofNullable(empresaRepository.obtenerUltimaEmpresa());
+        Optional<CicloContable> objCiclo = Optional.ofNullable(cicloContableReposytory.findFirstByOrderByIdDesc());
+        Optional<Empresa> objEmpresa = Optional.ofNullable(empresaRepository.findFirstByOrderByIdDesc());
         if (!objCiclo.isPresent() || !objEmpresa.isPresent()) {
             return "redirect:/";
         }
