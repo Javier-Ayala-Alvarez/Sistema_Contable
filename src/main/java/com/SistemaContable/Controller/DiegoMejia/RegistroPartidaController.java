@@ -1,9 +1,11 @@
 package com.SistemaContable.Controller.DiegoMejia;
 
 import com.SistemaContable.Repository.JavierAyala.Interfaces.CatalogoRepositoryInt;
+import com.SistemaContable.Repository.JavierAyala.Interfaces.CicloContableReposytory;
 import com.SistemaContable.model.DiegoMejia.Partida;
 import com.SistemaContable.model.DiegoMejia.RegistroPartida;
 import com.SistemaContable.model.JavierAyala.Catalogo;
+import com.SistemaContable.model.JavierAyala.CicloContable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +24,7 @@ public class RegistroPartidaController {
 
     @Autowired
     private CatalogoRepositoryInt catalogoRespositoryInt;
+    @Autowired CicloContableReposytory cicloContableReposytory;
 
     @RequestMapping("/LibroDiario/registroPartida")
     String registroPartida(Model model, HttpSession session) {
@@ -57,7 +60,8 @@ public class RegistroPartidaController {
     @PostMapping("/LibroDiario/registroPartida/add")
     String addRegistroPartida(HttpSession session, RegistroPartida registroPartida) {
 
-        if (session.getAttribute("partidaSesion") == null) {
+
+        if (session.getAttribute("partidaSesion") == null ) {
             return "redirect:/LibroDiario";
         }
         Partida p = (Partida) session.getAttribute("partidaSesion");
@@ -66,6 +70,7 @@ public class RegistroPartidaController {
         if (!oC.isPresent()){
             return "redirect:/LibroDiario/registroPartida";
         }
+
         registroPartida.setCatalogo(c);
         registroPartida.setPartida(p);
         p.getRegistroPartidas().add(registroPartida);
