@@ -30,6 +30,26 @@ public class Partida {
     @OneToMany(mappedBy = "partida", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RegistroPartida> registroPartidas;
 
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
+
+    public CicloContable getCicloContable() {
+        return cicloContable;
+    }
+
+    public void setCicloContable(CicloContable cicloContable) {
+        this.cicloContable = cicloContable;
+    }
+
     public Partida() {
     }
 

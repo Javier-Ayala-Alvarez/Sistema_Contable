@@ -14,10 +14,18 @@ public class Empresa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column
-    private String nombre;
-    @Column
-    private String descripcion;
+
+    @Column(nullable = false)
+    private String nombreEmpresa;
+
+    @Column(nullable = false)
+    private String direccionEmpresa;
+
+    @Column(nullable = false)
+    private Integer telefonoEmpresa;
+
+    @Column(nullable = false)
+    private String emailEmpresa;
 
 
 }

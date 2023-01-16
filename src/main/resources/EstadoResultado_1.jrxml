@@ -12,32 +12,32 @@
 	<field name="id" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="id"/>
 		<property name="com.jaspersoft.studio.field.label" value="id"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="estadoResultado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="estado_resultado"/>
 	</field>
 	<field name="dato1" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="dato1"/>
 		<property name="com.jaspersoft.studio.field.label" value="dato1"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="estadoResultado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="estado_resultado"/>
 	</field>
 	<field name="dato2" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="dato2"/>
 		<property name="com.jaspersoft.studio.field.label" value="dato2"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="estadoResultado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="estado_resultado"/>
 	</field>
 	<field name="dato3" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="dato3"/>
 		<property name="com.jaspersoft.studio.field.label" value="dato3"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="estadoResultado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="estado_resultado"/>
 	</field>
 	<field name="fecha" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="fecha"/>
 		<property name="com.jaspersoft.studio.field.label" value="fecha"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="estadoResultado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="estado_resultado"/>
 	</field>
 	<field name="nombre" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
 		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="estadoResultado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="estado_resultado"/>
 	</field>
 	<group name="nombre">
 		<groupExpression><![CDATA[$F{nombre}]]></groupExpression>
@@ -62,8 +62,8 @@
 				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="10" width="552" height="30" uuid="e181ed31-5f1c-4645-8f15-6467e20b06ad"/>
-				<textElement textAlignment="Center">
+				<reportElement x="0" y="10" width="552" height="30" uuid="a237370f-14d8-482c-9181-11714996be47"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="22" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{NombreEmpresa}]]></textFieldExpression>
@@ -71,7 +71,7 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="40" splitType="Stretch">
+		<band height="34" splitType="Stretch">
 			<textField pattern="MMMMM dd, yyyy">
 				<reportElement x="430" y="0" width="128" height="30" uuid="6a523240-53b9-4972-bf5b-c77fc667c38a"/>
 				<textElement>
@@ -89,7 +89,7 @@
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="31" splitType="Stretch">
+		<band height="36" splitType="Stretch">
 			<rectangle>
 				<reportElement x="0" y="0" width="552" height="30" backcolor="#8558E0" uuid="681a86ba-5560-4599-9f36-5deb6007a150"/>
 			</rectangle>
@@ -112,39 +112,38 @@
 				<text><![CDATA[Saldo]]></text>
 			</staticText>
 			<line>
-				<reportElement x="250" y="2" width="1" height="28" uuid="1b255cea-e21a-4645-bb6a-20b8c5c33aa3"/>
+				<reportElement x="251" y="2" width="1" height="28" uuid="1b255cea-e21a-4645-bb6a-20b8c5c33aa3"/>
 			</line>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="24" splitType="Stretch">
+		<band height="23" splitType="Stretch">
 			<line>
-				<reportElement x="0" y="22" width="560" height="1" uuid="a6e8398d-8815-41da-8e03-864c6b661cc9"/>
+				<reportElement x="0" y="20" width="560" height="1" uuid="a6e8398d-8815-41da-8e03-864c6b661cc9"/>
 			</line>
 			<textField>
-				<reportElement x="0" y="0" width="249" height="22" uuid="6e0ffcee-0f51-41d4-8ab0-aafe92f00eda">
+				<reportElement x="0" y="3" width="249" height="17" uuid="6e0ffcee-0f51-41d4-8ab0-aafe92f00eda">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="49da081f-453e-469f-be07-ae2c5270eb9c"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="260" y="0" width="110" height="22" uuid="048142e5-3b6c-452e-b2bf-faa258be8f42">
+				<reportElement x="251" y="3" width="119" height="17" uuid="048142e5-3b6c-452e-b2bf-faa258be8f42">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a4611b3e-117e-4010-86a0-fc1bfab4441c"/>
-					<printWhenExpression><![CDATA[$F{dato1}]]></printWhenExpression>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{dato1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["$"+$F{dato1}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="370" y="0" width="100" height="22" uuid="a6f9f410-ca95-41a9-9e3a-e60c0e502e74">
+				<reportElement x="370" y="3" width="100" height="17" uuid="a6f9f410-ca95-41a9-9e3a-e60c0e502e74">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5c275c13-253d-4999-b1c7-100585f205d6"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{dato2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["$"+$F{dato2}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="470" y="0" width="82" height="22" uuid="2e81cde2-7244-4e73-a33d-b7a233ef53ca">
+				<reportElement x="470" y="3" width="82" height="17" uuid="2e81cde2-7244-4e73-a33d-b7a233ef53ca">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d712a282-421f-4dfa-a0dc-b29e2126d9ad"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{dato3}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["$"+$F{dato3}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

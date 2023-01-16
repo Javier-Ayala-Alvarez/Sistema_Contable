@@ -1,6 +1,5 @@
 package com.SistemaContable.model.JavierAyala;
 
-import com.SistemaContable.model.DiegoMejia.Partida;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -14,11 +13,17 @@ public class CicloContable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "fechaInicio")
+    private Date fechaInicio;
+
     @Column(name = "fecha_fin")
     private Date fecha_fin;
 
     @Column(name = "total")
     private double total;
+
+    @Column(name = "estado")
+    private Boolean estado;
 
 
 }

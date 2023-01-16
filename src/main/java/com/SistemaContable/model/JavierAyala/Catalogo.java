@@ -24,7 +24,7 @@ public class Catalogo {
     private String codigo;
 
 
-    @Column(name = "nombre")//validando, nombre del campo, tamaño de 8 y debe ser unico
+    @Column(name = "nombre", length = 255)//validando, nombre del campo, tamaño de 8 y debe ser unico
     //@Min(3)//minimo 5 carácteres
     private String nombre;
     @Column(name = "saldoCuenta")
@@ -37,7 +37,7 @@ public class Catalogo {
     private List<RegistroPartida> registroPartidas;
 
 
-    @Column(name = "descripcion")
+    @Column(name = "descripcion", length = 2000)
     private String descripcion;
 
 
