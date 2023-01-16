@@ -1,6 +1,5 @@
 package com.SistemaContable.model.JavierAyala;
 
-import com.SistemaContable.model.DiegoMejia.Partida;
 import lombok.Data;
 
 import javax.persistence.*;

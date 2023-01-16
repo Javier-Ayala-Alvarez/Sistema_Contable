@@ -5,23 +5,35 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="126"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="863"/>
-
+	<parameter name="NombreEmpresa" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[Select c.codigo, c.nombre, c.descripcion, c.saldo_cuenta , c.tipo_cuenta,
-e.nombre as nombreempresa from catalogo c INNER JOIN empresa e ON c.id_empresa = e.id ORDER BY codigo ASC
-]]>
+		<![CDATA[Select c.codigo, c.nombre, c.descripcion, c.saldo_cuenta , c.tipo_cuenta from catalogo c ORDER BY codigo ASC]]>
 	</queryString>
 	<field name="codigo" class="java.lang.String">
-		</field>
+		<property name="com.jaspersoft.studio.field.name" value="codigo"/>
+		<property name="com.jaspersoft.studio.field.label" value="codigo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="catalogo"/>
+	</field>
 	<field name="nombre" class="java.lang.String">
-		</field>
+		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="catalogo"/>
+	</field>
 	<field name="descripcion" class="java.lang.String">
-		</field>
+		<property name="com.jaspersoft.studio.field.name" value="descripcion"/>
+		<property name="com.jaspersoft.studio.field.label" value="descripcion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="catalogo"/>
+	</field>
 	<field name="saldoCuenta" class="java.lang.String">
-		</field>
+		<property name="com.jaspersoft.studio.field.name" value="saldoCuenta"/>
+		<property name="com.jaspersoft.studio.field.label" value="saldoCuenta"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="catalogo"/>
+	</field>
 	<field name="tipoCuenta" class="java.lang.String">
-		</field>
-
+		<property name="com.jaspersoft.studio.field.name" value="tipoCuenta"/>
+		<property name="com.jaspersoft.studio.field.label" value="tipoCuenta"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="catalogo"/>
+	</field>
 	<group name="codigo">
 		<groupExpression><![CDATA[$F{codigo}]]></groupExpression>
 	</group>
@@ -34,13 +46,19 @@ e.nombre as nombreempresa from catalogo c INNER JOIN empresa e ON c.id_empresa =
 	<title>
 		<band height="95" splitType="Stretch">
 			<staticText>
-				<reportElement x="9" y="40" width="535" height="30" uuid="ac1efc34-2901-426c-9f4f-c93d450a3b04"/>
+				<reportElement x="9" y="47" width="535" height="30" uuid="ac1efc34-2901-426c-9f4f-c93d450a3b04"/>
 				<textElement textAlignment="Center">
 					<font size="19" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Cátalogo de Cuentas]]></text>
 			</staticText>
-
+			<textField>
+				<reportElement x="9" y="10" width="535" height="37" uuid="3e608075-01f1-4c9f-b2cc-70faded78502"/>
+				<textElement textAlignment="Center">
+					<font size="22" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{NombreEmpresa}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
@@ -62,7 +80,7 @@ e.nombre as nombreempresa from catalogo c INNER JOIN empresa e ON c.id_empresa =
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="46" splitType="Stretch">
+		<band height="42" splitType="Stretch">
 			<rectangle>
 				<reportElement x="0" y="0" width="560" height="40" backcolor="#8558E0" uuid="681a86ba-5560-4599-9f36-5deb6007a150"/>
 			</rectangle>
@@ -114,9 +132,9 @@ e.nombre as nombreempresa from catalogo c INNER JOIN empresa e ON c.id_empresa =
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="53" splitType="Stretch">
+		<band height="44" splitType="Stretch">
 			<textField>
-				<reportElement x="9" y="4" width="71" height="40" uuid="49f5b301-556d-45c0-baf1-aa8597cf47d7">
+				<reportElement x="9" y="2" width="71" height="34" uuid="49f5b301-556d-45c0-baf1-aa8597cf47d7">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dcc162a3-4148-42e6-abda-2321be0c5aa9"/>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -125,7 +143,7 @@ e.nombre as nombreempresa from catalogo c INNER JOIN empresa e ON c.id_empresa =
 				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="100" y="4" width="250" height="40" uuid="b06286f2-3ba6-4bb3-a194-33687598bf23">
+				<reportElement x="100" y="2" width="250" height="34" uuid="b06286f2-3ba6-4bb3-a194-33687598bf23">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="acf8c7f4-a1f7-4bb1-b5f0-45e0284277ec"/>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -134,25 +152,25 @@ e.nombre as nombreempresa from catalogo c INNER JOIN empresa e ON c.id_empresa =
 				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="43" width="560" height="1" uuid="a6e8398d-8815-41da-8e03-864c6b661cc9"/>
+				<reportElement x="0" y="39" width="560" height="1" uuid="a6e8398d-8815-41da-8e03-864c6b661cc9"/>
 			</line>
 			<textField>
-				<reportElement x="371" y="4" width="100" height="40" uuid="6c6149b7-3c8c-40d7-80ec-2d1bb6bdbd54">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0127da49-60a1-4b87-a1db-05751bef107a"/>
+				<reportElement x="480" y="2" width="80" height="30" uuid="2756ba15-4deb-4e33-9290-95cad515f39e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="09fcd121-65da-4cf0-adf0-8ea5c327f032"/>
 				</reportElement>
-				<textElement textAlignment="Center">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{tipoCuenta}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="476" y="4" width="82" height="40" uuid="345be8ee-9ec2-4f67-a024-252ae2d49bbd">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="651dd3aa-f833-42ce-90a3-ac9f0442af56"/>
-				</reportElement>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{saldoCuenta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="363" y="2" width="100" height="30" uuid="d32cb2ad-ee30-467b-a1ff-05af5559b120">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5362ac33-25b9-4ef0-b433-1e613f0c252a"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipoCuenta}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

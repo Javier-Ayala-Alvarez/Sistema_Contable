@@ -96,10 +96,10 @@
                         <tr th:each="estado : ${estados}">
                             <!---   <th scope="row" th:text="${estado.getCatalogo().codigo}"/>-->
                             <td th:text="${estado.getNombre()}"/>
-                            <td th:text="${estado.getDato1()}"/>
+                            <td th:text="${'$' + estado.getDato1()}"/>
 
-                            <td th:text="${estado.getDato2()}"/>
-                            <td th:text="${estado.getDato3()}"/>
+                            <td th:text="${'$' +estado.getDato2()}"/>
+                            <td th:text="${'$' +estado.getDato3()}"/>
                         </tr>
 
 
