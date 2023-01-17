@@ -1,5 +1,6 @@
 package com.SistemaContable.servicio.JavierAyala.ServicesImplements;
 
+import com.SistemaContable.Repository.Gerson.DataEmpresaRepositorio;
 import com.SistemaContable.Repository.JavierAyala.Interfaces.CatalogoRepositoryInt;
 import com.SistemaContable.Repository.JavierAyala.Interfaces.CatalogoRepositoryInterface;
 import com.SistemaContable.model.JavierAyala.Catalogo;
@@ -32,6 +33,8 @@ public class CatalogoServices implements CatalogoRepositoryInterface {
     CatalogoRepositoryInterface catalogoRespositoryInterface;
     @Autowired
     CatalogoRepositoryInt catalogoRepositoryInt;
+    @Autowired
+    DataEmpresaRepositorio dataEmpresaRepositorio;
 
 
     public Page<Catalogo> mostrarCatalogo(String frase, Pageable pageable) {
@@ -105,7 +108,7 @@ public class CatalogoServices implements CatalogoRepositoryInterface {
             List<Catalogo> catalogo = catalogoRepositoryInt.findAll(Sort.by("codigo").ascending());
             JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(catalogo);
             final HashMap<String, Object> parameters = new HashMap<>();
-            parameters.put("nombreempresa1"," nombreempresa1");
+            parameters.put("NombreEmpresa",dataEmpresaRepositorio.findAll().get(0).getNombreEmpresa());
             JasperPrint empReport = JasperFillManager.fillReport(JasperCompileManager.compileReport(ResourceUtils.getFile("classpath:ReporteCatalogo.jrxml").getAbsolutePath()) // path of the jasper report
                     , parameters //empParams dynamic parameters
                     ,dataSource);
@@ -119,7 +122,7 @@ public class CatalogoServices implements CatalogoRepositoryInterface {
             return new ResponseEntity<byte[]>(JasperExportManager.exportReportToPdf(empReport), headers, HttpStatus.OK);
 
         } catch (Exception e) {
-            return new ResponseEntity<byte[]>(HttpStatus.INTERNAL_SERVER_ERROR);
+           return new ResponseEntity<byte[]>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }
@@ -128,11 +131,8 @@ public class CatalogoServices implements CatalogoRepositoryInterface {
             List<Catalogo> catalogo = catalogoRepositoryInt.mostrarManual();
 
             final HashMap<String, Object> parameters = new HashMap<>();
-            parameters.put("nombreempresa1"," nombreempresa1");
-
+            parameters.put("NombreEmpresa",dataEmpresaRepositorio.findAll().get(0).getNombreEmpresa());
             JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(catalogo);
-
-
             JasperPrint empReport = JasperFillManager.fillReport(JasperCompileManager.compileReport(ResourceUtils.getFile("classpath:ReporteManual.jrxml").getAbsolutePath()) // path of the jasper report
                     , parameters //empParams dynamic parameters
                     ,dataSource);
@@ -146,7 +146,7 @@ public class CatalogoServices implements CatalogoRepositoryInterface {
             return new ResponseEntity<byte[]>(JasperExportManager.exportReportToPdf(empReport), headers, HttpStatus.OK);
 
         } catch (Exception e) {
-            return new ResponseEntity<byte[]>(HttpStatus.INTERNAL_SERVER_ERROR);
+          return new ResponseEntity<byte[]>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
 

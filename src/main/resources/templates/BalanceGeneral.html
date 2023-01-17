@@ -20,8 +20,34 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
           integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 
-
-    <h1 th:text="${tituloDeLaPagina}"/> <!--Muestra el mensaje que viene del back-end-->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-center">Balance General</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped" th:if="${!cuentas.isEmpty()}">
+                    <thead>
+                    <tr>
+                        <th scope="col">Cuenta</th>
+                        <th scope="col">Debe</th>
+                        <th scope="col">Haber</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="cuenta : ${cuentas}">
+                        <td th:text="${cuenta.getCodigocuenta()}"></td>
+                        <td th:text="${cuenta.nombreCuenta}"></td>
+                        <td th:text="${cuenta.debe}"></td>
+                        <td th:text="${cuenta.haber}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
 </div>
 

@@ -71,6 +71,7 @@ public class EstadoResultadoController {
         //-----------------------------------------------Areglar fecha-------------------------------------//
 
         try {
+
             registrosBase = this.estadoResultado.mostrar((dato ==null)?anio[0]:Integer.parseInt(dato));
             estadoResultadoCargarIn.cargaDatosEstado((dato ==null)?anio[0]:Integer.parseInt(dato));
             List<EstadoResultado> estadoResultado =  estadoResultadoPercistencia.findAll();
@@ -81,7 +82,7 @@ public class EstadoResultadoController {
             model.addAttribute("pie", "");
 
         }catch (Exception e){
-            model.addAttribute("pie", "Revise sus busqueda, los errores se pueden deber a que no hay un inventario inicial o el año ingresado no existe");
+            model.addAttribute("pie", "Revise sus busqueda, los errores se pueden deber a que el año ingresado no contiene partidas");
         }
 
 

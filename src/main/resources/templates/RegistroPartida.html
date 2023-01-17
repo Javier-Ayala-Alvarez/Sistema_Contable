@@ -45,13 +45,13 @@
                     <label for="debe" class="col-form-label">
                         Debe
                     </label>
-                    <input type="number" id="debe" class="form-control" step="0.01" th:field="*{debe}" min="0" required>
+                    <input type="number" step="any" id="debe" class="form-control" th:field="*{debe}" min="0" required>
                 </div>
                 <div class="mb-3">
                     <label for="haber" class="col-form-label">
                         Haber
                     </label>
-                    <input type="number" id="haber" class="form-control" step="0.01" th:field="*{haber}" min="0"
+                    <input type="number" id="haber" step="any" class="form-control"  th:field="*{haber}" min="0"
                            required>
                 </div>
 
