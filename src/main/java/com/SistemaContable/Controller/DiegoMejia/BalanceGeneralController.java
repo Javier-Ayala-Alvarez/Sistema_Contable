@@ -12,7 +12,7 @@ public class BalanceGeneralController {
     PartidaServiceApi partidaServiceApi;
     @RequestMapping("/BalanceGeneral")
     public String balanceGeneral(Model model){
-       model.addAttribute("cuentas",partidaServiceApi.mayorizar());
+       model.addAttribute("cuentas",partidaServiceApi.balanceGeneral());
         return "BalanceGeneral";
     }
 }

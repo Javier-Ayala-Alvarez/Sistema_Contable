@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public interface PartidaServiceApi extends GenericServiceApi <Partida,Long> {
     public ArrayList<MayorDTO> mayorizar();
+    public ArrayList<MayorDTO> balanceGeneral();
 
     Long getLastId();
 
