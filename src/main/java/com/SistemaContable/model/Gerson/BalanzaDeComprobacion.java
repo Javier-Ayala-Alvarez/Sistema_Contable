@@ -8,17 +8,20 @@ import java.util.List;
 import java.util.Date;
 
 @Entity
-@Immutable
-
+@Table
 public class BalanzaDeComprobacion {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column
     private String cuenta;
 
+    @Column
     private BigDecimal debe;
 
+    @Column
     private BigDecimal haber;
 
     public BalanzaDeComprobacion() {

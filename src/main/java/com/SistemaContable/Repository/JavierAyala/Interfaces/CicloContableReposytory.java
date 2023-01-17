@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface CicloContableReposytory extends JpaRepository<CicloContable, Integer> {
     @Query("select  EXTRACT(YEAR from r.fecha_fin) from CicloContable r ")
@@ -16,5 +18,5 @@ public interface CicloContableReposytory extends JpaRepository<CicloContable, In
     public int MaxId();
 
 
-    public CicloContable findFirstByOrderByIdDesc();
+    public Optional<CicloContable> findFirstByOrderByIdDesc();
 }

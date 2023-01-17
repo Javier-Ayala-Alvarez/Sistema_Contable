@@ -94,11 +94,5 @@ public class RegistroController {
 
 
 
-    @GetMapping("/BalanceGeneral")
-    public String BalanceGeneral(Model model) {
-        model.addAttribute("tituloDeLaPagina", "Balance General: Diego");
-        return "BalanceGeneral";
-    }
-
 
 }
