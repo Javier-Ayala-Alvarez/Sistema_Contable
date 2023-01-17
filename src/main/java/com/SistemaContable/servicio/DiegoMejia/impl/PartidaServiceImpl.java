@@ -60,18 +60,20 @@ public class PartidaServiceImpl extends GenericServiceApiImpl<Partida, Long>
             for (RegistroPartida registroPartida : partida.getRegistroPartidas()) {
                 mayorDTO = new MayorDTO();
                 String codigoCuenta = registroPartida.getCatalogo().getCodigo();
-                mayorDTO.setCodigocuenta(codigoCuenta.length() > 4 ? codigoCuenta.substring(0, 4) : codigoCuenta);
-                System.out.println(mayorDTO.getCodigocuenta() + "hola");
+
+                if (codigoCuenta.length() < 4 || (codigoCuenta.length() < 6 && codigoCuenta.contains("R"))) {
+                    mayorDTO.setCodigocuenta(codigoCuenta);
+                } else {
+                    mayorDTO.setCodigocuenta(codigoCuenta.substring(0, 4));
+                }
+
                 int indice = cuentasDelMayor.indexOf(mayorDTO);
 
                 if (indice >= 0) {
                     MayorDTO obtenido = cuentasDelMayor.get(indice);
 
-                    obtenido.setDebe( obtenido.getDebe().add(registroPartida.getDebe()));
+                    obtenido.setDebe(obtenido.getDebe().add(registroPartida.getDebe()));
                     obtenido.setHaber(obtenido.getHaber().add(registroPartida.getHaber()));
-                    System.out.println("encontrado");
-                }else {
-                    System.out.println("no se encontro");
                 }
 
             }
