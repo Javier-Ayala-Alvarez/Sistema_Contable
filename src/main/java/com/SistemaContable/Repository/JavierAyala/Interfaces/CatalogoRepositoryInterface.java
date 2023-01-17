@@ -2,6 +2,7 @@ package com.SistemaContable.Repository.JavierAyala.Interfaces;
 
 import com.SistemaContable.model.JavierAyala.Catalogo;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface CatalogoRepositoryInterface {
@@ -13,4 +14,6 @@ public interface CatalogoRepositoryInterface {
 
     //Mostrar el numero de registros segun la busqueda de like
     public int searchLike(String buscar);
+
+
 }
