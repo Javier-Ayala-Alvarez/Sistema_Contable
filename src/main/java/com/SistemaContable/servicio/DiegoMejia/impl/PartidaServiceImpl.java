@@ -39,7 +39,7 @@ public class PartidaServiceImpl extends GenericServiceApiImpl<Partida, Long>
         return partidaDaoApi.getLastId();
     }
 
-    ArrayList<MayorDTO> Mayorizar() {
+    public ArrayList<MayorDTO> mayorizar() {
         MayorDTO mayorDTO;
         ArrayList<Catalogo> cuentas4 = new ArrayList<>(catalogoRepositoryInt.obtenerCuentas4());
         ArrayList<MayorDTO> cuentasDelMayor = new ArrayList<>();
@@ -49,6 +49,7 @@ public class PartidaServiceImpl extends GenericServiceApiImpl<Partida, Long>
         for (Catalogo catalogo : cuentas4) {
             mayorDTO = new MayorDTO();
             mayorDTO.setCodigocuenta(catalogo.getCodigo());
+            mayorDTO.setNombreCuenta(catalogo.getNombre());
             mayorDTO.setDebe(new BigDecimal("0"));
             mayorDTO.setHaber(new BigDecimal("0"));
             cuentasDelMayor.add(mayorDTO);
@@ -58,14 +59,22 @@ public class PartidaServiceImpl extends GenericServiceApiImpl<Partida, Long>
 
             for (RegistroPartida registroPartida : partida.getRegistroPartidas()) {
                 mayorDTO = new MayorDTO();
-                mayorDTO.setCodigocuenta(registroPartida.getCatalogo().getCodigo().substring(0, 4));
+                String codigoCuenta = registroPartida.getCatalogo().getCodigo();
+
+                if (codigoCuenta.length() < 4 || (codigoCuenta.length() < 6 && codigoCuenta.contains("R"))) {
+                    mayorDTO.setCodigocuenta(codigoCuenta);
+                } else {
+                    mayorDTO.setCodigocuenta(codigoCuenta.substring(0, 4));
+                }
 
                 int indice = cuentasDelMayor.indexOf(mayorDTO);
 
-                MayorDTO obtenido = cuentasDelMayor.get(indice);
+                if (indice >= 0) {
+                    MayorDTO obtenido = cuentasDelMayor.get(indice);
 
-                obtenido.getDebe().add(registroPartida.getDebe());
-                obtenido.getHaber().add(registroPartida.getHaber());
+                    obtenido.setDebe(obtenido.getDebe().add(registroPartida.getDebe()));
+                    obtenido.setHaber(obtenido.getHaber().add(registroPartida.getHaber()));
+                }
 
             }
 
