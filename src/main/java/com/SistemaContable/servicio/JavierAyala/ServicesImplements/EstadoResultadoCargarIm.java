@@ -107,9 +107,9 @@ public class EstadoResultadoCargarIm implements EstadoResultadoCargarIn {
         });
         registrosPartidaRepImp.mostrarPartida(anio);
         //-----------------------------------------------Areglar fecha-------------------------------------//
-        // if (registrosPartidaRepImp.mostrarPartida(anio).size() == 0) {
+         if (registrosPartidaRepImp.mostrarPartida(anio).size() == 0) {
         //Retornar un mensaje
-        // } else {
+         } else {
         //Float total_cuentas_segundo, Catalogo catalogo, CicloContable cicloContable
         String anioanterior = String.valueOf(anio - 1);
 
@@ -157,7 +157,7 @@ public class EstadoResultadoCargarIm implements EstadoResultadoCargarIn {
             }
         }
         if (registrosPartidaRepImp.mostrarPartida(anio).size() >= 1) {
-            EstadoResultado registro = new EstadoResultado("INVENTARIO INICIAL", "", String.valueOf(registrosPartidaRepImp.mostrarPartida(anio).get(1).getHaber()), "", String.valueOf(anio));
+            EstadoResultado registro = new EstadoResultado("INVENTARIO INICIAL", "", String.valueOf(registrosPartidaRepImp.mostrarPartida(anio).get(1).getDebe()), "", String.valueOf(anio));
             estadoResultadoPercistencia.save(registro);
             balanceIncial = Double.valueOf(registro.getDato2());
 
@@ -165,7 +165,7 @@ public class EstadoResultadoCargarIm implements EstadoResultadoCargarIn {
             mercancia = Double.valueOf(String.valueOf(Precision.round(comprasNetas + balanceIncial, 2)));
             estadoResultadoPercistencia.save(registro1);
 
-            EstadoResultado registro2 = new EstadoResultado("INVENTARIO FINAL", "", String.valueOf(registrosPartidaRepImp.mostrarPartida(anio).get(0).getHaber()), "", String.valueOf(anio));
+            EstadoResultado registro2 = new EstadoResultado("INVENTARIO FINAL", "", String.valueOf(registrosPartidaRepImp.mostrarPartida(anio).get(0).getDebe()), "", String.valueOf(anio));
             estadoResultadoPercistencia.save(registro2);
             balance = Double.valueOf(registro2.getDato2());
 
@@ -181,7 +181,7 @@ public class EstadoResultadoCargarIm implements EstadoResultadoCargarIn {
         }
 
 
-        //}
+}
         registrosBase.stream().forEach(c -> {
 
             if (c.getCatalogo().getCodigo().substring(0, 2).equals("42") || c.getCatalogo().getCodigo().substring(0, 2).equals("43")) {
