@@ -20,12 +20,11 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
           integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 
-    <!--<h1 th:text="${tituloDeLaPagina}"/>--> <!--Muestra el mensaje que viene del back-end-->
     <div class="card-header">
         <h4>
             <div class="card-header py-3 text-center">
                 <i>
-                    <caption><h1 th:text="${tituloDeLaPagina.toUpperCase()}"/></caption>
+                    <caption><h1 th:text="${tituloDeLaPagina.toUpperCase()}"/></caption><!--Muestra el mensaje que viene del back-end-->
                     <caption><h1 th:utext="'EMPRESA ' + ${nombreEmpresa} + ' S.A. DE C.V.'"></h1></caption>
                 </i>
             </div>
@@ -38,24 +37,23 @@
                 <th:block th:each="libroMayor, iterator: ${mayor}">
 
                     <th:block th:if="${iterator.index==0}">
-                        <table>
+                        <table class="table table-bordered" id="dataTable" width="100%"
+                               cellspacing="0">
                             <h4>
                                 <i th:text="${libroMayor.codigo}"></i>
                                 <i th:text="${libroMayor.nombre}"></i>
                             </h4>
                             <thead>
-                            <tr>
-                                <th>Codigo</th>
-                                <th>Nombre</th>
-                                <th>Fecha</th>
-                                <th>Descripcion</th>
-                                <th>Debe</th>
-                                <th>Haber</th>
-                                <th>Saldo</th>
-                            </tr>
-
+                                <tr>
+                                    <th>Codigo</th>
+                                    <th>Nombre</th>
+                                    <th>Fecha</th>
+                                    <th>Descripcion</th>
+                                    <th>Debe</th>
+                                    <th>Haber</th>
+                                    <th>Saldo</th>
+                                </tr>
                             </thead>
-
                             <tr>
                                 <td th:text="${libroMayor.codigo}"></td>
                                 <td th:text="${libroMayor.nombre}"></td>
@@ -69,41 +67,39 @@
 
                     <th:block th:if="${iterator.index > 0}">
 
-
                         <th:block
                                 th:if="${!(mayor.get(iterator.index - 1).nombre.equals(libroMayor.nombre)) }">
 
                             </tbody>
                             </table>
 
-                            <table>
+                            <table class="table table-bordered" id="dataTable" width="100%"
+                                   cellspacing="0">
                                 <h4>
                                     <i th:text="${libroMayor.codigo}"></i>
                                     <i th:text="${libroMayor.nombre}"></i>
                                 </h4>
                                 <thead>
-                                <tr>
-                                    <th>Codigo</th>
-                                    <th>Nombre</th>
-                                    <th>Fecha</th>
-                                    <th>Descripcion</th>
-                                    <th>Debe</th>
-                                    <th>Haber</th>
-                                    <th>Saldo</th>
-                                </tr>
-
+                                    <tr>
+                                        <th>Codigo</th>
+                                        <th>Nombre</th>
+                                        <th>Fecha</th>
+                                        <th>Descripcion</th>
+                                        <th>Debe</th>
+                                        <th>Haber</th>
+                                        <th>Saldo</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td th:text=" ${libroMayor.codigo}"></td>
-                                    <td th:text="${libroMayor.nombre}"></td>
-                                    <td th:text="${libroMayor.fecha}"></td>
-                                    <td th:text="${libroMayor.descripcion}"></td>
-                                    <td th:text="'$ '+${libroMayor.debe}"></td>
-                                    <td th:text="'$ '+${libroMayor.haber}"></td>
-                                    <td th:text="'$ '+${libroMayor.saldo}"></td>
-                                </tr>
-
+                                    <tr>
+                                        <td th:text=" ${libroMayor.codigo}"></td>
+                                        <td th:text="${libroMayor.nombre}"></td>
+                                        <td th:text="${libroMayor.fecha}"></td>
+                                        <td th:text="${libroMayor.descripcion}"></td>
+                                        <td th:text="'$ '+${libroMayor.debe}"></td>
+                                        <td th:text="'$ '+${libroMayor.haber}"></td>
+                                        <td th:text="'$ '+${libroMayor.saldo}"></td>
+                                    </tr>
                         </th:block>
 
                         <th:block th:if="${mayor.get(iterator.index-1).nombre.equals(libroMayor.nombre)}">
@@ -117,134 +113,8 @@
                                 <td th:text="'$ '+${libroMayor.saldo}"></td>
                             </tr>
                         </th:block>
-
-
                     </th:block>
-
                 </th:block>
-
-
-                <!--   <div class="table-responsive">
-                       <table th:each="libroMayor : ${mayor}" class="table table-bordered" id="dataTable" width="100%"
-                              cellspacing="0">
-                           <h4>
-                               <i th:text="${libroMayor.codigo}"></i>
-                               <i th:text="${libroMayor.nombre}"></i>
-                           </h4>
-                           <tr>
-                               <th>Codigo</th>
-                               <th>Nombre</th>
-                               <th>Fecha</th>
-                               <th>Descripcion</th>
-                               <th>Debe</th>
-                               <th>Haber</th>
-                               <th>Saldo</th>
-                           </tr>
-                           <tr>
-                               <td th:text="${libroMayor.codigo}"></td>
-                               <td th:text="${libroMayor.nombre}"></td>
-                               <td th:text="${libroMayor.fecha}"></td>
-                               <td th:text="${libroMayor.descripcion}"></td>
-                               <td th:text="'$ '+${libroMayor.debe}"></td>
-                               <td th:text="'$ '+${libroMayor.haber}"></td>
-                               <td th:text="'$ '+${libroMayor.saldo}"></td>
-                           </tr>
-                       </table>
-                   </div>
-   -->
-                <!--
-                <div th:with="tempCodigo=''">
-                    <div class="table-responsive" >
-                        <table th:each="encaMayor : ${eMayor}" class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                                <h4>
-                                    <i th:text="${encaMayor.codigo}"></i>
-                                    <i th:text="${encaMayor.nombre}"></i>
-                                </h4>
-                                <tr>
-                                    <th>Codigo</th>
-                                    <th>Nombre</th>
-                                    <th>Fecha</th>
-                                    <th>Descripcion</th>
-                                    <th>Debe</th>
-                                    <th>Haber</th>
-                                    <th>Saldo</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="libroMayor : ${mayor}">
-                                    <td th:text="${libroMayor.codigo}"></td>
-                                    <td th:text="${libroMayor.nombre}"></td>
-                                    <td th:text="${libroMayor.fecha}"></td>
-                                    <td th:text="${libroMayor.descripcion}"></td>
-                                    <td th:text="'$ '+${libroMayor.debe}"></td>
-                                    <td th:text="'$ '+${libroMayor.haber}"></td>
-                                    <td th:text="'$ '+${libroMayor.saldo}"></td>
-                                </tr>
-                            </tbody>
-                            <div th:with="tempCodigo=${encaMayor.codigo}"></div>
-                        </table>
-                    </div>
-                </div>
-                -->
-                <!--
-                <div th:with="tempCodigo=''">
-                    <div class="table-responsive">
-                        <table th:each="libroMayor : ${mayor}" th:if="${libroMayor.codigo}" class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <h4>
-                                <i th:text="${libroMayor.codigo}"></i>
-                                <i th:text="${libroMayor.nombre}"></i>
-                            </h4>
-                            <tr>
-                                <th>Codigo</th>
-                                <th>Nombre</th>
-                                <th>Fecha</th>
-                                <th>Descripcion</th>
-                                <th>Debe</th>
-                                <th>Haber</th>
-                                <th>Saldo</th>
-                            </tr>
-                            <tr>
-                                <td th:text="${libroMayor.codigo}"></td>
-                                <td th:text="${libroMayor.nombre}"></td>
-                                <td th:text="${libroMayor.fecha}"></td>
-                                <td th:text="${libroMayor.descripcion}"></td>
-                                <td th:text="'$ '+${libroMayor.debe}"></td>
-                                <td th:text="'$ '+${libroMayor.haber}"></td>
-                                <td th:text="'$ '+${libroMayor.saldo}"></td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                -->
-                <!--
-                <div th:with="tempCodigo=''">
-                    <div th:each="libroMayor : ${mayor}" class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" >
-                            <tr th:if="${libroMayor.codigo == tempCodigo}">
-                                <th colspan="7" th:text="${libroMayor.codigo}"></th>
-                            </tr>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Fecha</th>
-                                <th>Descripcion</th>
-                                <th>Debe</th>
-                                <th>Haber</th>
-                                <th>Saldo</th>
-                            </tr>
-                            <tr th:if="${libroMayor.codigo = tempCodigo}">
-                                <td th:text="${libroMayor.nombre}"></td>
-                                <td th:text="${libroMayor.fecha}"></td>
-                                <td th:text="${libroMayor.descripcion}"></td>
-                                <td th:text="'$ '+${libroMayor.debe}"></td>
-                                <td th:text="'$ '+${libroMayor.haber}"></td>
-                                <td th:text="'$ '+${libroMayor.saldo}"></td>
-                            </tr>
-                        </table>
-                        <div th:with="tempCodigo=${libroMayor.codigo}"></div>
-                    </div>
-                </div>
-                -->
             </div>
         </div>
         <div th:if="${mayor.size() <= 0}">
