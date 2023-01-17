@@ -39,7 +39,7 @@ public class PartidaServiceImpl extends GenericServiceApiImpl<Partida, Long>
         return partidaDaoApi.getLastId();
     }
 
-    ArrayList<MayorDTO> Mayorizar(int idCicloContable) {
+    ArrayList<MayorDTO> Mayorizar() {
         MayorDTO mayorDTO;
         ArrayList<Catalogo> cuentas4 = new ArrayList<>(catalogoRepositoryInt.obtenerCuentas4());
         ArrayList<MayorDTO> cuentasDelMayor = new ArrayList<>();

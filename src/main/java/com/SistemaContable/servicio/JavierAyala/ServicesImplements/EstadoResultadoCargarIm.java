@@ -127,7 +127,7 @@ public class EstadoResultadoCargarIm implements EstadoResultadoCargarIn {
                 Date date = format1.parse((anioanterior) + "-01-01");//(anio-1)+"-01-01"
                 ciclo.setFecha_fin(date);
                 ciclo.setId(idmax);
-                ciclo.setTotal(0);
+                ciclo.setTotal(0.0);
                 cicloContableReposytory.save(ciclo);
                 ciclo.setId(cicloContableReposytory.MaxId());
 

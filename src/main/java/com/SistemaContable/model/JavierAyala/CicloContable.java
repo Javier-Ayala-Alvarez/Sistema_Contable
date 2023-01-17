@@ -20,7 +20,7 @@ public class CicloContable {
     private Date fecha_fin;
 
     @Column(name = "total")
-    private double total;
+    private Double total;
 
     @Column(name = "estado")
     private Boolean estado;
