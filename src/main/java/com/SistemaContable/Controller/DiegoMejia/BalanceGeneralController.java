@@ -11,8 +11,8 @@ public class BalanceGeneralController {
     @Autowired
     PartidaServiceApi partidaServiceApi;
     @RequestMapping("/BalanceGeneral")
-    public String balanceGeneral(Model model){
-       model.addAttribute("cuentas",partidaServiceApi.mayorizar());
+    public String balanzaComprobacion(Model model){
+       model.addAttribute("cuentas", partidaServiceApi.mayorizar());
         return "BalanceGeneral";
     }
 }
