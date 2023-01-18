@@ -31,6 +31,27 @@
         </h4>
     </div>
     <div class="card-body">
+        <div class="col-12 col-sm-6 mb-3">
+            <div class="input-group">
+                <select class="form-select" aria-label="Seleccione el mes">
+                    <option></option>
+                </select>
+                <div class="input-group-append">
+                    <label class="input-group-text">Mes</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 mb-3">
+            <div class="input-group">
+                <select class="form-select" aria-label="Seleccione el año">
+                    <option ></option>
+                </select>
+                <div class="input-group-append">
+                    <label class="input-group-text">Año</label>
+                </div>
+            </div>
+        </div>
+
         <div th:if="${mayor.size() > 0}">
             <div class="table-responsive">
 
