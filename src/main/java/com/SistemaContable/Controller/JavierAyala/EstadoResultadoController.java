@@ -66,7 +66,7 @@ public class EstadoResultadoController {
     @GetMapping("/EstadoDeResultadocalcular")
     public String EstadoDeResultadoCalcular(@RequestParam Map<String, Object> params, Model model, String dato, String balance) {
         int anio[] = cicloContableReposytory.anioactual();
-            estadoResultadoCargarIn.cargaDatosEstado((dato ==null)?anio[0]:Integer.parseInt(dato), (balance == null)? 0.0 : Double.parseDouble(balance));
+            estadoResultadoCargarIn.cargaDatosEstado((dato ==null)?anio[0]:Integer.parseInt(dato), (balance));
             EstadoDeResultado(params,model,dato,balance);
         return "EstadoDeResultado";
     }

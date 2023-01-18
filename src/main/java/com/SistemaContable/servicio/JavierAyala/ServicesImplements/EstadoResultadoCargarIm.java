@@ -60,7 +60,7 @@ public class EstadoResultadoCargarIm implements EstadoResultadoCargarIn {
     Double gastosOperaciones = 0.0;
 
     @Override
-    public void cargaDatosEstado(Integer anio, Double balance) {
+    public void cargaDatosEstado(Integer anio, String balanceafinal) {
         List<RegistrosEstadosResultadoDAO> estado = new ArrayList<>();
         List<RegistrosEstadosResultado> registrosBase = new ArrayList<>();
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yy");
@@ -172,11 +172,11 @@ public class EstadoResultadoCargarIm implements EstadoResultadoCargarIn {
                 mercancia = Double.valueOf(String.valueOf(Precision.round(comprasNetas + balanceIncial, 2)));
                 estadoResultadoPercistencia.save(registro1);
                 Double inventarioFinal = 0.00;
-                if (balance == 0) {
+                if (balanceafinal.equals("")) {
                     inventarioFinal = Double.parseDouble(String.valueOf(registrosPartidaRepImp.mostrarPartida(anio).get(0).getDebe())) + comprasNetas - ventasNetas;
                     registroPartida.setDebe(BigDecimal.valueOf(inventarioFinal));
                 }else {
-                    registroPartida.setDebe(BigDecimal.valueOf(balance));
+                    registroPartida.setDebe(BigDecimal.valueOf(Double.parseDouble(balanceafinal)));
                 }
                 if(registroPartida.getPartida()== null){
                     registroPartida.setCatalogo(registrosPartidaRepImp.mostrarPartida(Integer.parseInt(anioanterior)).get(0).getCatalogo());
