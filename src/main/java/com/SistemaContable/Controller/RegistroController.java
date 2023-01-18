@@ -60,29 +60,27 @@ public class RegistroController {
         model.addAttribute("tituloDeLaPagina", "Libro Mayor");
 
         //CONSULTA LIBRO MAYOR
-        String sql = "SELECT c.codigo, c.nombre, concat(EXTRACT(DAY from p.fecha),'/',EXTRACT(MONTH from p.fecha),'/',EXTRACT(YEAR from p.fecha))AS fecha, p.descripcion, rp.debe, rp.haber, CASE WHEN (c.saldo_cuenta) = 'Deudor' THEN (SUM(rp.debe) - SUM(rp.haber)) ELSE (SUM(rp.haber) - SUM(rp.debe)) END AS saldo FROM Partida p INNER JOIN registro_partida rp ON p.id = rp.partida_id INNER JOIN catalogo c ON c.id = rp.catalogo_id GROUP BY c.codigo, c.nombre, p.fecha, p.descripcion, rp.debe,rp.haber, c.saldo_cuenta ORDER BY c.codigo";
+        //String sql = "SELECT c.codigo, c.nombre, concat(EXTRACT(DAY from p.fecha),'/',EXTRACT(MONTH from p.fecha),'/',EXTRACT(YEAR from p.fecha))AS fecha, p.descripcion, rp.debe, rp.haber, CASE WHEN (c.saldo_cuenta) = 'Deudor' THEN (SUM(rp.debe) - SUM(rp.haber)) ELSE (SUM(rp.haber) - SUM(rp.debe)) END AS saldo FROM Partida p INNER JOIN registro_partida rp ON p.id = rp.partida_id INNER JOIN catalogo c ON c.id = rp.catalogo_id GROUP BY c.codigo, c.nombre, p.fecha, p.descripcion, rp.debe,rp.haber, c.saldo_cuenta ORDER BY c.codigo";
+        //String sql = "SELECT c.codigo, c.nombre, concat(EXTRACT(DAY from p.fecha),'/',EXTRACT(MONTH from p.fecha),'/',EXTRACT(YEAR from p.fecha))AS fecha, p.descripcion, rp.debe, rp.haber, SUM(CASE WHEN c.saldo_cuenta = 'Deudor' THEN rp.debe - rp.haber WHEN c.saldo_cuenta = 'Acreedor' THEN rp.haber - rp.debe ELSE 0 END) OVER (PARTITION BY c.nombre ORDER BY p.fecha) AS saldo FROM Partida p INNER JOIN registro_partida rp ON p.id = rp.partida_id INNER JOIN catalogo c ON c.id = rp.catalogo_id GROUP BY c.codigo, c.nombre, p.fecha, p.descripcion, rp.debe,rp.haber, c.saldo_cuenta ORDER BY c.nombre";
+        String sql = "SELECT c.codigo, c.nombre, EXTRACT(MONTH from p.fecha) AS mes, EXTRACT(YEAR from p.fecha) AS anio,concat(EXTRACT(DAY from p.fecha),'/',EXTRACT(MONTH from p.fecha),'/',EXTRACT(YEAR from p.fecha))AS fecha, p.descripcion, rp.debe, rp.haber, SUM(CASE WHEN c.saldo_cuenta = 'Deudor' THEN rp.debe - rp.haber WHEN c.saldo_cuenta = 'Acreedor' THEN rp.haber - rp.debe ELSE 0 END) OVER (PARTITION BY c.nombre ORDER BY p.fecha) AS saldo FROM Partida p INNER JOIN registro_partida rp ON p.id = rp.partida_id INNER JOIN catalogo c ON c.id = rp.catalogo_id WHERE EXTRACT(MONTH from p.fecha) = '1' AND EXTRACT(YEAR from p.fecha) = '2023' GROUP BY c.codigo, c.nombre, p.fecha, p.descripcion, rp.debe,rp.haber, c.saldo_cuenta ORDER BY c.nombre";
         List<Map<String, Object>> mayor = jdbcTemplate.queryForList(sql);
         model.addAttribute("mayor", mayor);
 
-        //ENCABEZADO MAYOR
-        String sql2 = "SELECT c.codigo, c.nombre\n" +
-                "FROM Partida p \n" +
-                "INNER JOIN registro_partida rp ON p.id = rp.partida_id \n" +
-                "INNER JOIN catalogo c ON c.id = rp.catalogo_id \n" +
-                "GROUP BY c.codigo, c.nombre\n" +
-                "ORDER BY c.codigo";
-        List<Map<String, Object>> eMayor = jdbcTemplate.queryForList(sql2);
-        model.addAttribute("eMayor", eMayor);
-
+        //NOMBRE EMPRESA
         String sql3 = "SELECT UPPER(nombre_empresa) as nombre_empresa FROM empresa WHERE id = ?";
         String nombreEmpresa = jdbcTemplate.queryForObject(sql3, new Object[]{1}, String.class);
         model.addAttribute("nombreEmpresa", nombreEmpresa);
+
+        //MES
+        String sql4 = "SELECT (EXTRACT(MONTH from p.fecha)) AS mes FROM partida p GROUP BY mes ORDER BY EXTRACT(MONTH from p.fecha) DESC";
+        List<Map<String, Object>> meses = jdbcTemplate.queryForList(sql4);
+        model.addAttribute("meses", meses);
 
         return "LibroMayor";
     }
     @GetMapping("/Cierre")
     public String cierre(Model model) {
-        model.addAttribute("tituloDeLaPagina", "Cierre contable: Deras");
+        model.addAttribute("tituloDeLaPagina", "Cierre contable");
         return "cierre";
     }
 
