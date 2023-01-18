@@ -42,11 +42,11 @@ public class PartidaServiceImpl extends GenericServiceApiImpl<Partida, Long>
         return partidaDaoApi.getLastId();
     }
 
-    public ArrayList<MayorDTO> mayorizar() {
+    public ArrayList<MayorDTO> mayorizar(Integer id) {
         MayorDTO mayorDTO;
         ArrayList<Catalogo> cuentas4 = new ArrayList<>(catalogoRepositoryInt.obtenerCuentas4());
         ArrayList<MayorDTO> cuentasDelMayor = new ArrayList<>();
-        ArrayList<Partida> partidas = (ArrayList<Partida>) partidaDaoApi.findAllByActivoIsTrue();
+        ArrayList<Partida> partidas = (ArrayList<Partida>) partidaDaoApi.findAllByActivoIsTrue(id);
 
         //cuentas del catalogo
         for (Catalogo catalogo : cuentas4) {
@@ -87,8 +87,8 @@ public class PartidaServiceImpl extends GenericServiceApiImpl<Partida, Long>
 
     }
 
-    public ArrayList<MayorDTO> balanceGeneral() {
-        ArrayList<MayorDTO> mayorDTOCollection = mayorizar();
+    public ArrayList<MayorDTO> balanceGeneral(Integer id) {
+        ArrayList<MayorDTO> mayorDTOCollection = mayorizar(id);
         Pattern pattern = Pattern.compile("^[^1-3].*");
 
 

@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.ArrayList;
 
 public interface PartidaServiceApi extends GenericServiceApi <Partida,Long> {
-    public ArrayList<MayorDTO> mayorizar();
-    public ArrayList<MayorDTO> balanceGeneral();
+    public ArrayList<MayorDTO> mayorizar(Integer id);
+    public ArrayList<MayorDTO> balanceGeneral(Integer id);
 
     Long getLastId();
 
