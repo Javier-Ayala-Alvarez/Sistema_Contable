@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.regex.Pattern;
 
 @Service
@@ -52,6 +53,7 @@ public class PartidaServiceImpl extends GenericServiceApiImpl<Partida, Long>
             mayorDTO = new MayorDTO();
             mayorDTO.setCodigocuenta(catalogo.getCodigo());
             mayorDTO.setNombreCuenta(catalogo.getNombre());
+            mayorDTO.setSaldoCuenta(catalogo.getSaldoCuenta());
             mayorDTO.setDebe(new BigDecimal("0"));
             mayorDTO.setHaber(new BigDecimal("0"));
             cuentasDelMayor.add(mayorDTO);
@@ -86,11 +88,45 @@ public class PartidaServiceImpl extends GenericServiceApiImpl<Partida, Long>
     }
 
     public ArrayList<MayorDTO> balanceGeneral() {
-        Collection<MayorDTO> mayorDTOCollection = mayorizar();
+        ArrayList<MayorDTO> mayorDTOCollection = mayorizar();
         Pattern pattern = Pattern.compile("^[^1-3].*");
 
-        mayorDTOCollection.removeIf(n -> ((n.getHaber().toString().equals("0")
-                && n.getDebe().toString().equals("0")))
+
+        mayorDTOCollection.forEach(n -> {
+            if (n.getSaldoCuenta().equals("Deudor")) {
+                n.setDebe(n.getDebe().subtract(n.getHaber()));
+
+                n.setHaber(new BigDecimal("0"));
+            } else {
+                n.setHaber(n.getHaber().subtract(n.getDebe()));
+
+                n.setDebe(new BigDecimal("0"));
+            }
+        });
+
+
+        MayorDTO inventarioFinal = mayorDTOCollection.get(mayorDTOCollection.indexOf(new MayorDTO("1109")));
+        MayorDTO utilidad = mayorDTOCollection.get(mayorDTOCollection.indexOf(new MayorDTO("3106")));
+        MayorDTO renta = mayorDTOCollection.get(mayorDTOCollection.indexOf(new MayorDTO("2111")));
+        MayorDTO reservaLegal = mayorDTOCollection.get(mayorDTOCollection.indexOf(new MayorDTO("3103")));
+
+
+        inventarioFinal.setHaber(new BigDecimal("0"));
+        inventarioFinal.setDebe(new BigDecimal("200000.00"));
+
+
+        utilidad.setDebe(new BigDecimal("0"));
+        utilidad.setHaber(new BigDecimal("34930.99"));
+
+        renta.setDebe(new BigDecimal("0"));
+        renta.setHaber(new BigDecimal("11643.66"));
+
+        reservaLegal.setHaber(new BigDecimal("3505.62"));
+        reservaLegal.setDebe(new BigDecimal("0"));
+
+
+        mayorDTOCollection.removeIf(n -> (n.getDebe().toString().equals("0")
+                && n.getHaber().toString().equals("0"))
                 || pattern.matcher(n.getCodigocuenta()).find());
 
         return new ArrayList<>(mayorDTOCollection);

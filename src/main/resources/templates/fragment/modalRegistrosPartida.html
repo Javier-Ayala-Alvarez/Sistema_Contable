@@ -29,6 +29,7 @@
                         <th>N°</th>
                         <th>Debe</th>
                         <th>Haber</th>
+                        <th>Nombre de cuenta</th>
                         <th>Numero cuenta del catalogo</th>
                     </tr>
 
@@ -38,6 +39,7 @@
                         <td th:text="${stat.count}"></td>
                         <td th:text="${registro.debe}"></td>
                         <td th:text="${registro.haber}"></td>
+                        <td th:text="${registro.catalogo.nombre}"></td>
                         <td th:text="${registro.catalogo.codigo}"></td>
 
                     </tr>
