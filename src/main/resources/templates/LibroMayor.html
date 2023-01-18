@@ -45,8 +45,6 @@
                             </h4>
                             <thead>
                                 <tr>
-                                    <th>Codigo</th>
-                                    <th>Nombre</th>
                                     <th>Fecha</th>
                                     <th>Descripcion</th>
                                     <th>Debe</th>
@@ -55,8 +53,6 @@
                                 </tr>
                             </thead>
                             <tr>
-                                <td th:text="${libroMayor.codigo}"></td>
-                                <td th:text="${libroMayor.nombre}"></td>
                                 <td th:text="${libroMayor.fecha}"></td>
                                 <td th:text="${libroMayor.descripcion}"></td>
                                 <td th:text="'$ '+${libroMayor.debe}"></td>
@@ -81,8 +77,6 @@
                                 </h4>
                                 <thead>
                                     <tr>
-                                        <th>Codigo</th>
-                                        <th>Nombre</th>
                                         <th>Fecha</th>
                                         <th>Descripcion</th>
                                         <th>Debe</th>
@@ -92,8 +86,6 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td th:text=" ${libroMayor.codigo}"></td>
-                                        <td th:text="${libroMayor.nombre}"></td>
                                         <td th:text="${libroMayor.fecha}"></td>
                                         <td th:text="${libroMayor.descripcion}"></td>
                                         <td th:text="'$ '+${libroMayor.debe}"></td>
@@ -104,8 +96,6 @@
 
                         <th:block th:if="${mayor.get(iterator.index-1).nombre.equals(libroMayor.nombre)}">
                             <tr>
-                                <td th:text="${libroMayor.codigo}"></td>
-                                <td th:text="${libroMayor.nombre}"></td>
                                 <td th:text="${libroMayor.fecha}"></td>
                                 <td th:text="${libroMayor.descripcion}"></td>
                                 <td th:text="'$ '+${libroMayor.debe}"></td>
