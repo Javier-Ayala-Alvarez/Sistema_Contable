@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface CicloContableReposytory extends JpaRepository<CicloContable, Integer> {
-    @Query("select  EXTRACT(YEAR from r.fecha_fin) from CicloContable r ")
+    @Query("select  EXTRACT(YEAR from r.fecha_fin) from CicloContable r order by r.fecha_fin desc ")
     public int[] anioactual();
 
     @Query("select max(r.id) from CicloContable r")

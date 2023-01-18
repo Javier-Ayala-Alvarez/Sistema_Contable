@@ -60,7 +60,7 @@ public class EstadoResultadoCargarIm implements EstadoResultadoCargarIn {
     Double gastosOperaciones = 0.0;
 
     @Override
-    public void cargaDatosEstado(Integer anio) {
+    public void cargaDatosEstado(Integer anio, Double balance) {
         List<RegistrosEstadosResultadoDAO> estado = new ArrayList<>();
         List<RegistrosEstadosResultado> registrosBase = new ArrayList<>();
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yy");
@@ -107,89 +107,102 @@ public class EstadoResultadoCargarIm implements EstadoResultadoCargarIn {
         });
         registrosPartidaRepImp.mostrarPartida(anio);
         //-----------------------------------------------Areglar fecha-------------------------------------//
-         if (registrosPartidaRepImp.mostrarPartida(anio).size() == 0) {
-        //Retornar un mensaje
-         } else {
-        //Float total_cuentas_segundo, Catalogo catalogo, CicloContable cicloContable
-        String anioanterior = String.valueOf(anio - 1);
+        if (registrosPartidaRepImp.mostrarPartida(anio).size() == 0) {
+            //Retornar un mensaje
+        } else {
+            //Float total_cuentas_segundo, Catalogo catalogo, CicloContable cicloContable
+            String anioanterior = String.valueOf(anio - 1);
+            RegistroPartida registroPartida = new RegistroPartida();
 
-        if (registrosPartidaRepImp.mostrarPartida(Integer.parseInt(anioanterior)).size() == 0) {
+            if (registrosPartidaRepImp.mostrarPartida(Integer.parseInt(anioanterior)).size() == 0) {
 
-            SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-            int idmax = 0;
-            try {
-                CicloContable ciclo = new CicloContable();
+                SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+                int idmax = 0;
                 try {
-                    idmax = (cicloContableReposytory.MaxId() + 1);
-                } catch (Exception e) {
-                    idmax = 1;
-                }
-                Date date = format1.parse((anioanterior) + "-01-01");//(anio-1)+"-01-01"
-                ciclo.setFecha_fin(date);
-                ciclo.setId(idmax);
-                ciclo.setTotal(0.0);
-                cicloContableReposytory.save(ciclo);
-                ciclo.setId(cicloContableReposytory.MaxId());
+                    CicloContable ciclo = new CicloContable();
+                    try {
+                        idmax = (cicloContableReposytory.MaxId() + 1);
+                    } catch (Exception e) {
+                        idmax = 1;
+                    }
+                    Date date = format1.parse((anioanterior) + "-01-01");//(anio-1)+"-01-01"
+                    ciclo.setFecha_fin(date);
+                    ciclo.setId(idmax);
+                    ciclo.setTotal(0.0);
+                    cicloContableReposytory.save(ciclo);
+                    ciclo.setId(cicloContableReposytory.MaxId());
 
-                Partida partida = new Partida();
-                int idpartida = 1;
-                try {
-                    idpartida = partidaRepository.idMax() + 1;
-                } catch (Exception e) {
-                    idpartida = 1;
-                }
-                partida.setId(Long.valueOf(idpartida));
-                partida.setActivo(true);
-                partida.setDescripcion("Cierre de ciclo");
-                partida.setFecha(date);
-                partida.setCicloContable(ciclo);
-                partidaRepository.save(partida);
+                    Partida partida = new Partida();
+                    int idpartida = 1;
+                    try {
+                        idpartida = partidaRepository.idMax() + 1;
+                    } catch (Exception e) {
+                        idpartida = 1;
+                    }
+                    partida.setId(Long.valueOf(idpartida));
+                    partida.setActivo(true);
+                    partida.setDescripcion("Cierre de ciclo");
+                    partida.setFecha(date);
+                    partida.setCicloContable(ciclo);
+                    partidaRepository.save(partida);
 
-                int idpartidaregist = 1;
-                try {
-                    idpartidaregist = registrosPartidaRepImp.idMax() + 1;
-                } catch (Exception e) {
-                    idpartidaregist = 1;
-                }
+                    int idpartidaregist = 1;
+                    try {
+                        idpartidaregist = registrosPartidaRepImp.idMax() + 1;
+                    } catch (Exception e) {
+                        idpartidaregist = 1;
+                    }
 
-                RegistroPartida registroPartida = new RegistroPartida();
-                registroPartida.setId(Long.valueOf(idpartidaregist));
-                registroPartida.setPartida(partida);
-                BigDecimal sDebe = new BigDecimal("0");
-                registroPartida.setDebe(sDebe);
-                registroPartida.setHaber(sDebe);
-                registroPartida.setCatalogo(catalogoRepositoryInt.buscarCodigo("1109"));
-                registrosPartidaRepImp.save(registroPartida);
-            } catch (ParseException e) {
-                e.printStackTrace();
+                    registroPartida.setId(Long.valueOf(idpartidaregist));
+                    registroPartida.setPartida(partida);
+                    BigDecimal sDebe = new BigDecimal(balance);
+                    registroPartida.setDebe(sDebe);
+                    registroPartida.setHaber(sDebe);
+                    registroPartida.setCatalogo(catalogoRepositoryInt.buscarCodigo("1109"));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
+            if (registrosPartidaRepImp.mostrarPartida(anio).size() >= 1) {
+                EstadoResultado registro = new EstadoResultado("INVENTARIO INICIAL", "", String.valueOf(registrosPartidaRepImp.mostrarPartida(anio).get(0).getDebe()), "", String.valueOf(anio));
+                estadoResultadoPercistencia.save(registro);
+                balanceIncial = Double.valueOf(registro.getDato2());
+
+                EstadoResultado registro1 = new EstadoResultado("MERCADERIA DISPONIBLE PARA LA VENTA", "", "", String.valueOf(Precision.round(comprasNetas + balanceIncial, 2)), String.valueOf(anio));
+                mercancia = Double.valueOf(String.valueOf(Precision.round(comprasNetas + balanceIncial, 2)));
+                estadoResultadoPercistencia.save(registro1);
+                Double inventarioFinal = 0.00;
+                if (balance == 0) {
+                    inventarioFinal = Double.parseDouble(String.valueOf(registrosPartidaRepImp.mostrarPartida(anio).get(0).getDebe())) + comprasNetas - ventasNetas;
+                    registroPartida.setDebe(BigDecimal.valueOf(inventarioFinal));
+                }else {
+                    registroPartida.setDebe(BigDecimal.valueOf(balance));
+                }
+                if(registroPartida.getPartida()== null){
+                    registroPartida.setCatalogo(registrosPartidaRepImp.mostrarPartida(Integer.parseInt(anioanterior)).get(0).getCatalogo());
+                    registroPartida.setId(registrosPartidaRepImp.mostrarPartida(Integer.parseInt(anioanterior)).get(0).getId());
+                    registroPartida.setPartida(registrosPartidaRepImp.mostrarPartida(Integer.parseInt(anioanterior)).get(0).getPartida());
+                    registroPartida.setHaber(BigDecimal.valueOf(0.0));
+                }
+                registrosPartidaRepImp.save(registroPartida);
+
+                EstadoResultado registro2 = new EstadoResultado("INVENTARIO FINAL", "", (String.valueOf(registrosPartidaRepImp.mostrarPartida(anio).get(1).getDebe())), "", String.valueOf(anio));
+                estadoResultadoPercistencia.save(registro2);
+                balance = Double.valueOf(registro2.getDato2());
+
+                EstadoResultado registro3 = new EstadoResultado("COSTO DE VENTA", "", "", String.valueOf(Precision.round(mercancia - balance, 2)), String.valueOf(anio));
+                estadoResultadoPercistencia.save(registro3);
+                costoVenta = Double.valueOf(String.valueOf(Precision.round(mercancia - balance, 2)));
+
+                EstadoResultado registro4 = new EstadoResultado("UTILIDAD BRUTA", "", "", String.valueOf(Precision.round(ventasNetas - costoVenta, 2)), String.valueOf(anio));
+                estadoResultadoPercistencia.save(registro4);
+                utilidadBruta = Double.valueOf(String.valueOf(Precision.round(ventasNetas - costoVenta, 2)));
+
+
+            }
+
+
         }
-        if (registrosPartidaRepImp.mostrarPartida(anio).size() >= 1) {
-            EstadoResultado registro = new EstadoResultado("INVENTARIO INICIAL", "", String.valueOf(registrosPartidaRepImp.mostrarPartida(anio).get(0).getDebe()), "", String.valueOf(anio));
-            estadoResultadoPercistencia.save(registro);
-            balanceIncial = Double.valueOf(registro.getDato2());
-
-            EstadoResultado registro1 = new EstadoResultado("MERCADERIA DISPONIBLE PARA LA VENTA", "", "", String.valueOf(Precision.round(comprasNetas + balanceIncial, 2)), String.valueOf(anio));
-            mercancia = Double.valueOf(String.valueOf(Precision.round(comprasNetas + balanceIncial, 2)));
-            estadoResultadoPercistencia.save(registro1);
-
-            EstadoResultado registro2 = new EstadoResultado("INVENTARIO FINAL", "", String.valueOf(registrosPartidaRepImp.mostrarPartida(anio).get(1).getDebe()), "", String.valueOf(anio));
-            estadoResultadoPercistencia.save(registro2);
-            balance = Double.valueOf(registro2.getDato2());
-
-            EstadoResultado registro3 = new EstadoResultado("COSTO DE VENTA", "", "", String.valueOf(Precision.round(mercancia - balance, 2)), String.valueOf(anio));
-            estadoResultadoPercistencia.save(registro3);
-            costoVenta = Double.valueOf(String.valueOf(Precision.round(mercancia - balance, 2)));
-
-            EstadoResultado registro4 = new EstadoResultado("UTILIDAD BRUTA", "", "", String.valueOf(Precision.round(ventasNetas - costoVenta, 2)), String.valueOf(anio));
-            estadoResultadoPercistencia.save(registro4);
-            utilidadBruta = Double.valueOf(String.valueOf(Precision.round(ventasNetas - costoVenta, 2)));
-
-
-        }
-
-
-}
         registrosBase.stream().forEach(c -> {
 
             if (c.getCatalogo().getCodigo().substring(0, 2).equals("42") || c.getCatalogo().getCodigo().substring(0, 2).equals("43")) {
@@ -220,9 +233,9 @@ public class EstadoResultadoCargarIm implements EstadoResultadoCargarIn {
             Double utilididadImpuesto = Double.valueOf(String.valueOf(Precision.round((utilidadoperciones - utilidadoperciones * 0.07), 2)));
             //25000 ventastotales
             Double renta = 0.0;
-            if(utilididadImpuesto <= 150000.00){
+            if (utilididadImpuesto <= 150000.00) {
                 renta = 0.25;
-            }else{
+            } else {
                 renta = 0.30;
             }
             EstadoResultado registro8 = new EstadoResultado("IMPUESTO SOBRE LA RENTA", "", "", String.valueOf(Precision.round((utilididadImpuesto * renta), 2)), String.valueOf(anio));
@@ -239,7 +252,7 @@ public class EstadoResultadoCargarIm implements EstadoResultadoCargarIn {
             List<EstadoResultado> registro = estadoResultadoPercistencia.findAll(); //= catalogoRepositoryInt.findAll(Sort.by("codigo").ascending());
             JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(registro);
             final HashMap<String, Object> parameters = new HashMap<>();
-            parameters.put("NombreEmpresa",dataEmpresaRepositorio.findAll().get(0).getNombreEmpresa());
+            parameters.put("NombreEmpresa", dataEmpresaRepositorio.findAll().get(0).getNombreEmpresa());
             JasperPrint empReport = JasperFillManager.fillReport(JasperCompileManager.compileReport(ResourceUtils.getFile("classpath:EstadoResultado_1.jrxml").getAbsolutePath()) // path of the jasper report
                     , parameters //empParams dynamic parameters
                     , dataSource);
@@ -253,7 +266,7 @@ public class EstadoResultadoCargarIm implements EstadoResultadoCargarIn {
             return new ResponseEntity<byte[]>(JasperExportManager.exportReportToPdf(empReport), headers, HttpStatus.OK);
 
         } catch (Exception e) {
-           return new ResponseEntity<byte[]>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<byte[]>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }

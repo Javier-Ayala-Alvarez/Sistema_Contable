@@ -32,35 +32,41 @@
                         <h2 th:text="'Año: '+${#dates.year(anioActual)}"/></h2>
                         <!--Muestra el mensaje que viene del back-end-->
                     </div>
-
-
-                    <div class="col-md-6 align-self-end ">
-
-
-                        <form th:action="@{/EstadoDeResultado}" method="GET">
-                            <div class="row p-2">
-                                <div class="col-md-6">
-
-
-                                   <input type="number" class="form-control" name="dato" id="dato"
-                                          th:value="${dato}"
-                                          placeholder="Buscar...">
-                                    <!--
-                                    <select class="form-select form-select-sm" aria-label=".form-select-lg example"
-                                            name="dato"
-                                            th:field="${anios}" th:value="${dato}">
-
-                                        <option th:each="anio: ${anios}"
-                                                th:value="${#dates.year(anio.getFecha_fin())}"
-                                                th:text="${#dates.year(anio.getFecha_fin())}" id="dato" name="dato"/>
-                                    </select>
-                                    -->
-                                </div>
-                                <div class="col-md-5 align-self-end ">
-                                    <input type="submit" class="btn btn-primary col-8" value="Buscar"/>
-                                </div>
+                    <div class="col-md-12 align-self-end ">
+                        <div class="row p-2">
+                            <div class="col-md-4">
+                                <form th:action="@{/EstadoDeResultadocalcular}" method="GET">
+                                    <input type="text" class="form-control" name="balance" id="balance"
+                                           th:value="${balance}" value="0"
+                                           placeholder="Balance final">
+                                    <div class="col-md-5 align-self-end ">
+                                        <input type="submit" class="btn btn-primary col-8" value="Calcular"/>
+                                    </div>
+                                </form>
                             </div>
-                        </form>
+                            <div class="col-md-4">
+                                <form th:action="@{/EstadoDeResultado}" method="GET">
+                                    <input type="number" class="form-control" name="dato" id="dato"
+                                           th:value="${dato}"
+                                           placeholder="Buscar...">
+                                    <div class="col-md-5 align-self-end ">
+                                        <input type="submit" class="btn btn-primary col-8" value="Buscar"/>
+                                    </div>
+                                </form>
+                                <!--
+                                <select class="form-select form-select-sm" aria-label=".form-select-lg example"
+                                        name="dato"
+                                        th:field="${anios}" th:value="${dato}">
+
+                                    <option th:each="anio: ${anios}"
+                                            th:value="${#dates.year(anio.getFecha_fin())}"
+                                            th:text="${#dates.year(anio.getFecha_fin())}" id="dato" name="dato"/>
+                                </select>
+                                -->
+                            </div>
+
+                        </div>
+
                     </div>
                 </div>
                 <div class="row p-2">
