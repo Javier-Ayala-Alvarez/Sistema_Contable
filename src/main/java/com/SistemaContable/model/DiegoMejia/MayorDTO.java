@@ -6,11 +6,18 @@ import java.util.Objects;
 public class MayorDTO {
 
     private String Codigocuenta;
-    String nombreCuenta;
-    BigDecimal debe;
-    BigDecimal haber;
+    private String nombreCuenta;
+    private BigDecimal debe;
+    private BigDecimal haber;
+    private String saldoCuenta;
+
+
 
     public MayorDTO() {
+    }
+
+    public MayorDTO(String codigocuenta) {
+        Codigocuenta = codigocuenta;
     }
 
     public String getCodigocuenta() {
@@ -31,6 +38,14 @@ public class MayorDTO {
 
     public BigDecimal getDebe() {
         return debe;
+    }
+
+    public String getSaldoCuenta() {
+        return saldoCuenta;
+    }
+
+    public void setSaldoCuenta(String saldoCuenta) {
+        this.saldoCuenta = saldoCuenta;
     }
 
     public void setDebe(BigDecimal debe) {

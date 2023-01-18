@@ -46,9 +46,7 @@ public class PartidaController {
 
     @GetMapping("/LibroDiario/detalle/{id}")
     public String getPartidaById(Model model, @PathVariable("id") String id) {
-
         model.addAttribute("partidaRegistro", partidaServiceApi.get(Long.valueOf(id)));
-
         return "/fragment/modalRegistrosPartida.html:: modalRegistroPartida";
     }
 

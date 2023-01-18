@@ -37,14 +37,21 @@
                     </tr>
                     </thead>
                     <tbody>
+
                     <tr th:each="cuenta : ${cuentas}">
                         <td th:text="${cuenta.getCodigocuenta()}"></td>
                         <td th:text="${cuenta.nombreCuenta}"></td>
                         <td th:text="${cuenta.debe}"></td>
                         <td th:text="${cuenta.haber}"></td>
+
                     </tr>
+
+
                     </tbody>
                 </table>
+
+                <h4 th:text="${'debe: '+debe}"></h4>
+                <h4 th:text="${'haber: '+haber}"></h4>
             </div>
         </div>
     </div>

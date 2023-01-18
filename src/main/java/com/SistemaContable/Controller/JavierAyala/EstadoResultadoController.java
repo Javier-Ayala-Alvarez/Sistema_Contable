@@ -63,9 +63,15 @@ public class EstadoResultadoController {
         return estadoResultadoCargarIm.exportReport();
 
     }
-
+    @GetMapping("/EstadoDeResultadocalcular")
+    public String EstadoDeResultadoCalcular(@RequestParam Map<String, Object> params, Model model, String dato, String balance) {
+        int anio[] = cicloContableReposytory.anioactual();
+            estadoResultadoCargarIn.cargaDatosEstado((dato ==null)?anio[0]:Integer.parseInt(dato), (balance));
+            EstadoDeResultado(params,model,dato,balance);
+        return "EstadoDeResultado";
+    }
     @GetMapping("/EstadoDeResultado")
-    public String EstadoDeResultado(@RequestParam Map<String, Object> params, Model model, String dato) {
+    public String EstadoDeResultado(@RequestParam Map<String, Object> params, Model model, String dato, String balance) {
         List<RegistrosEstadosResultado> registrosBase = new ArrayList<>();
         int anio[] = cicloContableReposytory.anioactual();
         //-----------------------------------------------Areglar fecha-------------------------------------//
@@ -73,7 +79,7 @@ public class EstadoResultadoController {
         try {
 
             registrosBase = this.estadoResultado.mostrar((dato ==null)?anio[0]:Integer.parseInt(dato));
-            estadoResultadoCargarIn.cargaDatosEstado((dato ==null)?anio[0]:Integer.parseInt(dato));
+            //estadoResultadoCargarIn.cargaDatosEstado((dato ==null)?anio[0]:Integer.parseInt(dato), (balance == null)? 0.0 : Double.parseDouble(balance));
             List<EstadoResultado> estadoResultado =  estadoResultadoPercistencia.findAll();
             model.addAttribute("tituloDeLaPagina", "Estado de Resultado");
             model.addAttribute("estados", estadoResultado);
