@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.regex.Pattern;
 
 @Service
 public class PartidaServiceImpl extends GenericServiceApiImpl<Partida, Long>
@@ -80,6 +82,18 @@ public class PartidaServiceImpl extends GenericServiceApiImpl<Partida, Long>
 
         }
         return cuentasDelMayor;
+
+    }
+
+    public ArrayList<MayorDTO> balanceGeneral() {
+        Collection<MayorDTO> mayorDTOCollection = mayorizar();
+        Pattern pattern = Pattern.compile("^[^1-3].*");
+
+        mayorDTOCollection.removeIf(n -> ((n.getHaber().toString().equals("0")
+                && n.getDebe().toString().equals("0")))
+                || pattern.matcher(n.getCodigocuenta()).find());
+
+        return new ArrayList<>(mayorDTOCollection);
 
     }
 }
