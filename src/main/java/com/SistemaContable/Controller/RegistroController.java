@@ -81,6 +81,12 @@ public class RegistroController {
     @GetMapping("/Cierre")
     public String cierre(Model model) {
         model.addAttribute("tituloDeLaPagina", "Cierre contable");
+
+        //NOMBRE EMPRESA
+        String sql3 = "SELECT UPPER(nombre_empresa) as nombre_empresa FROM empresa WHERE id = ?";
+        String nombreEmpresa = jdbcTemplate.queryForObject(sql3, new Object[]{1}, String.class);
+        model.addAttribute("nombreEmpresa", nombreEmpresa);
+
         return "cierre";
     }
 

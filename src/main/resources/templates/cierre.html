@@ -19,15 +19,29 @@
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
           integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+    <div class="card-header">
+        <h4>
+            <div class="card-header py-3 text-center">
+                <i>
+                    <caption><h1 th:text="${tituloDeLaPagina.toUpperCase()}"/></caption><!--Muestra el mensaje que viene del back-end-->
+                    <caption><h1 th:utext="'EMPRESA ' + ${nombreEmpresa} + ' S.A. DE C.V.'"></h1></caption>
+                </i>
+            </div>
+        </h4>
+    </div>
 
-    <h1 th:text="${tituloDeLaPagina}"/> <!--Muestra el mensaje que viene del back-end-->
+    <div class="row p-2 align-items-center">
+        <div class="col-4">
+            <a th:onclick="getModal()" class="btn btn-danger col-8">Generar Cierre del Ejercicio</a>
+            <a hidden class="btn btn-success col-8" data-bs-toggle="modal" data-bs-target="#modalPartida"
+               id="openModal"> </a>
+        </div>
+    </div>
 </div>
 
 
 <th:block layout:fragment="page-scripts">
 
 </th:block>
-
-
 </body>
 </html>
