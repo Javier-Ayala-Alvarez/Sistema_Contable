@@ -25,13 +25,10 @@ public class BalanceGeneralController {
     @RequestMapping("/BalanceGeneral")
     public String balanceGeneral(Model model) {
 
+        int[] valor = cicloContableReposytory.anioactual();
+       int id =  cicloContableReposytory.getAnioactual(valor[0]);
 
-        Optional<CicloContable> objCiclo =cicloContableReposytory.findFirstByOrderByIdDesc();
-        if (!objCiclo.isPresent()) {
-            return "redirect:/";
-        }
-
-        ArrayList<MayorDTO> mayorDTOArrayList = partidaServiceApi.balanceGeneral(objCiclo.get().getId());
+        ArrayList<MayorDTO> mayorDTOArrayList = partidaServiceApi.balanceGeneral(id);
         BigDecimal debe = new BigDecimal("0");
         BigDecimal haber = new BigDecimal("0");
 
