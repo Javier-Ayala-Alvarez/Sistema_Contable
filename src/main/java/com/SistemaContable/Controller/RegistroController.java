@@ -90,11 +90,7 @@ public class RegistroController {
         return "cierre";
     }
 
-    @GetMapping("/BalanceDeComprobacion")
-    public String BalanceDeComprobacion(Model model) {
-        model.addAttribute("tituloDeLaPagina", "Balance de comprobación: Gerson");
-        return "BalanceDeComprobacion";
-    }
+
 
 
 

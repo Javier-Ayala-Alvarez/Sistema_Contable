@@ -21,12 +21,12 @@ public class DataEmpresaController {
     public String Configuracion(Model model) {
         Empresa dataEmpresa = new Empresa();
         if(dataEmpresaRepositorio.findAll().size() > 0){
-            dataEmpresa =dataEmpresaRepositorio.findAll().get(0);
+            dataEmpresa =dataEmpresaRepositorio.findAll().get(dataEmpresaRepositorio.findAll().size()-1);
 
         }
         model.addAttribute("dataEmpresa",dataEmpresa );
 
-        model.addAttribute("tituloDeLaPagina", "Configuración: Gerson");
+        //model.addAttribute("tituloDeLaPagina", "Configuración: Gerson");
         return "configuracion";
     }
 
@@ -36,11 +36,11 @@ public class DataEmpresaController {
         Empresa dataEmpresa = new Empresa();
         dataEmpresaRepositorio.save(empresa);
         if(dataEmpresaRepositorio.findAll().size() > 0){
-            dataEmpresa =dataEmpresaRepositorio.findAll().get(0);
+            dataEmpresa =dataEmpresaRepositorio.findAll().get(dataEmpresaRepositorio.findAll().size()-1);
 
         }
         modelo.addAttribute("dataEmpresa", dataEmpresa);
-        modelo.addAttribute("tituloDeLaPagina", "Configuración: Gerson");
+        //modelo.addAttribute("tituloDeLaPagina", "Configuración: Gerson");
 
         //return "dataEmpresaCrear";
         return "configuracion";
